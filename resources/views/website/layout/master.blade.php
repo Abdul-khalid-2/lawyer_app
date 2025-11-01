@@ -307,7 +307,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetch("#")
+            fetch("{{ route('specializations.list') }}")
                 .then(response => response.json())
                 .then(data => {
                     let specializationSelect = document.getElementById("lawyerSpecialization");

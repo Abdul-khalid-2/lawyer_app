@@ -2,8 +2,7 @@
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header d-flex justify-content-between align-items-center">
             <h4 class="text-white mb-0">
-                <i class="fas fa-store me-2"></i>
-                E-Commerce Admin
+                Consaltent Lawyers
             </h4>
             <button class="btn btn-link d-md-none p-0" onclick="closeSidebar()" style="color: white;">
                 <i class="fas fa-times"></i>

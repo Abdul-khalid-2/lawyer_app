@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('blog_category_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title');
             $table->string('slug')->unique();
+            $table->json('structure')->notNullable();
             $table->text('excerpt')->nullable();
             $table->longText('content');
             $table->string('featured_image')->nullable();
