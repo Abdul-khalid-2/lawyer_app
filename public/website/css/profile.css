@@ -1,0 +1,151 @@
+/* Profile Header */
+.profile-header {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Verified Badge */
+.verified-badge {
+    background-color: var(--secondary);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+/* Rating Stars */
+.rating {
+    color: #f39c12;
+}
+
+/* Specialization Badge */
+.specialization-badge {
+    background-color: #e8f4fc;
+    color: var(--secondary);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+/* Profile Section */
+.profile-section {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+/* Section Title with Underline */
+.section-title {
+    position: relative;
+    margin-bottom: 25px;
+    font-weight: 700;
+    padding-bottom: 15px;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--secondary);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* Timeline Item (Experience & Education) */
+.timeline-item {
+    position: relative;
+    padding: 0 0 30px 30px;
+    border-left: 2px solid var(--secondary);
+    margin-left: 15px;
+}
+
+.timeline-item:last-child {
+    border-left: 2px solid transparent;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--secondary);
+    left: -9px;
+    top: 0;
+}
+
+/* Portfolio Item */
+.portfolio-item {
+    margin-bottom: 30px;
+}
+
+.portfolio-item h5 {
+    margin-bottom: 10px;
+}
+
+/* Review Card */
+.review-card {
+    border-left: 4px solid var(--secondary);
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+/* Team Member */
+.team-member {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.team-member img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* Contact Widget (Sidebar) */
+.contact-widget {
+    background-color: var(--light);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+/* Stats Box (Sidebar) */
+.stats-box {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--light);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.stats-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 5px;
+}

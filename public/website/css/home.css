@@ -1,0 +1,123 @@
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.pexels.com/photos/5668859/pexels-photo-5668859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    padding: 120px 0;
+    color: white;
+}
+
+/* Section Title */
+.section-title {
+    position: relative;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--secondary);
+    margin: 15px 0;
+}
+
+/* Section Spacing */
+.section-padding {
+    padding: 80px 0;
+}
+
+/* Lawyer Card */
+.lawyer-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.lawyer-card:hover {
+    transform: translateY(-10px);
+}
+
+.lawyer-img {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Specialization Badge */
+.specialization-badge {
+    background-color: #e8f4fc;
+    color: var(--secondary);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+/* Rating Stars */
+.rating {
+    color: #f39c12;
+}
+
+/* Stats Box */
+.stats-box {
+    background-color: var(--light);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+/* Testimonial Card */
+.testimonial-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin: 15px;
+}
+
+.testimonial-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+/* Search Form */
+.search-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Auth Modals */
+.modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.auth-tabs .nav-link {
+    border-radius: 0;
+    padding: 15px;
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.auth-tabs .nav-link.active {
+    background-color: var(--secondary);
+    color: white;
+}
