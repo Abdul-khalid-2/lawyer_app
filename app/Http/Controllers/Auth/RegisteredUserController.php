@@ -74,7 +74,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:lawyers,email'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'phone' => ['nullable', 'string', 'max:20'],
             'specialization_id' => ['required', 'exists:specializations,id'], // Changed from 'specialization'
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -87,18 +87,13 @@ class RegisteredUserController extends Controller
                 'name' => $request->first_name . ' ' . $request->last_name,
                 'email' => $request->email,
                 'role' => 'lawyer',
-                'password' => Hash::make($request->password),
+                'password' => $request->password,
             ]);
 
             // Create Lawyer linked to User
             $lawyer = Lawyer::create([
                 'user_id' => $user->id,
                 'uuid' => \Illuminate\Support\Str::uuid(),
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'password' => Hash::make($request->password),
             ]);
 
             $user->assignRole('lawyer');

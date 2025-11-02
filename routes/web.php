@@ -17,26 +17,16 @@ Route::get('/', function () {
 })->name('home');
 Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::get('lawyer/profile/edit', [LawyerProfileController::class, 'edit'])->name('lawyer.profile.edit');
     Route::put('lawyer/profile', [LawyerProfileController::class, 'update'])->name('lawyer.profile.update');
     Route::put('lawyer/profile/password', [LawyerProfileController::class, 'updatePassword'])->name('lawyer.profile.password');
     Route::get('lawyer/view', [LawyerProfileController::class, 'show'])->name('lawyer.profile.show');
-});
 
-
-
-
-Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -53,9 +43,7 @@ Route::middleware(['auth'])->group(function () {
     // Reviews
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::patch('/reviews/{review}/status', [ReviewController::class, 'updateStatus'])->name('reviews.status');
-});
 
-Route::middleware(['auth', 'verified'])->group(function () {
     // Blog Categories Routes
     Route::resource('blog-categories', BlogCategoryController::class);
 

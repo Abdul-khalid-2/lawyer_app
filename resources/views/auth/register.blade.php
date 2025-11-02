@@ -246,7 +246,7 @@
                                 </form>
 
                                 <div class="auth-footer">
-                                    <p>Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
+                                    <p>Already have an account? <a  class="primary me-2" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a></p>
                                 </div>
                             </div>
 
@@ -328,7 +328,7 @@
                                 </form>
 
                                 <div class="auth-footer">
-                                    <p>Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
+                                    <p>Already have an account? <a class="primary me-2" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a></p>
                                 </div>
                             </div>
                         </div>
