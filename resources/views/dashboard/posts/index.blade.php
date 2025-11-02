@@ -33,7 +33,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         @if($post->featured_image)
-                                        <img src="{{ asset('storage/' . $post->featured_image) }}"
+                                        <img src="{{ asset('website/' . $post->featured_image) }}"
                                             alt="{{ $post->title }}" class="rounded me-3"
                                             style="width: 40px; height: 40px; object-fit: cover;">
                                         @endif

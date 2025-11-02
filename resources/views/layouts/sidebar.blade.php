@@ -17,57 +17,51 @@
             </div>
 
             @role('super_admin')
-
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-briefcase"></i>
-                    <span>Cases</span>
-                </a>
-            </div>
-
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>Clients</span>
-                </a>
-            </div>
-
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-gavel"></i>
-                    <span>Lawyers</span>
-                </a>
-            </div>
-
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Users</span>
-                </a>
-            </div>
-
-            <div class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Specialization</span>
-                </a>
-            </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Cases</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Clients</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-gavel"></i>
+                        <span>Lawyers</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span>Users</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span>Specialization</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('blog-categories.index') }}" class="nav-link">
+                        <i class="fas fa-gavel"></i>
+                        <span>Blogs Categories</span>
+                    </a>
+                </div>
             @endrole
 
             @role('lawyer')
-            <div class="nav-item">
-                <a href="{{ route('blog-categories.index') }}" class="nav-link">
-                    <i class="fas fa-gavel"></i>
-                    <span>Blogs Categories</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="{{ route('blog-posts.index') }}" class="nav-link">
-                    <i class="fas fa-gavel"></i>
-                    <span>Blogs</span>
-                </a>
-            </div>
-
+                <div class="nav-item">
+                    <a href="{{ route('blog-posts.index') }}" class="nav-link">
+                        <i class="fas fa-gavel"></i>
+                        <span>Blogs</span>
+                    </a>
+                </div>
             @endrole
         </ul>
     </nav>

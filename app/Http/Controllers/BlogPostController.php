@@ -89,9 +89,16 @@ class BlogPostController extends Controller
                 $blogData['tags'] = json_encode(array_map('trim', explode(',', $request->tags)));
             }
 
-            // Handle featured image upload
+            // Handle featured image upload (custom disk + slug-based folder)
             if ($request->hasFile('featured_image')) {
-                $blogData['featured_image'] = $request->file('featured_image')->store('blog-images', 'public');
+                $blog_feature_img = Str::slug(Auth::user()->name);
+                $fileName = time() . '.' . $request->file('featured_image')->getClientOriginalExtension();
+                $filePath = $blog_feature_img . '/' . $fileName;
+
+                // Store in custom "website" disk
+                Storage::disk('website')->put($filePath, file_get_contents($request->file('featured_image')));
+
+                $blogData['featured_image'] = $filePath;
             }
 
             // Add canvas elements data
