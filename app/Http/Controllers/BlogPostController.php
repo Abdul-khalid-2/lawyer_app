@@ -339,10 +339,24 @@ class BlogPostController extends Controller
 
     public function show(BlogPost $blogPost)
     {
-        // Increment view count
-        $blogPost->increment('view_count');
+        if ($blogPost->lawyer_id !== Auth::user()->lawyer->id) {
+            abort(403);
+        }
 
-        return view('blog-posts.show', compact('blogPost'));
+        $categories = BlogCategory::where('is_active', true)->get();
+
+        // Prepare structure for editing
+        if (!$blogPost->structure) {
+            $blogPost->structure = ['elements' => []];
+        } else {
+            $blogPost->structure = $this->prepareForDisplay($blogPost->structure);
+        }
+
+        // Change variable name to match view
+        $post = $blogPost;
+
+
+        return view('dashboard.posts.show', compact('post', 'categories'));
     }
 
     public function edit(BlogPost $blogPost)
@@ -353,7 +367,19 @@ class BlogPostController extends Controller
         }
 
         $categories = BlogCategory::where('is_active', true)->get();
-        return view('blog-posts.form', compact('post', 'categories'));
+
+        // Prepare structure for editing
+        if (!$blogPost->structure) {
+            $blogPost->structure = ['elements' => []];
+        } else {
+            $blogPost->structure = $this->prepareForDisplay($blogPost->structure);
+        }
+
+        // Change variable name to match view
+        $post = $blogPost;
+
+
+        return view('dashboard.posts.edit', compact('post', 'categories'));
     }
 
     public function update(Request $request, BlogPost $blogPost)
@@ -363,46 +389,164 @@ class BlogPostController extends Controller
             abort(403);
         }
 
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'blog_category_id' => 'nullable|exists:blog_categories,id',
             'excerpt' => 'nullable|string',
-            'content' => 'required|string',
             'featured_image' => 'nullable|image|max:2048',
             'status' => 'required|in:draft,published,archived',
-            'tags' => 'nullable|string'
+            'tags' => 'nullable|string',
+            'structure' => 'required|json',
         ]);
 
-        // Update slug if title changed
-        if ($blogPost->title !== $validated['title']) {
-            $validated['slug'] = Str::slug($validated['title']) . '-' . Str::random(6);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
-        // Handle tags
-        if ($request->tags) {
-            $validated['tags'] = json_encode(array_map('trim', explode(',', $request->tags)));
-        } else {
-            $validated['tags'] = null;
-        }
+        try {
+            $structureData = json_decode($request->structure, true);
 
-        // Handle featured image upload
-        if ($request->hasFile('featured_image')) {
-            // Delete old image if exists
-            if ($blogPost->featured_image) {
-                Storage::disk('website')->delete($blogPost->featured_image);
+            // Process images from base64 to file storage
+            $processedData = $this->processImages($structureData, $blogPost->lawyer_id);
+
+            // Extract individual element data for separate columns
+            $elementData = $this->extractElementData($processedData);
+
+            // Update slug if title changed
+            $slug = $blogPost->slug;
+            if ($blogPost->title !== $request->title) {
+                $slug = $this->generateUniqueSlug($request->title, $blogPost->id);
             }
-            $validated['featured_image'] = $request->file('featured_image')->store('blog-images', 'public');
+
+            $blogData = [
+                'title' => $request->title,
+                'blog_category_id' => $request->blog_category_id,
+                'slug' => $slug,
+                'excerpt' => $request->excerpt,
+                'content' => $this->generateContentFromStructure($processedData),
+                'structure' => $processedData,
+                'status' => $request->status,
+            ];
+
+            // Update published_at based on status
+            if ($request->status === 'published' && $blogPost->status !== 'published') {
+                $blogData['published_at'] = now();
+            } elseif ($request->status !== 'published') {
+                $blogData['published_at'] = null;
+            }
+
+            // Handle tags
+            if ($request->tags) {
+                $blogData['tags'] = json_encode(array_map('trim', explode(',', $request->tags)));
+            } else {
+                $blogData['tags'] = null;
+            }
+
+            // Handle featured image upload
+            if ($request->hasFile('featured_image')) {
+                // Delete old image if exists
+                if ($blogPost->featured_image) {
+                    Storage::disk('website')->delete($blogPost->featured_image);
+                }
+
+                $blog_feature_img = Str::slug(Auth::user()->name);
+                $fileName = time() . '.' . $request->file('featured_image')->getClientOriginalExtension();
+                $filePath = $blog_feature_img . '/' . $fileName;
+
+                Storage::disk('website')->put($filePath, file_get_contents($request->file('featured_image')));
+                $blogData['featured_image'] = $filePath;
+            }
+
+            // Add canvas elements data
+            $blogData = array_merge($blogData, $elementData);
+
+            $blogPost->update($blogData);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Blog post updated successfully!',
+                'redirect_url' => route('blog-posts.show', $blogPost->id)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update blog post: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Prepare data for display by converting image paths to URLs
+     */
+    private function prepareForDisplay($structure)
+    {
+        if (!isset($structure['elements']) || !is_array($structure['elements'])) {
+            return $structure;
         }
 
-        // Update published_at based on status
-        if ($validated['status'] === 'published' && $blogPost->status !== 'published') {
-            $validated['published_at'] = now();
+        foreach ($structure['elements'] as &$element) {
+            if (isset($element['content'])) {
+                // Convert image paths to URLs
+                if (isset($element['content']['src']) && is_string($element['content']['src'])) {
+                    $element['content']['src'] = $this->getCorrectImageUrl($element['content']['src']);
+                }
+
+                // Process HTML content for image paths
+                foreach ($element['content'] as $key => &$value) {
+                    if (is_string($value)) {
+                        $value = $this->convertImagePathsToUrls($value);
+                    }
+                }
+            }
         }
 
-        $blogPost->update($validated);
+        return $structure;
+    }
 
-        return redirect()->route('blog-posts.index')
-            ->with('success', 'Blog post updated successfully.');
+    /**
+     * Get correct image URL with proper domain and path
+     */
+    private function getCorrectImageUrl($path)
+    {
+        // If it's already a full URL, return as is
+        if (filter_var($path, FILTER_VALIDATE_URL)) {
+            return $path;
+        }
+
+        // If it's a storage path from website disk, generate proper URL
+        if (strpos($path, 'lawyers/') === 0 || strpos($path, 'blog-images/') === 0) {
+            // Force URL generation with current request's scheme and host
+            $baseUrl = request()->getSchemeAndHttpHost();
+            return $baseUrl . '/website/' . $path;
+        }
+
+        // For any other case
+        return asset('storage/' . $path);
+    }
+
+    /**
+     * Convert storage paths to URLs in HTML content
+     */
+    private function convertImagePathsToUrls($content)
+    {
+        if (empty($content) || !is_string($content)) {
+            return $content;
+        }
+
+        // Replace image paths in src attributes
+        $content = preg_replace_callback(
+            '/src=(["\'])(lawyers\/[^\1]+?\.(jpg|jpeg|png|gif|webp))\1/i',
+            function ($matches) {
+                return 'src=' . $matches[1] . $this->getCorrectImageUrl($matches[2]) . $matches[1];
+            },
+            $content
+        );
+
+        return $content;
     }
 
     public function destroy(BlogPost $blogPost)
