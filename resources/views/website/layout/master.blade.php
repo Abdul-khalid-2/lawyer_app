@@ -84,14 +84,6 @@
                     <!-- Session Status -->
                     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                    <ul class="nav nav-tabs auth-tabs mb-4" id="loginTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client-login" type="button" role="tab">Client Login</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="lawyer-tab" data-bs-toggle="tab" data-bs-target="#lawyer-login" type="button" role="tab">Lawyer Login</button>
-                        </li>
-                    </ul>
                     <div class="tab-content" id="loginTabsContent">
                         <!-- Client Login Form -->
                         <div class="tab-pane fade show active" id="client-login" role="tabpanel">
@@ -126,38 +118,6 @@
                             </div>
                         </div>
 
-                        <!-- Lawyer Login Form -->
-                        <div class="tab-pane fade" id="lawyer-login" role="tabpanel">
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <input type="hidden" name="user_type" value="lawyer">
-
-                                <div class="mb-3">
-                                    <label for="lawyerEmail" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="lawyerEmail" name="email" value="{{ old('email') }}" required autofocus>
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lawyerPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="lawyerPassword" name="password" required>
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="rememberLawyer" name="remember">
-                                    <label class="form-check-label" for="rememberLawyer">Remember me</label>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100">Login as Lawyer</button>
-                            </form>
-
-                            <div class="text-center mt-3">
-                                @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}">Forgot your password?</a>
-                                @endif
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -165,168 +125,10 @@
     </div>
 
     <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create an Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs auth-tabs mb-4" id="registerTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="register-client-tab" data-bs-toggle="tab" data-bs-target="#register-client" type="button" role="tab">Client Registration</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="register-lawyer-tab" data-bs-toggle="tab" data-bs-target="#register-lawyer" type="button" role="tab">Lawyer Registration</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="registerTabsContent">
-                        <!-- Client Registration Form -->
-                        <div class="tab-pane fade show active" id="register-client" role="tabpanel">
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
-                                <input type="hidden" name="user_type" value="client">
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="clientFirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" id="clientFirstName" name="first_name" value="{{ old('first_name') }}" required autofocus>
-                                        <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="clientLastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" id="clientLastName" name="last_name" value="{{ old('last_name') }}" required>
-                                        <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="clientRegEmail" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="clientRegEmail" name="email" value="{{ old('email') }}" required>
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="clientRegPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="clientRegPassword" name="password" required autocomplete="new-password">
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="clientConfirmPassword" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="clientConfirmPassword" name="password_confirmation" required autocomplete="new-password">
-                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="termsAgree" name="terms" required>
-                                    <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms & Conditions</a></label>
-                                    <x-input-error :messages="$errors->get('terms')" class="mt-2" />
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100">Register as Client</button>
-                            </form>
-
-                            <div class="text-center mt-3">
-                                <a href="{{ route('login') }}">Already registered?</a>
-                            </div>
-                        </div>
-
-                        <!-- Lawyer Registration Form -->
-                        <div class="tab-pane fade" id="register-lawyer" role="tabpanel">
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
-                                <input type="hidden" name="user_type" value="lawyer">
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lawyerFirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" id="lawyerFirstName" name="first_name" value="{{ old('first_name') }}" required autofocus>
-                                        <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lawyerLastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" id="lawyerLastName" name="last_name" value="{{ old('last_name') }}" required>
-                                        <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lawyerRegEmail" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="lawyerRegEmail" name="email" value="{{ old('email') }}" required>
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lawyerPhone" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="lawyerPhone" name="phone" value="{{ old('phone') }}">
-                                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lawyerSpecialization" class="form-label">Primary Specialization</label>
-                                    <select class="form-control" id="lawyerSpecialization" name="specialization">
-                                        <option value="">Loading...</option>
-                                    </select>
-                                    <x-input-error :messages="$errors->get('specialization')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lawyerRegPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="lawyerRegPassword" name="password" required autocomplete="new-password">
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="lawyerConfirmPassword" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="lawyerConfirmPassword" name="password_confirmation" required autocomplete="new-password">
-                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                                </div>
-
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="lawyerTermsAgree" name="terms" required>
-                                    <label class="form-check-label" for="lawyerTermsAgree">I agree to the <a href="#">Terms & Conditions</a></label>
-                                    <x-input-error :messages="$errors->get('terms')" class="mt-2" />
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100">Register as Lawyer</button>
-                            </form>
-
-                            <div class="text-center mt-3">
-                                <a href="{{ route('login') }}">Already registered?</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch("{{ route('specializations.list') }}")
-                .then(response => response.json())
-                .then(data => {
-                    let specializationSelect = document.getElementById("lawyerSpecialization");
-                    specializationSelect.innerHTML = '<option value="">Select Specialization</option>';
 
-                    data.forEach(spec => {
-                        specializationSelect.innerHTML += `<option value="${spec.id}">${spec.name}</option>`;
-                    });
-
-                    // Restore old value if validation failed
-                    @if(old('specialization'))
-                    specializationSelect.value = "{{ old('specialization') }}";
-                    @endif
-                })
-                .catch(err => {
-                    console.error("Error loading specializations:", err);
-                });
-        });
-    </script>
 
     @stack('js')
 

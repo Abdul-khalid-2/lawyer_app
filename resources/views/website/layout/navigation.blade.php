@@ -22,17 +22,19 @@
 
             <div class="d-flex">
                 @auth
-                <a href="#" class="btn btn-outline-primary me-2">Dashboard</a>
-                <form method="POST" action="{{ route('logout') }}" class="mt-1">
-                    @csrf
-                    <button class="btn btn-outline-danger">Logout</button>
-                </form>
+                    @role('lawyer')
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline-primary me-2">Dashboard</a>
+                    @endrole
+                    <form method="POST" action="{{ route('logout') }}" class="mt-1">
+                        @csrf
+                        <button class="btn btn-outline-danger">Logout</button>
+                    </form>
                 @else
-                <!-- <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a> -->
-                <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    <!-- <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a> -->
+                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 @if (Route::has('register'))
-                <!-- <a href="{{ route('register') }}" class="btn btn-primary">Register</a> -->
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                    <!-- <a href="{{ route('register') }}" class="btn btn-primary">Register</a> -->
+                    <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
                 @endif
                 @endauth
             </div>

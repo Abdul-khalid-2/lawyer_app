@@ -14,7 +14,7 @@ use App\Http\Controllers\BlogPostController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
 
 // Route::get('/dashboard', function () {
