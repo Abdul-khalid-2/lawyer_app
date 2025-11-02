@@ -55,9 +55,14 @@
             @endrole
 
             @role('lawyer')
-
             <div class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('blog-categories.index') }}" class="nav-link">
+                    <i class="fas fa-gavel"></i>
+                    <span>Blogs Categories</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="{{ route('blog-posts.index') }}" class="nav-link">
                     <i class="fas fa-gavel"></i>
                     <span>Blogs</span>
                 </a>

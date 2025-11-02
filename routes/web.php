@@ -9,6 +9,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Website\WebsiteHomeController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogPostController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -52,6 +55,14 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/reviews/{review}/status', [ReviewController::class, 'updateStatus'])->name('reviews.status');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Blog Categories Routes
+    Route::resource('blog-categories', BlogCategoryController::class);
 
+    // Blog Posts Routes
+    Route::resource('blog-posts', BlogPostController::class);
+});
+
+require __DIR__ . '/auth.php';
 
 require __DIR__ . '/auth.php';
