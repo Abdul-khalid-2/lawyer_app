@@ -16,12 +16,12 @@ class ExperienceController extends Controller
         $lawyer = Auth::user()->lawyer;
         $experiences = $lawyer->experiences()->orderBy('start_date', 'desc')->get();
 
-        return view('experiences.index', compact('experiences'));
+        return view('dashboard.experiences.index', compact('experiences'));
     }
 
     public function create()
     {
-        return view('experiences.create');
+        return view('dashboard.experiences.create');
     }
 
     public function store(Request $request)
@@ -58,14 +58,14 @@ class ExperienceController extends Controller
     {
         // $this->authorize('view', $experience);
 
-        return view('experiences.show', compact('experience'));
+        return view('dashboard.experiences.show', compact('experience'));
     }
 
     public function edit(Experience $experience)
     {
         // $this->authorize('update', $experience);
 
-        return view('experiences.edit', compact('experience'));
+        return view('dashboard.experiences.edit', compact('experience'));
     }
 
     public function update(Request $request, Experience $experience)

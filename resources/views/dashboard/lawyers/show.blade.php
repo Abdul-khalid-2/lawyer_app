@@ -228,7 +228,7 @@
                         @if($lawyer->hourly_rate)
                         <div class="mb-3">
                             <strong><i class="fas fa-money-bill-wave text-primary me-2"></i>Hourly Rate</strong>
-                            <p class="mb-0">${{ number_format($lawyer->hourly_rate, 2) }}/hour</p>
+                            <p class="mb-0">Rs.{{ number_format($lawyer->hourly_rate, 2) }}/hour</p>
                         </div>
                         @endif
                     </div>

@@ -249,7 +249,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="hourly_rate" class="form-label">Hourly Rate ($)</label>
+                                    <label for="hourly_rate" class="form-label">Hourly Rate (Rs)</label>
                                     <input type="number" step="0.01" class="form-control @error('hourly_rate') is-invalid @enderror"
                                         id="hourly_rate" name="hourly_rate" value="{{ old('hourly_rate', $lawyer->hourly_rate) }}">
                                     @error('hourly_rate')
@@ -389,12 +389,12 @@
             });
         });
     </script>
-                                <script>
-                            document.querySelectorAll('.specialization-checkbox').forEach(checkbox => {
-                                checkbox.addEventListener('change', function() {
-                                    const experienceInput = this.closest('.col-md-6').querySelector('.specialization-experience');
-                                    experienceInput.style.display = this.checked ? '' : 'none';
-                                });
-                            });
-                            </script>
+    <script>
+        document.querySelectorAll('.specialization-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const experienceInput = this.closest('.col-md-6').querySelector('.specialization-experience');
+                experienceInput.style.display = this.checked ? '' : 'none';
+            });
+        });
+    </script>
 </x-app-layout>
