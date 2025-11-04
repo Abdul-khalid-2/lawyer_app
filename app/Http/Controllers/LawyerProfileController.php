@@ -110,7 +110,7 @@ class LawyerProfileController extends Controller
             $syncData = [];
             foreach ($request->specializations as $specId) {
                 $syncData[$specId] = [
-                    'years_of_experience' => $request->input("specialization_experience.$specId", 0),
+                    'years_of_experience' => $request->input("specialization_experience.{$specId}", 0) ?: 0,
                 ];
             }
             $lawyer->specializations()->sync($syncData);
