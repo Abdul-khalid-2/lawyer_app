@@ -21,7 +21,7 @@
 </section>
 
 <!-- Search Section -->
-<section class="section-padding bg-light">
+<!-- <section class="section-padding bg-light">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -42,7 +42,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- Featured Lawyers -->
 <section class="section-padding" id="lawyers">

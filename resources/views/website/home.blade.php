@@ -21,28 +21,7 @@
 </section>
 
 <!-- Search Section -->
-<section class="section-padding bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="search-form">
-                    <h3 class="mb-4">Find Your Lawyer</h3>
-                    <div class="row">
-                        <div class="col-md-5 mb-3">
-                            <input type="text" class="form-control form-control-lg" placeholder="Specialization (e.g. Criminal Law)">
-                        </div>
-                        <div class="col-md-5 mb-3">
-                            <input type="text" class="form-control form-control-lg" placeholder="Location (City or State)">
-                        </div>
-                        <div class="col-md-2 mb-3">
-                            <button class="btn btn-primary w-100">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Featured Lawyers -->
 <section class="section-padding" id="lawyers">

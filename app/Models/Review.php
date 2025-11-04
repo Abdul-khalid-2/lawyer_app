@@ -17,14 +17,14 @@ class Review extends Model
         'title',
         'review',
         'status',
-        'is_featured',
+        'is_featured'
     ];
 
     protected $casts = [
-        'is_featured' => 'boolean',
+        'rating' => 'integer',
+        'is_featured' => 'boolean'
     ];
 
-    // Relationships
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class);

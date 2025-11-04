@@ -32,12 +32,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
     public function lawyer()
     {
         return $this->hasOne(Lawyer::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(UserActivity::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function isSuperAdmin()
@@ -47,11 +58,17 @@ class User extends Authenticatable
 
     public function isLawyer()
     {
-        return $this->hasRole('lawyer');
+        return $this->hasRole('lawyer') && $this->lawyer !== null;
     }
 
     public function isClient()
     {
         return $this->hasRole('client');
+    }
+
+    // Accessor for profile image URL
+    public function getProfileImageUrlAttribute()
+    {
+        return $this->profile_image ? asset('storage/' . $this->profile_image) : asset('images/default-avatar.png');
     }
 }

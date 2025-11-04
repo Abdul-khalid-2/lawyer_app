@@ -107,7 +107,13 @@ class LawyerProfileController extends Controller
 
         // Sync specializations
         if ($request->has('specializations')) {
-            $lawyer->specializations()->sync($request->specializations);
+            $syncData = [];
+            foreach ($request->specializations as $specId) {
+                $syncData[$specId] = [
+                    'years_of_experience' => $request->input("specialization_experience.$specId", 0),
+                ];
+            }
+            $lawyer->specializations()->sync($syncData);
         } else {
             $lawyer->specializations()->detach();
         }

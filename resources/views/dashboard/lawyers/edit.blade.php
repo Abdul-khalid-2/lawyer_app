@@ -188,21 +188,46 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="specializations" class="form-label">Specializations</label>
-                                <select multiple class="form-control @error('specializations') is-invalid @enderror"
-                                    id="specializations" name="specializations[]">
+                                <label class="form-label">Specializations & Experience</label>
+                                <div class="row">
                                     @foreach($specializations as $specialization)
-                                    <option value="{{ $specialization->id }}"
-                                        {{ in_array($specialization->id, old('specializations', $lawyer->specializations->pluck('id')->toArray())) ? 'selected' : '' }}>
-                                        {{ $specialization->name }}
-                                    </option>
+                                        @php
+                                            $isChecked = in_array($specialization->id, old('specializations', $lawyer->specializations->pluck('id')->toArray()));
+                                            $pivotExp = old('specialization_experience.' . $specialization->id, $lawyer->specializations->find($specialization->id)->pivot->years_of_experience ?? '');
+                                        @endphp
+
+                                        <div class="col-md-6">
+                                            <div class="form-check mb-2">
+                                                <input 
+                                                    class="form-check-input specialization-checkbox" 
+                                                    type="checkbox" 
+                                                    id="spec_{{ $specialization->id }}" 
+                                                    name="specializations[]" 
+                                                    value="{{ $specialization->id }}"
+                                                    {{ $isChecked ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="spec_{{ $specialization->id }}">
+                                                    {{ $specialization->name }}
+                                                </label>
+                                            </div>
+
+                                            <div class="mb-3 specialization-experience" style="{{ $isChecked ? '' : 'display:none;' }}">
+                                                <label for="exp_{{ $specialization->id }}" class="form-label">Years of Experience</label>
+                                                <input 
+                                                    type="number" 
+                                                    class="form-control" 
+                                                    id="exp_{{ $specialization->id }}" 
+                                                    name="specialization_experience[{{ $specialization->id }}]" 
+                                                    min="0"
+                                                    value="{{ $pivotExp }}"
+                                                    placeholder="Years of experience in {{ $specialization->name }}">
+                                            </div>
+                                        </div>
                                     @endforeach
-                                </select>
-                                <small class="text-muted">Hold Ctrl/Cmd to select multiple specializations</small>
-                                @error('specializations')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                </div>
                             </div>
+
+
+
 
                             <div class="mb-3">
                                 <label for="bio" class="form-label">Professional Bio</label>
@@ -364,4 +389,12 @@
             });
         });
     </script>
+                                <script>
+                            document.querySelectorAll('.specialization-checkbox').forEach(checkbox => {
+                                checkbox.addEventListener('change', function() {
+                                    const experienceInput = this.closest('.col-md-6').querySelector('.specialization-experience');
+                                    experienceInput.style.display = this.checked ? '' : 'none';
+                                });
+                            });
+                            </script>
 </x-app-layout>

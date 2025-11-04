@@ -15,7 +15,7 @@ class BlogPost extends Model
         'blog_category_id',
         'title',
         'slug',
-        'structure', // Make sure this is in fillable
+        'structure',
         'excerpt',
         'content',
         'featured_image',
@@ -35,15 +35,15 @@ class BlogPost extends Model
     ];
 
     protected $casts = [
-        'structure' => 'array',
         'tags' => 'array',
+        'published_at' => 'datetime',
+        'structure' => 'array',
         'banner' => 'array',
         'image' => 'array',
         'rich_text' => 'array',
         'text_left_image_right' => 'array',
         'custom_html' => 'array',
-        'canvas_elements' => 'array',
-        'published_at' => 'datetime'
+        'canvas_elements' => 'array'
     ];
 
     public function lawyer()
@@ -54,5 +54,21 @@ class BlogPost extends Model
     public function category()
     {
         return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    }
+
+    // Scopes
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'draft');
+    }
+
+    public function scopeArchived($query)
+    {
+        return $query->where('status', 'archived');
     }
 }

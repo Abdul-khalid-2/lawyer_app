@@ -35,7 +35,6 @@ class Lawyer extends Model
     protected $casts = [
         'is_verified' => 'boolean',
         'is_featured' => 'boolean',
-        'is_active' => 'boolean',
         'hourly_rate' => 'decimal:2',
     ];
 
@@ -62,14 +61,19 @@ class Lawyer extends Model
         return $this->hasMany(Experience::class);
     }
 
-    public function blogPosts()
+    public function portfolios()
     {
-        return $this->hasMany(BlogPost::class);
+        return $this->hasMany(Portfolio::class);
     }
 
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function blog_posts()
+    {
+        return $this->hasMany(BlogPost::class);
     }
 
     public function visitors()
@@ -103,10 +107,22 @@ class Lawyer extends Model
         return $this->reviews()->where('status', 'approved')->avg('rating') ?? 0;
     }
 
+    public function getTotalBlogPostsAttribute()
+    {
+        return $this->blog_posts()->count();
+    }
+
+    public function getPublishedPostsAttribute()
+    {
+        return $this->blog_posts()->where('status', 'published')->count();
+    }
+
     // Scopes
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->whereHas('user', function ($q) {
+            $q->where('is_active', true);
+        });
     }
 
     public function scopeVerified($query)
