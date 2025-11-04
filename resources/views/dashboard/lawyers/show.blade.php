@@ -11,13 +11,13 @@
             width: 150px;
             height: 150px;
             border: 5px solid white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         .stats-card {
             border: none;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
         
@@ -64,9 +64,17 @@
                     @endif
                 </div>
                 <div class="col-md-4 text-md-end">
-                    <a href="{{ route('lawyer.profile.edit') }}" class="btn btn-light btn-lg">
-                        <i class="fas fa-edit me-2"></i>Edit Profile
-                    </a>
+                    <div class="d-flex flex-column flex-md-row gap-2 justify-content-md-end">
+                        <a href="{{ route('educations.index') }}" class="btn btn-light btn-lg">
+                            <i class="fas fa-graduation-cap me-2"></i>Education
+                        </a>
+                        <a href="{{ route('experiences.index') }}" class="btn btn-light btn-lg">
+                            <i class="fas fa-briefcase me-2"></i>Experience
+                        </a>
+                        <a href="{{ route('lawyer.profile.edit') }}" class="btn btn-light btn-lg">
+                            <i class="fas fa-edit me-2"></i>Edit Profile
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

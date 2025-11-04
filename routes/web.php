@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ExperienceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,8 +51,13 @@ Route::middleware('auth')->group(function () {
 
     // Blog Posts Routes
     Route::resource('blog-posts', BlogPostController::class);
-});
 
-require __DIR__ . '/auth.php';
+
+    // Education Routes
+    Route::resource('educations', EducationController::class);
+
+    // Experience Routes
+    Route::resource('experiences', ExperienceController::class);
+});
 
 require __DIR__ . '/auth.php';
