@@ -1,7 +1,7 @@
 <x-app-layout>
     <style>
         .profile-header {
-            background: linear-gradient(135deg, #667eea 0%, #617bf0ff 0%);
+            background: linear-gradient(135deg, #000000 0%, #0b5ed7 100%);
             color: white;
             padding: 3rem 0;
             margin-bottom: 2rem;
@@ -15,6 +15,7 @@
         }
         
         .stats-card {
+            background: linear-gradient(135deg, #000000 0%, #0b5ed7 100%);
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -26,7 +27,7 @@
         }
         
         .badge-custom {
-            background: linear-gradient(135deg, #667eea 0%, #617bf0ff 0%);
+            background: linear-gradient(135deg, #0b5ed7 0%, #0b5ed7 100%);
             color: white;
             padding: 8px 15px;
             border-radius: 20px;
@@ -66,13 +67,13 @@
                 <div class="col-md-4 text-md-end">
                     <div class="d-flex flex-column flex-md-row gap-2 justify-content-md-end">
                         <a href="{{ route('educations.index') }}" class="btn btn-light btn-lg">
-                            <i class="fas fa-graduation-cap me-2"></i>Education
+                            <i class="fas fa-graduation-cap "></i>Education
                         </a>
                         <a href="{{ route('experiences.index') }}" class="btn btn-light btn-lg">
-                            <i class="fas fa-briefcase me-2"></i>Experience
+                            <i class="fas fa-briefcase "></i>Experience
                         </a>
                         <a href="{{ route('lawyer.profile.edit') }}" class="btn btn-light btn-lg">
-                            <i class="fas fa-edit me-2"></i>Edit Profile
+                            <i class="fas fa-edit "></i>Edit 
                         </a>
                     </div>
                 </div>
