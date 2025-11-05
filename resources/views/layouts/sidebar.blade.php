@@ -1,9 +1,12 @@
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header d-flex justify-content-between align-items-center">
-            <h4 class="text-white mb-0">
-                Consaltent Lawyers
-            </h4>
+            <a href="{{ route('home') }}">
+                 <h4 class="text-white mb-0">
+                    Consaltent Lawyers
+                </h4>
+            </a>
+           
             <button class="btn btn-link d-md-none p-0" onclick="closeSidebar()" style="color: white;">
                 <i class="fas fa-times"></i>
             </button>

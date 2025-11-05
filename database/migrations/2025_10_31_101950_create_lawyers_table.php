@@ -30,6 +30,7 @@ return new class extends Migration
             $table->text('services')->nullable();
             $table->text('awards')->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
             $table->integer('view_count')->default(0);
             $table->timestamps();
