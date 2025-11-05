@@ -1,7 +1,7 @@
 <x-app-layout>
     <style>
         .profile-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #617bf0ff 0%);
             color: white;
             padding: 3rem 0;
             margin-bottom: 2rem;
@@ -26,7 +26,7 @@
         }
         
         .badge-custom {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea 0%, #617bf0ff 0%);
             color: white;
             padding: 8px 15px;
             border-radius: 20px;
@@ -86,32 +86,32 @@
             <div class="col-md-3 mb-4">
                 <div class="card stats-card text-center">
                     <div class="card-body">
-                        <h3 class="text-primary">{{ $lawyer->years_of_experience }}+</h3>
-                        <p class="text-muted mb-0">Years Experience</p>
+                        <h3 class="text-white">{{ $lawyer->years_of_experience }}+</h3>
+                        <p class="text-white mb-0">Years Experience</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card stats-card text-center">
                     <div class="card-body">
-                        <h3 class="text-success">{{ $lawyer->reviews->count() }}</h3>
-                        <p class="text-muted mb-0">Total Reviews</p>
+                        <h3 class="text-white">{{ $lawyer->reviews->count() }}</h3>
+                        <p class="text-white mb-0">Total Reviews</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card stats-card text-center">
                     <div class="card-body">
-                        <h3 class="text-info">{{ $lawyer->average_rating }}/5</h3>
-                        <p class="text-muted mb-0">Average Rating</p>
+                        <h3 class="text-white">{{ $lawyer->average_rating }}/5</h3>
+                        <p class="text-white mb-0">Average Rating</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card stats-card text-center">
                     <div class="card-body">
-                        <h3 class="text-warning">{{ $lawyer->blog_posts_count ?? 0 }}</h3>
-                        <p class="text-muted mb-0">Blog Posts</p>
+                        <h3 class="text-white">{{ $lawyer->blog_posts()->count() ?? 0 }}</h3>
+                        <p class="text-white mb-0">Blog Posts</p>
                     </div>
                 </div>
             </div>
