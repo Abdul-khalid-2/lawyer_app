@@ -50,4 +50,21 @@ class Review extends Model
     {
         return $query->where('is_featured', true);
     }
+
+    public function scopeWithHighRating($query, $minRating = 4)
+    {
+        return $query->where('rating', '>=', $minRating);
+    }
+
+    // Accessors
+    public function getStatusBadgeAttribute()
+    {
+        $badges = [
+            'pending' => 'bg-warning',
+            'approved' => 'bg-success',
+            'rejected' => 'bg-danger'
+        ];
+
+        return '<span class="badge ' . ($badges[$this->status] ?? 'bg-secondary') . '">' . ucfirst($this->status) . '</span>';
+    }
 }

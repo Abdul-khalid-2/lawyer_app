@@ -130,18 +130,20 @@
                 return response.json();
             })
             .then(data => {
-                if (data.html) {
+                if (data.html && data.html.trim() !== '') {
                     document.getElementById('lawyersContainer').insertAdjacentHTML('beforeend', data.html);
                 }
                 hasMore = data.hasMore;
                 skip = data.nextSkip;
 
-                if (!hasMore && currentSkip === 0) {
-                    // No lawyers found on initial filter
+                // Show "no lawyers" message only on initial load with no results
+                if (currentSkip === 0 && document.getElementById('lawyersContainer').children.length === 0) {
                     document.getElementById('lawyersContainer').innerHTML = 
                         '<div class="col-12 text-center"><p class="text-muted">No lawyers found matching your criteria.</p></div>';
-                } else if (!hasMore && currentSkip > 0) {
-                    // No more lawyers to load
+                }
+                
+                // Show "no more" message when scrolling
+                if (!hasMore && currentSkip > 0) {
                     document.getElementById('noMoreMessage').classList.remove('d-none');
                 }
             })

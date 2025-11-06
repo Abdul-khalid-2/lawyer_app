@@ -14,13 +14,17 @@ use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\Website\WebsiteLawyersController;
+use App\Http\Controllers\Website\WebsiteReviewController;
+
 
 Route::get('/', [WebsiteHomeController::class, 'home'])->name('home');
 Route::get('find-lawyers', [WebsiteLawyersController::class, 'index'])->name('find-lawyeres');
 
 Route::get('/lawyers', [WebsiteLawyersController::class, 'index'])->name('website.lawyers');
 Route::post('/lawyers/load-more', [WebsiteLawyersController::class, 'loadMore'])->name('website.lawyers.load-more');
-Route::get('/lawyer/{uuid}', [WebsiteLawyersController::class, 'show'])->name('website.lawyer.profile');
+Route::get('/lawyer/{uuid}', [WebsiteLawyersController::class, 'show'])->name('website.lawyers.profile');
+
+Route::post('/lawyers/{uuid}/track-time', [WebsiteLawyersController::class, 'trackTime'])->name('website.track-time');
 
 // Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
 // Route::middleware(['auth', 'verified', 'role:super-admin|school-admin'])->group(function () {
@@ -63,6 +67,14 @@ Route::middleware('auth')->group(function () {
 
     // Experience Routes
     Route::resource('experiences', ExperienceController::class);
+
+    // Review routes
+    Route::middleware(['auth'])->group(function () {
+        Route::post('/lawyers/{lawyerUuid}/reviews', [WebsiteReviewController::class, 'store'])->name('website.reviews.store');
+        Route::patch('/reviews/{reviewUuid}/status', [WebsiteReviewController::class, 'updateStatus'])->name('website.reviews.update-status');
+        Route::patch('/reviews/{reviewUuid}/toggle-featured', [WebsiteReviewController::class, 'toggleFeatured'])->name('website.reviews.toggle-featured');
+        Route::delete('/reviews/{reviewUuid}', [WebsiteReviewController::class, 'destroy'])->name('website.reviews.destroy');
+    });
 });
 
 
