@@ -13,12 +13,17 @@ use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\Website\WebsiteLawyersController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
+Route::get('/', [WebsiteHomeController::class, 'home'])->name('home');
+Route::get('find-lawyers', [WebsiteLawyersController::class, 'index'])->name('find-lawyeres');
 
+Route::get('/lawyers', [WebsiteLawyersController::class, 'index'])->name('website.lawyers');
+Route::post('/lawyers/load-more', [WebsiteLawyersController::class, 'loadMore'])->name('website.lawyers.load-more');
+Route::get('/lawyer/{uuid}', [WebsiteLawyersController::class, 'show'])->name('website.lawyer.profile');
+
+// Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
+// Route::middleware(['auth', 'verified', 'role:super-admin|school-admin'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -59,5 +64,8 @@ Route::middleware('auth')->group(function () {
     // Experience Routes
     Route::resource('experiences', ExperienceController::class);
 });
+
+
+
 
 require __DIR__ . '/auth.php';
