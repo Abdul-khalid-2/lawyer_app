@@ -48,8 +48,8 @@
                             @endforeach
                         </div> -->
                         @php
-                        $averageRating = $lawyer->reviews->avg('rating');
-                        $reviewCount = $lawyer->reviews->count();
+                            $averageRating = $lawyer->reviews->avg('rating');
+                            $reviewCount = $lawyer->reviews->count();
                         @endphp
                         <!-- <div class="rating mb-2">
                             @for($i = 1; $i <= 5; $i++)
@@ -68,7 +68,7 @@
                             {{ $lawyer->city ? $lawyer->city . ', ' . $lawyer->state : 'Location not specified' }}
                         </p>
                         <div class="d-flex">
-                            <a href="#" class="btn btn-outline-primary me-2">View Profile</a>
+                            <a href="{{ route('website.lawyers.profile', $lawyer->uuid) }}" class="btn btn-outline-primary me-2">View Profile</a>
                             <a href="#contact" class="btn btn-primary">Contact</a>
                         </div>
                     </div>

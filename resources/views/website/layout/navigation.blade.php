@@ -30,7 +30,6 @@
                         <button class="btn btn-outline-danger">Logout</button>
                     </form>
                 @else
-                    <!-- <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a> -->
                     <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 @if (Route::has('register'))
                     <!-- <a href="{{ route('register') }}" class="btn btn-primary">Register</a> -->

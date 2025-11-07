@@ -22,12 +22,12 @@ Route::get('find-lawyers', [WebsiteLawyersController::class, 'index'])->name('fi
 
 Route::get('/lawyers', [WebsiteLawyersController::class, 'index'])->name('website.lawyers');
 Route::post('/lawyers/load-more', [WebsiteLawyersController::class, 'loadMore'])->name('website.lawyers.load-more');
-Route::get('/lawyer/{uuid}', [WebsiteLawyersController::class, 'show'])->name('website.lawyers.profile');
+Route::get('/lawyer/{uuid}/view', [WebsiteLawyersController::class, 'show'])->name('website.lawyers.profile');
 
 Route::post('/lawyers/{uuid}/track-time', [WebsiteLawyersController::class, 'trackTime'])->name('website.track-time');
 
 // Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
-// Route::middleware(['auth', 'verified', 'role:super-admin|school-admin'])->group(function () {
+// Route::middleware(['auth', 'verified', 'role:super-admin|school-admin'])->group(function () {});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

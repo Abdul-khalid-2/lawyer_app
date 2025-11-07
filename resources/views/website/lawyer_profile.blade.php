@@ -232,11 +232,11 @@
                             <button class="btn btn-outline-primary">
                                 <i class="fas fa-calendar me-1"></i> Schedule Consultation
                             </button>
-                            @if($lawyer->hourly_rate)
+                            <!-- @if($lawyer->hourly_rate)
                             <span class="btn btn-outline-success">
                                 <i class="fas fa-dollar-sign me-1"></i> ${{ number_format($lawyer->hourly_rate) }}/hr
                             </span>
-                            @endif
+                            @endif -->
                         </div>
                     </div>
                 </div>
@@ -500,7 +500,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
                             <i class="fas fa-exclamation-circle me-2"></i>
-                            <span>Please <a href="{{ route('login') }}" class="alert-link">login</a> to leave a review.</span>
+                            <span>Please <a  class="primary me-2" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a> to leave a review.</span>
                         </div>
                         <a href="{{ route('register') }}" class="btn btn-sm btn-outline-primary">Sign Up</a>
                     </div>
