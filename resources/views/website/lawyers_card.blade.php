@@ -70,12 +70,12 @@
                             @endfor
                         </div>
                         @if($reviewCount > 0)
-                            <span class="text-primary fw-semibold small ms-1">{{ number_format($averageRating, 1) }}</span>
+                            <span class="text-primary fw-semibold small ms-1">{{ number_format($averageRating, 1) }}/{{ $reviewCount }}</span>
                         @endif
                     </div>
                     
                     @if($reviewCount > 0)
-                        <small class="text-muted">({{ $reviewCount }})</small>
+                        {{-- <small class="text-muted">({{ $reviewCount }})</small> --}}
                     @endif
                 </div>
                 

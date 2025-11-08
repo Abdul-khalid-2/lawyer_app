@@ -89,57 +89,7 @@
     </div>
 </section>
 
-<!-- How It Works -->
-<section class="section-padding bg-light" id="how-it-works">
-    <div class="container">
-        <h2 class="section-title text-center">How It Works</h2>
-        <div class="row">
-            <div class="col-md-4 text-center mb-4">
-                <div class="mb-4">
-                    <i class="fas fa-search fa-3x text-secondary"></i>
-                </div>
-                <h4>1. Search Lawyers</h4>
-                <p>Browse through our verified lawyer profiles by specialization, location, or experience.</p>
-            </div>
-            <div class="col-md-4 text-center mb-4">
-                <div class="mb-4">
-                    <i class="fas fa-user-check fa-3x text-secondary"></i>
-                </div>
-                <h4>2. Connect</h4>
-                <p>Contact lawyers directly through our platform to discuss your legal needs.</p>
-            </div>
-            <div class="col-md-4 text-center mb-4">
-                <div class="mb-4">
-                    <i class="fas fa-handshake fa-3x text-secondary"></i>
-                </div>
-                <h4>3. Get Representation</h4>
-                <p>Hire the right lawyer and get the legal representation you deserve.</p>
-            </div>
-        </div>
 
-        <div class="row mt-5 pt-5">
-            <div class="col-lg-6">
-                <h3 class="mb-4">For Clients</h3>
-                <p>Find the perfect lawyer for your specific legal needs. Our platform makes it easy to compare profiles, read reviews, and connect with legal professionals.</p>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Browse lawyer profiles</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Read client reviews</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Schedule consultations</li>
-                </ul>
-            </div>
-            <div class="col-lg-6">
-                <h3 class="mb-4">For Lawyers</h3>
-                <p>Join our platform to showcase your expertise, connect with clients, and grow your legal practice. We provide the tools you need to succeed.</p>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Create your profile</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Showcase your experience</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Connect with clients</li>
-                </ul>
-                <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#registerModal">Join as a Lawyer</button>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Stats Section -->
 <section class="section-padding">

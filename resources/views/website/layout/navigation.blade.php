@@ -13,10 +13,13 @@
                     <a class="nav-link" href="{{ route('find-lawyeres') }}">Find Lawyers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#how-it-works">How It Works</a>
+                    <a class="nav-link" href="{{ route('website.howItWork') }}">How It Works</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('website.blog.index') }}">Blogs</a>
                 </li>
             </ul>
 

@@ -46,6 +46,17 @@ class BlogPost extends Model
         'canvas_elements' => 'array'
     ];
 
+    // Add this accessor to safely handle tags
+    public function getTagsAttribute($value)
+    {
+        if (is_string($value)) {
+            return json_decode($value, true) ?? [];
+        }
+
+        return $value ?? [];
+    }
+
+    // Relationships
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class);
@@ -59,7 +70,14 @@ class BlogPost extends Model
     // Scopes
     public function scopePublished($query)
     {
-        return $query->where('status', 'published');
+        return $query->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
+    }
+
+    public function scopeWithTag($query, $tag)
+    {
+        return $query->where('tags', 'like', '%"' . $tag . '"%');
     }
 
     public function scopeDraft($query)

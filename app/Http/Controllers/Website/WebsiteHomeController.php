@@ -73,4 +73,18 @@ class WebsiteHomeController extends Controller
         // return JSON response
         return response()->json(Specialization::select('id', 'name')->get());
     }
+
+
+
+    public function howItWork()
+    {
+        $stats = [
+            'lawyersCount' => Lawyer::where('is_verified', true)->where('is_featured', true)->count(),
+            'clientsCount' => \App\Models\User::count(), // Assuming you have a User model for clients
+            'casesCount' => \App\Models\Portfolio::count(),
+            'citiesCount' => Lawyer::where('is_verified', true)->distinct('city')->count('city'),
+            'specializationsCount' => Specialization::count(),
+        ];
+        return view('website.how_it_works', compact('stats'));
+    }
 }
