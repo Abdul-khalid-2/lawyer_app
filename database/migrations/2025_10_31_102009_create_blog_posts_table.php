@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
+            $table->json('heading')->nullable();
             $table->foreignId('lawyer_id')->constrained()->onDelete('cascade');
             $table->foreignId('blog_category_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title');
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->integer('view_count')->default(0);
             $table->integer('read_time')->default(5);
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
+            $table->enum('is_featured', ['1', '0'])->default('0');
             $table->timestamp('published_at')->nullable();
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();

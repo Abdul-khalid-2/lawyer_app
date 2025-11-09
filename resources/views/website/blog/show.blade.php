@@ -16,12 +16,12 @@
                     </ol>
                 </nav>
 
-                @if($post->category)
+                {{-- @if($post->category)
                 <a href="{{ route('website.blog.category', $post->category->slug) }}"
                     class="badge bg-primary text-decoration-none mb-3">
                     {{ $post->category->name }}
                 </a>
-                @endif
+                @endif --}}
 
                 <h1 class="display-5 fw-bold mb-3">{{ $post->title }}</h1>
 
@@ -34,7 +34,7 @@
                         <h6 class="mb-0">{{ $post->lawyer->user->name }}</h6>
                         <small class="text-muted">
                             {{ $post->published_at->format('F j, Y') }} ·
-                            {{ $post->read_time }} min read ·
+                            {{-- {{ $post->read_time }} min read · --}}
                             {{ $post->view_count }} views
                         </small>
                     </div>

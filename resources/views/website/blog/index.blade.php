@@ -125,9 +125,9 @@
 
                 <!-- Pagination -->
                 @if($posts->hasPages())
-                <div class="d-flex justify-content-center mt-5">
+                <div class="card-footer">
                     <nav>
-                        {{ $posts->links() }}
+                        {{ $posts->links('pagination::bootstrap-5') }}
                     </nav>
                 </div>
                 @endif

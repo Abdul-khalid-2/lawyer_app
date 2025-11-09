@@ -229,6 +229,7 @@ class BlogPostController extends Controller
     private function extractElementData($formData)
     {
         $elementData = [
+            'heading' => [],
             'banner' => [],
             'image' => [],
             'rich_text' => [],
@@ -252,6 +253,9 @@ class BlogPostController extends Controller
 
                 // Map element types to database columns
                 switch ($type) {
+                    case 'heading':
+                        $elementData['heading'][] = $elementInfo;
+                        break;
                     case 'banner':
                         $elementData['banner'][] = $elementInfo;
                         break;
@@ -300,10 +304,10 @@ class BlogPostController extends Controller
             'heading' => fn($el) => "<{$el['content']['level']}>{$el['content']['text']}</{$el['content']['level']}>",
             'text' => fn($el) => $el['content']['content'],
             'image' => fn($el) => $el['content']['src'] ?
-                "<figure><img src=\"" . Storage::disk('public')->url($el['content']['src']) . "\" alt=\"{$el['content']['alt']}\">" .
+                "<figure><img src=\"" . asset('website/' . $el['content']['src']) . "\" alt=\"{$el['content']['alt']}\">" .
                 ($el['content']['caption'] ? "<figcaption>{$el['content']['caption']}</figcaption>" : "") . "</figure>" : '',
             'banner' => fn($el) => $el['content']['src'] ?
-                "<div class=\"banner\"><img src=\"" . Storage::disk('public')->url($el['content']['src']) . "\" alt=\"Banner\">" .
+                "<div class=\"banner\"><img src=\"" . asset('website/' . $el['content']['src'])  . "\" alt=\"Banner\">" .
                 "<div class=\"banner-content\"><h2>{$el['content']['title']}</h2><p>{$el['content']['subtitle']}</p></div></div>" : '',
             'columns' => fn($el) => "<div class=\"row\"><div class=\"col-md-6\">{$el['content']['left']}</div><div class=\"col-md-6\">{$el['content']['right']}</div></div>"
         ];
@@ -519,13 +523,20 @@ class BlogPostController extends Controller
 
         // If it's a storage path from website disk, generate proper URL
         if (strpos($path, 'lawyers/') === 0 || strpos($path, 'blog-images/') === 0) {
-            // Force URL generation with current request's scheme and host
+            // Check if the path already contains the base URL to avoid duplication
             $baseUrl = request()->getSchemeAndHttpHost();
-            return $baseUrl . '/website/' . $path;
+            if (strpos($path, $baseUrl) === false) {
+                return $baseUrl . '/website/' . $path;
+            }
+            return $path;
         }
 
-        // For any other case
-        return asset('storage/' . $path);
+        // For any other case, only add if not already a full URL
+        if (!filter_var($path, FILTER_VALIDATE_URL)) {
+            return asset('website/' . $path);
+        }
+
+        return $path;
     }
 
     /**
@@ -558,7 +569,7 @@ class BlogPostController extends Controller
 
         // Delete featured image if exists
         if ($blogPost->featured_image) {
-            Storage::disk('public')->delete($blogPost->featured_image);
+            Storage::disk('website')->delete($blogPost->featured_image);
         }
 
         $blogPost->delete();

@@ -8,6 +8,7 @@ use App\Models\BlogCategory;
 use App\Models\Lawyer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class WebsiteBlogController extends Controller
 {
@@ -60,6 +61,14 @@ class WebsiteBlogController extends Controller
         }
 
         $posts = $query->paginate(9);
+
+        // Prepare structure for display
+        foreach ($posts as $post) {
+            if ($post->structure) {
+                $post->structure = $this->prepareForDisplay($post->structure);
+            }
+        }
+
         $categories = BlogCategory::where('is_active', true)->get();
         $popularPosts = $this->getPopularPosts();
         $recentPosts = $this->getRecentPosts();
@@ -87,6 +96,11 @@ class WebsiteBlogController extends Controller
         // Increment view count
         $post->increment('view_count');
 
+        // Prepare structure for display
+        if ($post->structure) {
+            $post->structure = $this->prepareForDisplay($post->structure);
+        }
+
         // Related posts
         $relatedPosts = $this->getRelatedPosts($post);
         $popularPosts = $this->getPopularPosts();
@@ -101,7 +115,92 @@ class WebsiteBlogController extends Controller
             'tags'
         ));
     }
+    // ---------------------------------------------
+    /**
+     * Prepare data for display by converting image paths to URLs
+     */
+    private function prepareForDisplay($structure)
+    {
+        if (!isset($structure['elements']) || !is_array($structure['elements'])) {
+            return $structure;
+        }
 
+        foreach ($structure['elements'] as &$element) {
+            if (isset($element['content'])) {
+                // Convert image paths to URLs
+                if (isset($element['content']['src']) && is_string($element['content']['src'])) {
+                    $element['content']['src'] = $this->getCorrectImageUrl($element['content']['src']);
+                }
+
+                // Process HTML content for image paths
+                foreach ($element['content'] as $key => &$value) {
+                    if (is_string($value)) {
+                        $value = $this->convertImagePathsToUrls($value);
+                    }
+                }
+            }
+        }
+
+        return $structure;
+    }
+
+    /**
+     * Get correct image URL with proper domain and path
+     */
+    private function getCorrectImageUrl($path)
+    {
+        // If it's already a full URL, return as is
+        if (filter_var($path, FILTER_VALIDATE_URL)) {
+            return $path;
+        }
+
+        // If it's a storage path from website disk, generate proper URL
+        if (strpos($path, 'lawyers/') === 0 || strpos($path, 'blog-images/') === 0) {
+            // Check if file exists in storage
+            if (Storage::disk('website')->exists($path)) {
+                return Storage::disk('website')->url($path);
+            }
+        }
+
+        // For featured images and other paths
+        if (strpos($path, '/') !== false) {
+            return asset('website/' . $path);
+        }
+
+        // Default fallback
+        return asset('website/' . $path);
+    }
+
+    /**
+     * Convert storage paths to URLs in HTML content
+     */
+    private function convertImagePathsToUrls($content)
+    {
+        if (empty($content) || !is_string($content)) {
+            return $content;
+        }
+
+        // Replace image paths in src attributes for website disk
+        $content = preg_replace_callback(
+            '/src=(["\'])(lawyers\/[^\1]+?\.(jpg|jpeg|png|gif|webp))\1/i',
+            function ($matches) {
+                return 'src=' . $matches[1] . $this->getCorrectImageUrl($matches[2]) . $matches[1];
+            },
+            $content
+        );
+
+        // Replace other image paths
+        $content = preg_replace_callback(
+            '/src=(["\'])(blog-images\/[^\1]+?\.(jpg|jpeg|png|gif|webp))\1/i',
+            function ($matches) {
+                return 'src=' . $matches[1] . $this->getCorrectImageUrl($matches[2]) . $matches[1];
+            },
+            $content
+        );
+
+        return $content;
+    }
+    // ---------------------------------------------
     public function category($slug)
     {
         $category = BlogCategory::where('slug', $slug)
@@ -116,10 +215,19 @@ class WebsiteBlogController extends Controller
             ->orderBy('published_at', 'desc')
             ->paginate(9);
 
+        // Prepare structure for display
+        foreach ($posts as $post) {
+            if ($post->structure) {
+                $post->structure = $this->prepareForDisplay($post->structure);
+            }
+        }
+
         $popularPosts = $this->getPopularPosts();
-        $categories = BlogCategory::where('is_active', true)->get();
+        $categoriesCount = BlogCategory::where('is_active', true)->get();
+        $categories = BlogCategory::get();
         $tags = $this->getAllTags();
 
+        abort(404);
         return view('website.blog.category', compact(
             'category',
             'posts',
@@ -138,6 +246,13 @@ class WebsiteBlogController extends Controller
             ->where('published_at', '<=', now())
             ->orderBy('published_at', 'desc')
             ->paginate(9);
+
+        // Prepare structure for display
+        foreach ($posts as $post) {
+            if ($post->structure) {
+                $post->structure = $this->prepareForDisplay($post->structure);
+            }
+        }
 
         $popularPosts = $this->getPopularPosts();
         $categories = BlogCategory::where('is_active', true)->get();
@@ -166,6 +281,13 @@ class WebsiteBlogController extends Controller
             ->orderBy('published_at', 'desc')
             ->paginate(9);
 
+        // Prepare structure for display
+        foreach ($posts as $post) {
+            if ($post->structure) {
+                $post->structure = $this->prepareForDisplay($post->structure);
+            }
+        }
+
         $popularPosts = $this->getPopularPosts();
         $categories = BlogCategory::where('is_active', true)->get();
         $tags = $this->getAllTags();
@@ -179,31 +301,54 @@ class WebsiteBlogController extends Controller
         ));
     }
 
+    /**
+     * Prepare data for display by converting image paths to URLs
+     */
+
+
     private function getPopularPosts($limit = 5)
     {
-        return BlogPost::with(['lawyer.user', 'category'])
+        $posts = BlogPost::with(['lawyer.user', 'category'])
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->orderBy('view_count', 'desc')
             ->limit($limit)
             ->get();
+
+        // Prepare structure for display
+        foreach ($posts as $post) {
+            if ($post->structure) {
+                $post->structure = $this->prepareForDisplay($post->structure);
+            }
+        }
+
+        return $posts;
     }
 
     private function getRecentPosts($limit = 5)
     {
-        return BlogPost::with(['lawyer.user', 'category'])
+        $posts = BlogPost::with(['lawyer.user', 'category'])
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->orderBy('published_at', 'desc')
             ->limit($limit)
             ->get();
+
+        // Prepare structure for display
+        foreach ($posts as $post) {
+            if ($post->structure) {
+                $post->structure = $this->prepareForDisplay($post->structure);
+            }
+        }
+
+        return $posts;
     }
 
     private function getRelatedPosts($post, $limit = 3)
     {
-        return BlogPost::with(['lawyer.user', 'category'])
+        $posts = BlogPost::with(['lawyer.user', 'category'])
             ->where('id', '!=', $post->id)
             ->where('status', 'published')
             ->whereNotNull('published_at')
@@ -215,6 +360,15 @@ class WebsiteBlogController extends Controller
             ->orderBy('published_at', 'desc')
             ->limit($limit)
             ->get();
+
+        // Prepare structure for display
+        foreach ($posts as $blogPost) {
+            if ($blogPost->structure) {
+                $blogPost->structure = $this->prepareForDisplay($blogPost->structure);
+            }
+        }
+
+        return $posts;
     }
 
     private function getAllTags()
