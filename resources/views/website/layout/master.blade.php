@@ -81,43 +81,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Session Status -->
-                    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                    <div class="tab-content" id="loginTabsContent">
-                        <!-- Client Login Form -->
-                        <div class="tab-pane fade show active" id="client-login" role="tabpanel">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
-                                <input type="hidden" name="user_type" value="client">
 
                                 <div class="mb-3">
-                                    <label for="clientEmail" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="clientEmail" name="email" value="{{ old('email') }}" required autofocus>
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                    <label for="email" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="email" name="email" required autofocus>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="clientPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="clientPassword" name="password" required>
-                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
 
                                 <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
-                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Remember me</label>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100">Login as Client</button>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
                             </form>
 
                             <div class="text-center mt-3">
                                 @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}">Forgot your password?</a>
                                 @endif
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -152,6 +140,71 @@
                     confirmButtonText: 'OK'
                 });
             @endif
+        });
+    </script>
+
+    <script>
+        // public/js/auth.js
+        class AuthManager {
+            init() {
+                this.setupLoginForms();
+            }
+
+            setupLoginForms() {
+                // Setup all login forms on the page
+                document.querySelectorAll('form[action*="login"]').forEach(form => {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.handleLogin(form);
+                    });
+                });
+            }
+
+            async handleLogin(form) {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+
+                // Show loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Logging in...';
+
+                try {
+                    const formData = new FormData(form);
+
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        this.showError(data.message || 'Login failed');
+                    }
+
+                } catch (error) {
+                    this.showError('Network error. Please try again.');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+
+            showError(message) {
+                // Simple error display - you can customize this
+                alert(message); // Or use your preferred notification system
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new AuthManager().init();
         });
     </script>
 

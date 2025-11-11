@@ -75,7 +75,7 @@ class DashboardController extends Controller
             ->orderBy('date')
             ->get();
 
-        return view('dashboard.super-admin', compact(
+        return view('dashboard.super_admin', compact(
             'stats',
             'recentActivities',
             'popularLawyers',
