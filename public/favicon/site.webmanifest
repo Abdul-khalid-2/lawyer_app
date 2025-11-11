@@ -1,0 +1,23 @@
+{
+    "name": "Law-Skoolyst - Legal Services Platform",
+    "short_name": "Law-Skoolyst",
+    "description": "Find the right lawyer for your legal needs",
+    "theme_color": "#2c3e50",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

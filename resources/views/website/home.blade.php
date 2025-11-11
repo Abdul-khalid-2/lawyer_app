@@ -207,10 +207,29 @@
             <div class="col-lg-4 mb-4">
                 <div class="testimonial-card">
                     <div class="d-flex align-items-center mb-3">
-                        <img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Client" class="testimonial-img">
+                        <img src="{{ asset('website/images/male_advocate_avatar.jpg') }}" alt="Advocate Kaleem" class="testimonial-img">
                         <div>
-                            <h5 class="mb-0">Sarah Williams</h5>
-                            <small class="text-muted">Real Estate Client</small>
+                            <h5 class="mb-0">Advocate Kaleem</h5>
+                            <small class="text-muted">Corporate Law Specialist</small>
+                        </div>
+                    </div>
+                    <div class="rating mb-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="mb-0">"Law-Skoolyst has been instrumental in expanding my client base. The platform efficiently connects me with clients who need expert corporate legal advice and services."</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ asset('website/images/female_advocate_avatar.jpg') }}" alt="Advocate Mis Samreen" class="testimonial-img">
+                        <div>
+                            <h5 class="mb-0">Advocate Mis Samreen</h5>
+                            <small class="text-muted">Family Law Expert</small>
                         </div>
                     </div>
                     <div class="rating mb-2">
@@ -220,26 +239,7 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <p class="mb-0">"I was struggling with a property dispute. LegalConnect connected me with an expert real estate lawyer who resolved my case efficiently."</p>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="testimonial-card">
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Client" class="testimonial-img">
-                        <div>
-                            <h5 class="mb-0">Robert Chen</h5>
-                            <small class="text-muted">Family Law Client</small>
-                        </div>
-                    </div>
-                    <div class="rating mb-2">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="mb-0">"The family lawyer I found here was compassionate and knowledgeable. She helped me through a difficult custody case with great expertise."</p>
+                    <p class="mb-0">"As a family law practitioner, Law-Skoolyst has helped me reach clients who genuinely need my expertise. The platform's matching system ensures I work with cases that align with my specialization."</p>
                 </div>
             </div>
             @endforelse

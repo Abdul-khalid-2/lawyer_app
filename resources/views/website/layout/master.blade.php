@@ -4,11 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LegalConnect - Find the Right Lawyer for Your Needs</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Law-Skoolyst - Find the Right Lawyer & Legal Expert for Your Case</title>
+    <meta name="description" content="Connect with verified lawyers, legal experts, and attorneys. Get professional legal advice, case consultation, and find the perfect lawyer for your specific needs.">
+    <meta name="keywords" content="lawyer, legal advice, attorney, law firm, legal consultation, find lawyer, legal expert, case lawyer, legal services, law consultation, legal help, lawyer directory, legal professionals">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="Law-Skoolyst - Find the Right Lawyer & Legal Expert">
+    <meta property="og:description" content="Connect with verified lawyers and legal experts. Get professional legal advice and find the perfect lawyer for your case.">
+    <meta property="og:image" content="{{ asset('website/images/og-image.jpg') }}">
+    <meta property="og:site_name" content="Law-Skoolyst">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url('/') }}">
+    <meta property="twitter:title" content="Law-Skoolyst - Find the Right Lawyer & Legal Expert">
+    <meta property="twitter:description" content="Connect with verified lawyers and legal experts. Get professional legal advice for your legal needs.">
+    <meta property="twitter:image" content="{{ asset('website/images/twitter-image.jpg') }}">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="author" content="Law-Skoolyst">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="msapplication-TileColor" content="#2c3e50">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+        @php
+        $structuredData = [
+            '@context' => 'https://schema.org',
+            '@type' => 'LegalService',
+            'name' => 'Law-Skoolyst',
+            'description' => 'Professional legal services and lawyer directory platform',
+            'url' => url('/'),
+            'logo' => asset('website/images/logo.png'),
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressCountry' => 'US'
+            ],
+            'contactPoint' => [
+                '@type' => 'ContactPoint',
+                'contactType' => 'customer service',
+                'availableLanguage' => 'English'
+            ],
+            'sameAs' => [
+                'https://www.facebook.com/lawskoolyst',
+                'https://www.twitter.com/lawskoolyst',
+                'https://www.linkedin.com/company/lawskoolyst'
+            ]
+        ];
+        @endphp
+        @json($structuredData)
+    </script>
+
+    <!-- Favicon Configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}" color="#2c3e50">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <meta name="msapplication-TileColor" content="#2c3e50">
+    <meta name="msapplication-config" content="{{ asset('favicon/browserconfig.xml') }}">
+    <meta name="theme-color" content="#2c3e50">
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+    <!-- CSS Files -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('website/css/global.css') }}">
 
     @stack('css')
@@ -21,101 +100,10 @@
     @include('website.layout.navigation')
 
     @yield('content')
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h4 class="mb-4">LegalConnect</h4>
-                    <p>Connecting clients with the right legal professionals since 2023. Our mission is to make legal representation accessible to everyone.</p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="mb-4">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#home">Home</a></li>
-                        <li class="mb-2"><a href="#lawyers">Find Lawyers</a></li>
-                        <li class="mb-2"><a href="#how-it-works">How It Works</a></li>
-                        <li class="mb-2"><a href="#about">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h5 class="mb-4">For Lawyers</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#">Join as Lawyer</a></li>
-                        <li class="mb-2"><a href="#">Lawyer Login</a></li>
-                        <li class="mb-2"><a href="#">Resources</a></li>
-                        <li class="mb-2"><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h5 class="mb-4">Contact Us</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Legal Street, Law City</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> (555) 123-4567</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@legalconnect.com</li>
-                    </ul>
-                    <div class="d-flex mt-3">
-                        <a href="#" class="me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
-                        <a href="#" class="me-3"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" class="me-3"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
-                    </div>
-                </div>
-            </div>
-            <hr class="mt-4 mb-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 LegalConnect. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
-
-
-
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Login to Your Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email" required autofocus>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                </div>
-
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label" for="remember">Remember me</label>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100">Login</button>
-                            </form>
-
-                            <div class="text-center mt-3">
-                                @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}">Forgot your password?</a>
-                                @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-
+    @include('website.layout.footer')
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -197,12 +185,15 @@
             }
 
             showError(message) {
-                // Simple error display - you can customize this
-                alert(message); // Or use your preferred notification system
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: message,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                });
             }
         }
-
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             new AuthManager().init();
         });

@@ -235,7 +235,7 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <p class="mb-0">"I was struggling with a property dispute. LegalConnect connected me with an expert real estate lawyer who resolved my case efficiently."</p>
+                    <p class="mb-0">"I was struggling with a property dispute. Law-Skoolyst connected me with an expert real estate lawyer who resolved my case efficiently."</p>
                 </div>
             </div>
             <div class="col-lg-4 mb-4">

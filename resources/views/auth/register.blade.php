@@ -454,7 +454,7 @@
                 <div class="auth-card">
                     <div class="auth-header">
                         <h1>Create Your Account</h1>
-                        <p>Join LegalConnect as a Client or Lawyer</p>
+                        <p>Join Law-Skoolyst as a Client or Lawyer</p>
                     </div>
                     
                     <ul class="nav nav-tabs auth-tabs" id="registerTabs" role="tablist">
