@@ -115,6 +115,11 @@ class SpecializationSeeder extends Seeder
                 'description' => 'Legal practice dealing with media, entertainment, and arts',
                 'icon' => 'fa-film'
             ],
+            [
+                'name' => 'Other',
+                'description' => 'You Can Create Your Own Specialization Post If Not Listed Here',
+                'icon' => 'fa-asterisk'
+            ],
         ];
 
         $data = [];
