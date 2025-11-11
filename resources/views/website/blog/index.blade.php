@@ -20,9 +20,9 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-4 text-lg-end">
+            <!-- <div class="col-lg-4 text-lg-end">
                 <img src="{{ asset('website/images/blog-hero.svg') }}" alt="Legal Blog" class="img-fluid" style="max-height: 200px;">
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
