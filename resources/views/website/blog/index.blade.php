@@ -114,7 +114,7 @@
                 @if($posts->count() > 0)
                 <div class="row">
                     @foreach($posts as $post)
-                    <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="col-md-6 col-lg-6 mb-4">
                         <article class="blog-card card h-100 border-0 shadow-sm">
                             @if($post->featured_image)
                             <img src="{{ asset('website/' . $post->featured_image) }}"
