@@ -1,5 +1,5 @@
 @forelse($lawyers as $lawyer)
-<div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+<div class="col-md-6 col-lg-6 col-xl-4 mb-4">
     <div class="card lawyer-card h-100 shadow-sm border-0">
         <div class="card-body d-flex flex-column">
             <!-- Lawyer Header with Image and Basic Info -->
