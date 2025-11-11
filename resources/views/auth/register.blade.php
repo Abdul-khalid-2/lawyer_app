@@ -5,11 +5,11 @@
     .auth-section {
         min-height: 100vh;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 80px 0 60px;
+        padding: 60px 0 40px;
     }
     .auth-card {
         border-radius: 16px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         border: none;
         overflow: hidden;
         background: white;
@@ -19,36 +19,42 @@
     .auth-header {
         background: linear-gradient(135deg, #2980b9, #4a6583);
         color: white;
-        padding: 2.5rem 2rem;
+        padding: 2rem 1.5rem;
         text-align: center;
     }
     .auth-header h1 {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         margin-bottom: 0.5rem;
-        font-size: 2.2rem;
+        font-size: clamp(1.8rem, 4vw, 2.2rem);
     }
     .auth-header p {
         opacity: 0.9;
         margin-bottom: 0;
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 2.5vw, 1.1rem);
     }
     .auth-tabs {
         border-bottom: 1px solid #e9ecef;
-        padding: 0 2rem;
+        padding: 0;
         margin-bottom: 0;
         background: #f8f9fa;
+        display: flex;
+    }
+
+    .auth-tabs .nav-item {
+        flex: 1;
     }
     .auth-tabs .nav-link {
-        padding: 1.25rem 2rem;
+        padding: 1rem 0.5rem;
         font-weight: 600;
         color: #6c757d;
         border: none;
         border-bottom: 3px solid transparent;
         transition: all 0.3s ease;
-        font-size: 1rem;
+        font-size: clamp(0.85rem, 2vw, 1rem);
         width: 100%;
         text-align: center;
+        white-space: nowrap;
     }
     .auth-tabs .nav-link.active {
         color: #2c3e50;
@@ -60,20 +66,21 @@
         border-bottom: 3px solid rgba(52, 152, 219, 0.5);
     }
     .auth-body {
-        padding: 2.5rem 2rem;
+        padding: 2rem 1.5rem;
     }
     .form-label {
         font-weight: 600;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
         color: #2c3e50;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
     .form-control {
-        padding: 0.875rem 1.25rem;
-        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
         border: 1px solid #dee2e6;
         transition: all 0.3s ease;
         font-size: 1rem;
+        width: 100%;
     }
     .form-control:focus {
         border-color: #3498db;
@@ -81,15 +88,18 @@
     }
     .password-toggle {
         position: relative;
+        width: 100%;
     }
     .password-toggle-icon {
         position: absolute;
-        right: 15px;
+        right: 12px;
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
         color: #6c757d;
         transition: color 0.2s;
+        padding: 8px;
+        z-index: 2;
     }
     .password-toggle-icon:hover {
         color: #3498db;
@@ -101,9 +111,10 @@
         font-weight: 600;
         border-radius: 10px;
         transition: all 0.3s ease;
-        font-size: 1.05rem;
+        font-size: 1rem;
         letter-spacing: 0.5px;
         width: 100%;
+        margin-top: 0.5rem;
     }
     .btn-primary:hover {
         transform: translateY(-2px);
@@ -113,6 +124,12 @@
         background-color: #3498db;
         border-color: #3498db;
     }
+
+    .form-check-label {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+
     .form-check-label a {
         color: #3498db;
         text-decoration: none;
@@ -125,7 +142,7 @@
         text-align: center;
         padding-top: 1.5rem;
         border-top: 1px solid #e9ecef;
-        margin-top: 2rem;
+        margin-top: 1.5rem;
     }
     .auth-footer a {
         color: #3498db;
@@ -136,10 +153,11 @@
         text-decoration: underline;
     }
     .password-strength {
-        height: 5px;
+        height: 4px;
         margin-top: 0.5rem;
-        border-radius: 3px;
+        border-radius: 2px;
         transition: all 0.3s;
+        width: 100%;
     }
     .strength-weak {
         background-color: #e74c3c;
@@ -158,18 +176,281 @@
         width: 100%;
     }
     .form-note {
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         color: #6c757d;
         margin-top: 0.5rem;
+        line-height: 1.4;
+    }
+
+    /* Mobile-first responsive adjustments */
+    @media (max-width: 768px) {
+        .auth-section {
+            padding: 40px 15px 30px;
+        }
+
+        .auth-header {
+            padding: 1.5rem 1rem;
+        }
+
+        .auth-body {
+            padding: 1.5rem 1rem;
+        }
+
+        .auth-tabs .nav-link {
+            padding: 0.875rem 0.25rem;
+            font-size: 0.85rem;
+        }
+
+        .auth-tabs .nav-link i {
+            margin-right: 0.25rem !important;
+        }
+
+        .form-control {
+            padding: 0.675rem 0.875rem;
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .row {
+            margin-left: -8px;
+            margin-right: -8px;
+        }
+
+        .row > [class*="col-"] {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .auth-section {
+            padding: 30px 10px 20px;
+        }
+
+        .auth-header {
+            padding: 1.25rem 0.75rem;
+        }
+
+        .auth-body {
+            padding: 1.25rem 0.75rem;
+        }
+
+        .auth-tabs .nav-link {
+            padding: 0.75rem 0.125rem;
+            font-size: 0.8rem;
+        }
+
+        .auth-tabs .nav-link i {
+            display: block;
+            margin: 0 auto 0.25rem !important;
+            font-size: 1rem;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+        }
+
+        .form-control {
+            padding: 0.625rem 0.75rem;
+        }
+
+        .password-toggle-icon {
+            right: 8px;
+            padding: 6px;
+        }
+
+        .btn-primary {
+            padding: 0.675rem 1.25rem;
+        }
+
+        .auth-footer {
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .auth-footer p {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .auth-tabs .nav-link {
+            font-size: 0.75rem;
+            padding: 0.625rem 0.125rem;
+        }
+
+        .auth-tabs .nav-link i {
+            font-size: 0.9rem;
+            margin-bottom: 0.125rem !important;
+        }
+
+        .auth-header h1 {
+            font-size: 1.6rem;
+        }
+
+        .auth-header p {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 360px) {
+        .auth-section {
+            padding: 20px 8px 15px;
+        }
+
+        .auth-header {
+            padding: 1rem 0.5rem;
+        }
+
+        .auth-body {
+            padding: 1rem 0.5rem;
+        }
+
+        .auth-tabs .nav-link {
+            font-size: 0.7rem;
+            padding: 0.5rem 0.125rem;
+        }
+
+        .form-control {
+            padding: 0.5rem 0.625rem;
+        }
+    }
+
+    /* Large screens */
+    @media (min-width: 1200px) {
+        .auth-card {
+            max-width: 650px;
+        }
+
+        .auth-body {
+            padding: 2.5rem 2rem;
+        }
+    }
+
+    /* Fix for very tall screens */
+    @media (min-height: 1000px) {
+        .auth-section {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+        }
+    }
+
+    /* Improved form spacing */
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Better select styling */
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+    }
+
+    /* Error message styling */
+    .mt-2 {
+        margin-top: 0.5rem !important;
+    }
+
+    .text-danger {
+        font-size: 0.8rem;
+    }
+
+    /* Ensure proper touch targets */
+    @media (pointer: coarse) {
+        .password-toggle-icon {
+            padding: 12px;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .btn-primary {
+            min-height: 44px;
+        }
+
+        .form-check-input {
+            transform: scale(1.2);
+            margin-right: 8px;
+        }
+    }
+
+    .dropdown-search-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .dropdown-search-input {
+        position: relative;
+    }
+
+    .dropdown-search-input i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+    }
+
+    .dropdown-search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #dee2e6;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-option {
+        padding: 10px 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #f8f9fa;
+        transition: background-color 0.2s;
+    }
+
+    .dropdown-option:hover {
+        background-color: #f8f9fa;
+    }
+
+    .dropdown-option:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-search-results.show {
+        display: block;
+    }
+
+    /* Selected option display */
+    .selected-specialization {
+        padding: 10px 15px;
+        background: #e9ecef;
+        border-radius: 6px;
+        margin-top: 5px;
+        display: none;
     }
 </style>
 @endpush
 
 @section('content')
 <section class="auth-section">
-    <div class="container">
+    <div class="container-fluid px-3 px-sm-4">
         <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-10">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                 <div class="auth-card">
                     <div class="auth-header">
                         <h1>Create Your Account</h1>
@@ -179,12 +460,14 @@
                     <ul class="nav nav-tabs auth-tabs" id="registerTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="register-client-tab" data-bs-toggle="tab" data-bs-target="#register-client" type="button" role="tab">
-                                <i class="fas fa-user me-2"></i> Register as Client
+                                <i class="fas fa-user me-1 me-sm-2"></i>
+                                <span class="d-none d-sm-inline">Register as</span> Client
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="register-lawyer-tab" data-bs-toggle="tab" data-bs-target="#register-lawyer" type="button" role="tab">
-                                <i class="fas fa-gavel me-2"></i>Lawyer Registration
+                                <i class="fas fa-gavel me-1 me-sm-2"></i>
+                                <span class="d-none d-sm-inline">Lawyer</span> Registration
                             </button>
                         </li>
                     </ul>
@@ -197,56 +480,54 @@
                                     @csrf
                                     <input type="hidden" name="user_type" value="client">
 
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
+                                    <div class="row g-2 g-sm-3">
+                                        <div class="col-12 col-sm-6">
                                             <label for="clientFirstName" class="form-label">First Name</label>
                                             <input type="text" class="form-control" id="clientFirstName" name="first_name" value="{{ old('first_name') }}" required autofocus>
                                             <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-12 col-sm-6">
                                             <label for="clientLastName" class="form-label">Last Name</label>
                                             <input type="text" class="form-control" id="clientLastName" name="last_name" value="{{ old('last_name') }}" required>
                                             <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                                         </div>
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="clientRegEmail" class="form-label">Email address</label>
                                         <input type="email" class="form-control" id="clientRegEmail" name="email" value="{{ old('email') }}" required>
                                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="clientRegPassword" class="form-label">Password</label>
                                         <div class="password-toggle">
                                             <input type="password" class="form-control" id="clientRegPassword" name="password" required autocomplete="new-password">
-                                            <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                                            <span class="password-toggle-icon" role="button" aria-label="Toggle password visibility">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
                                         </div>
                                         <div class="password-strength strength-weak"></div>
                                         <div class="form-note">Use 8+ characters with a mix of letters, numbers & symbols</div>
                                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="clientConfirmPassword" class="form-label">Confirm Password</label>
                                         <div class="password-toggle">
                                             <input type="password" class="form-control" id="clientConfirmPassword" name="password_confirmation" required autocomplete="new-password">
-                                            <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                                            <span class="password-toggle-icon" role="button" aria-label="Toggle password visibility">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
                                         </div>
                                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
-
-                                    <!-- <div class="mb-4 form-check">
-                                        <input type="checkbox" class="form-check-input" id="termsAgree"  name="terms" required>
-                                        <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
-                                        <x-input-error :messages="$errors->get('terms')" class="mt-2" />
-                                    </div> -->
 
                                     <button type="submit" class="btn btn-primary">Register as User</button>
                                 </form>
 
                                 <div class="auth-footer">
-                                    <p>Already have an account? <a  class="primary me-2" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a></p>
+                                    <p>Already have an account? <a class="primary me-2" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a></p>
                                 </div>
                             </div>
 
@@ -256,71 +537,83 @@
                                     @csrf
                                     <input type="hidden" name="user_type" value="lawyer">
 
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
+                                    <div class="row g-2 g-sm-3">
+                                        <div class="col-12 col-sm-6">
                                             <label for="lawyerFirstName" class="form-label">First Name</label>
                                             <input type="text" class="form-control" id="lawyerFirstName" name="first_name" value="{{ old('first_name') }}" required>
                                             <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-12 col-sm-6">
                                             <label for="lawyerLastName" class="form-label">Last Name</label>
                                             <input type="text" class="form-control" id="lawyerLastName" name="last_name" value="{{ old('last_name') }}" required>
                                             <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                                         </div>
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="lawyerRegEmail" class="form-label">Email address</label>
                                         <input type="email" class="form-control" id="lawyerRegEmail" name="email" value="{{ old('email') }}" required>
                                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="lawyerPhone" class="form-label">Phone Number</label>
                                         <input type="tel" class="form-control" id="lawyerPhone" name="phone" value="{{ old('phone') }}" required>
                                         <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="lawyerSpecialization" class="form-label">Primary Specialization</label>
-                                        <select class="form-control" id="lawyerSpecialization" name="specialization_id" required>
-                                            <option value="">Select Specialization</option>
-                                            @if(isset($specializations) && count($specializations) > 0)
-                                                @foreach($specializations as $specialization)
-                                                    <option value="{{ $specialization->id }}" {{ old('specialization_id') == $specialization->id ? 'selected' : '' }}>
-                                                        {{ $specialization->name }}
-                                                    </option>
-                                                @endforeach
-                                            @else
-                                                <option value="">Loading specializations...</option>
-                                            @endif
-                                        </select>
+                                        <div class="dropdown-search-container">
+                                            <div class="dropdown-search-input">
+                                                <input type="text" class="form-control" placeholder="Search specializations..." id="specializationSearch">
+                                                <i class="fas fa-search"></i>
+                                            </div>
+                                            <div class="dropdown-search-results" id="specializationResults">
+                                                @if(isset($specializations) && count($specializations) > 0)
+                                                    @foreach($specializations as $specialization)
+                                                        <div class="dropdown-option" data-value="{{ $specialization->id }}">
+                                                            {{ $specialization->name }}
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="dropdown-option text-muted">No specializations available</div>
+                                                @endif
+                                            </div>
+                                            <input type="hidden" name="specialization_id" id="selectedSpecialization" value="{{ old('specialization_id') }}" required>
+                                        </div>
                                         <x-input-error :messages="$errors->get('specialization_id')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="lawyerRegPassword" class="form-label">Password</label>
                                         <div class="password-toggle">
                                             <input type="password" class="form-control" id="lawyerRegPassword" name="password" required autocomplete="new-password">
-                                            <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                                            <span class="password-toggle-icon" role="button" aria-label="Toggle password visibility">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
                                         </div>
                                         <div class="password-strength strength-weak"></div>
                                         <div class="form-note">Use 8+ characters with a mix of letters, numbers & symbols</div>
                                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mt-3">
                                         <label for="lawyerConfirmPassword" class="form-label">Confirm Password</label>
                                         <div class="password-toggle">
                                             <input type="password" class="form-control" id="lawyerConfirmPassword" name="password_confirmation" required autocomplete="new-password">
-                                            <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                                            <span class="password-toggle-icon" role="button" aria-label="Toggle password visibility">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
                                         </div>
                                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-4 form-check">
+                                    <div class="mt-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="lawyerTermsAgree" name="terms" required>
-                                        <label class="form-check-label" for="lawyerTermsAgree">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
+                                        <label class="form-check-label" for="lawyerTermsAgree">
+                                            I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+                                        </label>
                                         <x-input-error :messages="$errors->get('terms')" class="mt-2" />
                                     </div>
 
@@ -352,6 +645,10 @@
                 input.setAttribute('type', type);
                 this.querySelector('i').classList.toggle('fa-eye');
                 this.querySelector('i').classList.toggle('fa-eye-slash');
+                
+                // Update aria-label for accessibility
+                const isVisible = type === 'text';
+                this.setAttribute('aria-label', isVisible ? 'Hide password' : 'Show password');
             });
         });
 
@@ -420,6 +717,85 @@
                 });
             });
         });
+
+        // Prevent zoom on iOS for input fields
+        document.addEventListener('touchstart', function() {
+            // This helps prevent zoom on focus in iOS
+        }, { passive: true });
+    });
+
+
+
+    // Custom dropdown functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('specializationSearch');
+        const resultsContainer = document.getElementById('specializationResults');
+        const hiddenInput = document.getElementById('selectedSpecialization');
+        const selectedDisplay = document.createElement('div');
+        selectedDisplay.className = 'selected-specialization';
+        resultsContainer.parentNode.insertBefore(selectedDisplay, resultsContainer.nextSibling);
+
+        if (searchInput && resultsContainer) {
+            // Show dropdown on focus
+            searchInput.addEventListener('focus', function() {
+                resultsContainer.classList.add('show');
+                filterOptions();
+            });
+
+            // Filter options on input
+            searchInput.addEventListener('input', filterOptions);
+
+            // Handle option selection
+            resultsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('dropdown-option')) {
+                    const value = e.target.getAttribute('data-value');
+                    const text = e.target.textContent;
+                    
+                    hiddenInput.value = value;
+                    searchInput.value = '';
+                    selectedDisplay.textContent = `Selected: ${text}`;
+                    selectedDisplay.style.display = 'block';
+                    resultsContainer.classList.remove('show');
+                    
+                    // Remove any existing selected class
+                    document.querySelectorAll('.dropdown-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    e.target.classList.add('selected');
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown-search-container')) {
+                    resultsContainer.classList.remove('show');
+                }
+            });
+
+            function filterOptions() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const options = resultsContainer.querySelectorAll('.dropdown-option');
+                
+                options.forEach(option => {
+                    const text = option.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+            }
+
+            // Initialize with existing value
+            const initialValue = hiddenInput.value;
+            if (initialValue) {
+                const selectedOption = resultsContainer.querySelector(`[data-value="${initialValue}"]`);
+                if (selectedOption) {
+                    selectedDisplay.textContent = `Selected: ${selectedOption.textContent}`;
+                    selectedDisplay.style.display = 'block';
+                }
+            }
+        }
     });
 </script>
 @endpush
