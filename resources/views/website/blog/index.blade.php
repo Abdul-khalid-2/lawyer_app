@@ -156,9 +156,9 @@
                                             style="width: 32px; height: 32px; object-fit: cover;">
                                         <small class="text-muted">{{ $post->lawyer->user->name }}</small>
                                     </div>
-                                    <small class="text-muted">
+                                    {{-- <small class="text-muted">
                                         <i class="far fa-clock me-1"></i>{{ $post->read_time }} min read
-                                    </small>
+                                    </small> --}}
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <small class="text-muted">
