@@ -1,4 +1,56 @@
 @extends('website.layout.master')
+@push('css')
+    
+<script>
+    /* Comments Styles */
+    .comments-section {
+        margin-top: 3rem;
+    }
+
+    .comment-item {
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .comment-item:hover {
+        border-left-color: #667eea;
+        background-color: #f8f9fa;
+    }
+
+    .comment-replies {
+        margin-left: 2.5rem;
+        padding-left: 1.5rem;
+        border-left: 2px solid #e9ecef;
+        position: relative;
+    }
+
+    .comment-replies::before {
+        content: '';
+        position: absolute;
+        left: -1px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, transparent, #667eea, transparent);
+    }
+
+    /* Depth-based styling */
+    .comment-depth-1 { margin-left: 1rem; }
+    .comment-depth-2 { margin-left: 2rem; }
+    .comment-depth-3 { margin-left: 3rem; }
+    .comment-depth-4 { margin-left: 4rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .comment-replies {
+            margin-left: 1rem;
+            padding-left: 1rem;
+        }
+    }
+
+</script>
+@endpush
 
 @section('content')
 <!-- Blog Post Header -->
@@ -139,6 +191,22 @@
                     </div>
                 </div>
                 @endif
+
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Blog post content here -->
+                            
+                            <!-- Comments Section -->
+                            @include('website.blog.comments.comments', ['blogPost' => $post])
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <!-- Sidebar content -->
+                        </div>
+                    </div>
+                </div>
+                
             </div>
 
             <!-- Sidebar -->

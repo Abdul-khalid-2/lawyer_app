@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
             'last_name' => ['required', 'string', 'max:255'],  // Added last_name
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'terms' => ['accepted'], // Added terms validation
+            // 'terms' => ['accepted'], // Added terms validation
         ]);
 
         $user = User::create([

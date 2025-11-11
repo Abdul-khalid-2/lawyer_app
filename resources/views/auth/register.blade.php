@@ -184,7 +184,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="register-lawyer-tab" data-bs-toggle="tab" data-bs-target="#register-lawyer" type="button" role="tab">
-                                <i class="fas fa-gavel me-2"></i> Register as Lawyer
+                                <i class="fas fa-gavel me-2"></i>Lawyer Registration
                             </button>
                         </li>
                     </ul>
@@ -236,13 +236,13 @@
                                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-4 form-check">
-                                        <input type="checkbox" class="form-check-input" id="termsAgree" name="terms" required>
+                                    <!-- <div class="mb-4 form-check">
+                                        <input type="checkbox" class="form-check-input" id="termsAgree"  name="terms" required>
                                         <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
                                         <x-input-error :messages="$errors->get('terms')" class="mt-2" />
-                                    </div>
+                                    </div> -->
 
-                                    <button type="submit" class="btn btn-primary">Register as Client</button>
+                                    <button type="submit" class="btn btn-primary">Register as User</button>
                                 </form>
 
                                 <div class="auth-footer">

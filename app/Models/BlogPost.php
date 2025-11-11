@@ -73,4 +73,36 @@ class BlogPost extends Model
     {
         return $query->where('status', 'archived');
     }
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
+
+    /**
+     * Get all comments with replies for the blog post.
+     */
+    public function allComments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get approved comments for the blog post.
+     */
+    public function approvedComments()
+    {
+        return $this->hasMany(Comment::class)->approved()->whereNull('parent_id');
+    }
+
+    /**
+     * Get comments count.
+     */
+    public function getCommentsCountAttribute()
+    {
+        return $this->allComments()->approved()->count();
+    }
 }

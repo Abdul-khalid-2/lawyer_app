@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\Website\WebsiteLawyersController;
@@ -38,8 +39,9 @@ Route::prefix('blog')->group(function () {
     Route::get('/{slug}', [WebsiteBlogController::class, 'show'])->name('website.blog.show');
 });
 
-
-
+// blog comments routes
+Route::post('/blog/{blogPost}/comments', [CommentController::class, 'store'])->name('website.blog.comments.store');
+Route::get('/comments/{comment}/replies', [CommentController::class, 'getReplies'])->name('website.comments.replies');
 
 // Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
 // Route::middleware(['auth', 'verified', 'role:super-admin|school-admin'])->group(function () {});

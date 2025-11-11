@@ -258,6 +258,7 @@ class WebsiteBlogController extends Controller
         $categories = BlogCategory::where('is_active', true)->get();
         $tags = $this->getAllTags();
 
+        abort(404);
         return view('website.blog.tag', compact(
             'tag',
             'posts',

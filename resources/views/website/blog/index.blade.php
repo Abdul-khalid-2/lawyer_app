@@ -1,5 +1,56 @@
 @extends('website.layout.master')
 
+@push('css')
+<style>
+    .blog-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .blog-search-form .form-control {
+        border: none;
+        box-shadow: none;
+    }
+
+    .blog-search-form .btn {
+        border: none;
+    }
+
+    .blog-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .blog-card .card-title a:hover {
+        color: #667eea !important;
+    }
+
+    .sidebar-widget .list-group-item {
+        border: none;
+        padding: 0.75rem 0;
+    }
+
+    .sidebar-widget .list-group-item:hover {
+        background: transparent;
+        color: #667eea;
+    }
+
+    .pagination .page-link {
+        border-radius: 8px;
+        margin: 0 2px;
+        border: none;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: #667eea;
+        border-color: #667eea;
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Blog Header -->
 <section class="blog-header bg-primary text-white py-5">
@@ -240,53 +291,3 @@
 </section>
 @endsection
 
-@push('css')
-<style>
-    .blog-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .blog-search-form .form-control {
-        border: none;
-        box-shadow: none;
-    }
-
-    .blog-search-form .btn {
-        border: none;
-    }
-
-    .blog-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .blog-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .blog-card .card-title a:hover {
-        color: #667eea !important;
-    }
-
-    .sidebar-widget .list-group-item {
-        border: none;
-        padding: 0.75rem 0;
-    }
-
-    .sidebar-widget .list-group-item:hover {
-        background: transparent;
-        color: #667eea;
-    }
-
-    .pagination .page-link {
-        border-radius: 8px;
-        margin: 0 2px;
-        border: none;
-    }
-
-    .pagination .page-item.active .page-link {
-        background: #667eea;
-        border-color: #667eea;
-    }
-</style>
-@endpush
