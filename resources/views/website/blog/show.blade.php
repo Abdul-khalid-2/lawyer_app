@@ -78,7 +78,7 @@
                 <h1 class="display-5 fw-bold mb-3">{{ $post->title }}</h1>
 
                 <div class="d-flex align-items-center mb-4">
-                    <img src="{{ $post->lawyer->user->profile_image ? asset('website/' . $post->lawyer->user->profile_image) : asset('website/images/default-avatar.png') }}"
+                    <img src="{{ $post->lawyer->user->profile_image ? asset('website/' . $post->lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
                         alt="{{ $post->lawyer->user->name }}"
                         class="rounded-circle me-3"
                         style="width: 50px; height: 50px; object-fit: cover;">
@@ -142,7 +142,7 @@
                     <div class="mt-5 p-4 bg-light rounded">
                         <div class="row align-items-center">
                             <div class="col-md-2 text-center">
-                                <img src="{{ $post->lawyer->user->profile_image ? asset('website/' . $post->lawyer->user->profile_image) : asset('website/images/default-avatar.png') }}"
+                                <img src="{{ $post->lawyer->user->profile_image ? asset('website/' . $post->lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
                                     alt="{{ $post->lawyer->user->name }}"
                                     class="rounded-circle mb-3 mb-md-0"
                                     style="width: 80px; height: 80px; object-fit: cover;">

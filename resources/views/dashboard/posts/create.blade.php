@@ -158,6 +158,84 @@
             margin-bottom: 20px;
         }
         
+        /* Tags Input Styles */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+            min-height: 42px;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            background-color: #fff;
+        }
+        
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .tag-item:hover {
+            background-color: #d8dde0;
+        }
+        
+        .tag-text {
+            margin-right: 6px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .tag-remove {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 0.875rem;
+            padding: 0;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .tag-remove:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .tags-input {
+            flex: 1;
+            min-width: 120px;
+            border: none;
+            outline: none;
+            padding: 4px 8px;
+            font-size: 0.875rem;
+        }
+        
+        .tags-input:focus {
+            box-shadow: none;
+        }
+        
+        .tags-input::placeholder {
+            color: #6c757d;
+        }
+        
+        .tags-help-text {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 4px;
+        }
     </style>
 </head>
 
@@ -272,8 +350,12 @@
 
                             <div class="mb-3">
                                 <label for="tags" class="form-label">Tags</label>
-                                <input type="text" class="form-control" id="tags" name="tags" 
-                                       placeholder="Enter tags separated by commas (e.g., legal, advice, law)">
+                                <div class="tags-container" id="tagsContainer">
+                                    <input type="text" class="tags-input" id="tagsInput" 
+                                           placeholder="Type a tag and press Enter or Space">
+                                </div>
+                                <div class="tags-help-text">Press Enter, Space, or comma to add a tag. Click the X to remove.</div>
+                                <input type="hidden" id="tags" name="tags">
                             </div>
                         </form>
                     </div>
@@ -344,6 +426,153 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        class TagsManager {
+            constructor() {
+                this.tags = [];
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                const tagsInput = document.getElementById('tagsInput');
+                const tagsContainer = document.getElementById('tagsContainer');
+
+                // Handle key events
+                tagsInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ' || e.key === ',') {
+                        e.preventDefault();
+                        this.addTag(tagsInput.value.trim());
+                        tagsInput.value = '';
+                    } else if (e.key === 'Backspace' && tagsInput.value === '' && this.tags.length > 0) {
+                        this.removeTag(this.tags.length - 1);
+                    }
+                });
+
+                // Handle blur event
+                tagsInput.addEventListener('blur', () => {
+                    if (tagsInput.value.trim() !== '') {
+                        this.addTag(tagsInput.value.trim());
+                        tagsInput.value = '';
+                    }
+                });
+
+                // Prevent space from scrolling the page
+                tagsInput.addEventListener('keyup', (e) => {
+                    if (e.key === ' ') {
+                        e.preventDefault();
+                    }
+                });
+            }
+
+            addTag(tagText) {
+                if (tagText === '') return;
+
+                // Clean the tag text (remove commas and extra spaces)
+                tagText = tagText.replace(/,/g, '').trim();
+
+                if (tagText === '') return;
+
+                // Check for duplicates
+                if (this.tags.includes(tagText)) {
+                    // Highlight the duplicate tag briefly
+                    const existingTag = document.querySelector(`.tag-item[data-tag="${tagText}"]`);
+                    if (existingTag) {
+                        existingTag.style.backgroundColor = '#ffc107';
+                        setTimeout(() => {
+                            existingTag.style.backgroundColor = '';
+                        }, 1000);
+                    }
+                    return;
+                }
+
+                // Add to tags array
+                this.tags.push(tagText);
+
+                // Create tag element
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag-item';
+                tagElement.setAttribute('data-tag', tagText);
+                tagElement.innerHTML = `
+                    <span class="tag-text">${tagText}</span>
+                    <button type="button" class="tag-remove" onclick="tagsManager.removeTagByElement(this.parentNode)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+
+                // Insert before the input
+                const tagsInput = document.getElementById('tagsInput');
+                tagsContainer.insertBefore(tagElement, tagsInput);
+
+                // Update hidden input
+                this.updateHiddenInput();
+
+                // Focus back on input
+                tagsInput.focus();
+            }
+
+            removeTag(index) {
+                if (index >= 0 && index < this.tags.length) {
+                    this.tags.splice(index, 1);
+                    this.renderTags();
+                    this.updateHiddenInput();
+                }
+            }
+
+            removeTagByElement(tagElement) {
+                const tagText = tagElement.getAttribute('data-tag');
+                const index = this.tags.indexOf(tagText);
+                if (index !== -1) {
+                    this.removeTag(index);
+                }
+            }
+
+            renderTags() {
+                const tagsContainer = document.getElementById('tagsContainer');
+                const tagsInput = document.getElementById('tagsInput');
+                
+                // Remove all tag elements
+                const tagElements = tagsContainer.querySelectorAll('.tag-item');
+                tagElements.forEach(el => el.remove());
+
+                // Re-add tags
+                this.tags.forEach(tag => {
+                    const tagElement = document.createElement('div');
+                    tagElement.className = 'tag-item';
+                    tagElement.setAttribute('data-tag', tag);
+                    tagElement.innerHTML = `
+                        <span class="tag-text">${tag}</span>
+                        <button type="button" class="tag-remove" onclick="tagsManager.removeTagByElement(this.parentNode)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    tagsContainer.insertBefore(tagElement, tagsInput);
+                });
+            }
+
+            updateHiddenInput() {
+                document.getElementById('tags').value = this.tags.join(',');
+            }
+
+            clearTags() {
+                this.tags = [];
+                this.renderTags();
+                this.updateHiddenInput();
+            }
+
+            getTags() {
+                return this.tags;
+            }
+
+            setTags(tagsArray) {
+                this.tags = [...tagsArray];
+                this.renderTags();
+                this.updateHiddenInput();
+            }
+        }
+
         class BlogPostBuilder {
             constructor() {
                 this.elements = [];
@@ -882,6 +1111,7 @@
                         // Reset form
                         $('#blogPostForm')[0].reset();
                         this.clearCanvas();
+                        tagsManager.clearTags();
                     } else {
                         throw new Error(result.message);
                     }
@@ -998,6 +1228,7 @@
         // Initialize the blog post builder when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             window.builder = new BlogPostBuilder();
+            window.tagsManager = new TagsManager();
         });
     </script>
 </body>
