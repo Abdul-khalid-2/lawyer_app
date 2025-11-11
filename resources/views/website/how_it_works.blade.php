@@ -2,16 +2,62 @@
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('website/css/home.css') }}">
+<style>
+    /* .hero-section {
+        background: 
+            linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
+            url('{{ asset('website/images/hero-bg.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0;
+        color: white;
+    } */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+        color: white;
+        padding: 120px 0;
+    }
+
+    .hero-section .hero-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .hero-section .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(44, 62, 80, 0.8);
+        z-index: 2;
+    }
+
+    .hero-section .hero-content {
+        position: relative;
+        z-index: 3;
+    }
+</style>
 @endpush
 
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero-section text-center" id="home" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ asset('website/debitis-tenetur-dist/1762078162.jpg') }}') center/cover no-repeat;">
-    <div class="container">
+<section class="hero-section text-center" id="home">
+    <!-- <img src="{{ asset('website/hero_image.JPG') }}" alt="Hero background" class="hero-bg"> -->
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h1 class="display-4 mb-4 text-white">Your Trusted Legal Partner for Justice & Rights</h1>
+                <h1 class="display-4 mb-4 text-white">Your Trusted Legal Partner for Justice And Rights</h1>
                 <p class="lead mb-5 text-light">Expert legal counsel from experienced advocates and law firms. Schedule consultations, get case reviews, and find the right representation for your legal matters.</p>
                 <a href="{{ route('find-lawyeres') }}" class="btn btn-primary btn-lg me-3">Browse Lawyers</a>
                 <a href="#how-it-works" class="btn btn-outline-light btn-lg">Legal Consultation</a>

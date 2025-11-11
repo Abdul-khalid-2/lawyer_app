@@ -115,7 +115,7 @@
                     <h3 class="mb-4">Related Articles</h3>
                     <div class="row">
                         @foreach($relatedPosts as $relatedPost)
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
                             <div class="card border-0 shadow-sm h-100">
                                 @if($relatedPost->featured_image)
                                 <img src="{{ asset('website/' . $relatedPost->featured_image) }}"

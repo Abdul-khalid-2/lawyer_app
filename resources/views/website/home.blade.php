@@ -2,13 +2,60 @@
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('website/css/home.css') }}">
+<style>
+    /* .hero-section {
+        background: 
+            linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
+            url('{{ asset('website/images/hero-bg.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0;
+        color: white;
+    } */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    color: white;
+    padding: 120px 0;
+}
+
+.hero-section .hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.hero-section .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 62, 80, 0.8);
+    z-index: 2;
+}
+
+.hero-section .hero-content {
+    position: relative;
+    z-index: 3;
+}
+
+</style>
 @endpush
 
 @section('content')
 
 <!-- Hero Section -->
 <section class="hero-section text-center" id="home">
-    <div class="container">
+    <img src="{{ asset('website/hero_image.JPG') }}" alt="Hero background" class="hero-bg">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h1 class="display-4 mb-4">Find the Perfect Lawyer for Your Legal Needs</h1>
@@ -19,6 +66,7 @@
         </div>
     </div>
 </section>
+
 
 
 <!-- Featured Lawyers -->
