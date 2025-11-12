@@ -3,7 +3,7 @@
 @push('css')
 <style>
     .blog-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2f2f2f 0%, #000000 100%);
     }
 
     .blog-search-form .form-control {
@@ -57,7 +57,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3">Legal Insights & Articles</h1>
+                <h1 class="display-4 fw-bold mb-3">Legal Insights And Articles</h1>
                 <p class="lead mb-4">Expert legal advice, case studies, and industry insights from experienced lawyers</p>
 
                 <!-- Search Form -->
