@@ -701,7 +701,12 @@
                     <img src="{{ asset('website/' . $post->featured_image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 120px; object-fit: cover;">
                     @endif
                     <div class="card-body">
-                        <h6 class="card-title">{{ Str::limit($post->title, 50) }}</h6>
+                        <h6 class="card-title">
+                            <a href="{{ route('website.blog.show', $post->slug) }}"
+                                class="text-dark text-decoration-none">
+                                {{ Str::limit($post->title, 50) }}
+                            </a>
+                        </h6>
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">{{ $post->published_at->format('M j, Y') }}</small>
                             <span class="badge bg-primary">{{ $post->view_count }} views</span>
