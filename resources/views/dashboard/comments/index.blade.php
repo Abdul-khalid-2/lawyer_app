@@ -190,8 +190,8 @@
                                         style="width: 32px; height: 32px; object-fit: cover;">
 
                                     <div>
-                                        <small class="fw-bold d-block">{{ $comment->user->name }}</small>
-                                        <small class="text-muted">{{ $comment->user->email }}</small>
+                                        <small class="fw-bold d-block">{{ $comment->user->name??$comment->name }}</small>
+                                        <small class="text-muted">{{ $comment->user->email??$comment->email }}</small>
                                     </div>
                                 </div>
                             </td>
