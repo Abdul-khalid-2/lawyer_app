@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="{{ asset('website/css/profile.css') }}">
 <style>
     .specialization-badge {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #3498db;
+        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
         color: white;
         padding: 0.5rem 1rem;
         border-radius: 25px;
@@ -47,7 +48,8 @@
     }
     
     .contact-widget {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #3498db;
+        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
         color: white;
         border-radius: 12px;
         padding: 2rem;
