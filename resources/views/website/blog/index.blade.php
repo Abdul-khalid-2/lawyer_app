@@ -259,10 +259,30 @@
                     <div class="card-body">
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($tags->take(15) as $tag)
-                            <a href="{{ route('website.blog.tag', $tag) }}"
-                                class="badge bg-light text-dark text-decoration-none">
-                                #{{ $tag }}
-                            </a>
+                                @php
+                                    // If tag is stored as JSON array, parse it
+                                    if (str_starts_with($tag, '["') && str_ends_with($tag, '"]')) {
+                                        $tagArray = json_decode($tag, true);
+                                        $displayTags = is_array($tagArray) ? $tagArray : [$tag];
+                                    } else {
+                                        // If tag is comma-separated string, split it
+                                        $displayTags = explode(',', $tag);
+                                    }
+                                @endphp
+                                
+                                @foreach($displayTags as $individualTag)
+                                    @php
+                                        $cleanTag = trim($individualTag);
+                                        // Remove any remaining quotes or brackets
+                                        $cleanTag = trim($cleanTag, '[]"\'');
+                                    @endphp
+                                    @if(!empty($cleanTag))
+                                        <a href="{{ route('website.blog.tag', $cleanTag) }}"
+                                        class="badge bg-light text-dark text-decoration-none">
+                                            #{{ $cleanTag }}
+                                        </a>
+                                    @endif
+                                @endforeach
                             @endforeach
                         </div>
                     </div>

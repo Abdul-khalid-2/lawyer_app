@@ -173,6 +173,11 @@
                                 <img src="{{ asset('website/' . $relatedPost->featured_image) }}"
                                     class="card-img-top" alt="{{ $relatedPost->title }}"
                                     style="height: 150px; object-fit: cover;">
+                                @else
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                        style="height: 200px;">
+                                        <i class="fas fa-newspaper fa-3x text-muted"></i>
+                                    </div>
                                 @endif
                                 <div class="card-body">
                                     <h6 class="card-title">
