@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -105,6 +106,16 @@ class RegisteredUserController extends Controller
 
             // Log in the lawyer
             Auth::guard('web')->login($user);
+
+            Mail::raw(
+                'New user registered on law.skoolyst.com. 
+                Check profile: http://law.skoolyst.com/lawyer/' . $lawyer->uuid . '/view',
+                function ($message) {
+                    $message->to('abdulkhalidmasood@gmail.com')
+                        ->subject('New Lawyer Registered');
+                }
+            );
+
 
             return redirect()->route('lawyer.dashboard');
         } catch (Exception $e) {
