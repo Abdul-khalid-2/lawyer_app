@@ -182,10 +182,13 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ $comment->user->profile_image ? asset('website/' . $comment->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
-                                         alt="{{ $comment->user->name }}" 
-                                         class="rounded-circle me-2"
-                                         style="width: 32px; height: 32px; object-fit: cover;">
+                                    <img src="{{ $comment->user?->profile_image 
+                                        ? asset('website/' . $comment->user->profile_image) 
+                                        : asset('website/images/male_advocate_avatar.jpg') }}"
+                                        alt="{{ $comment->user?->name ?? 'User' }}"
+                                        class="rounded-circle me-2"
+                                        style="width: 32px; height: 32px; object-fit: cover;">
+
                                     <div>
                                         <small class="fw-bold d-block">{{ $comment->user->name }}</small>
                                         <small class="text-muted">{{ $comment->user->email }}</small>
