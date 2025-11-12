@@ -17,6 +17,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\Website\WebsiteLawyersController;
 use App\Http\Controllers\Website\WebsiteReviewController;
 use App\Http\Controllers\Website\WebsiteBlogController;
+use App\Http\Controllers\Website\WebsiteCommentController;
 
 Route::get('/', [WebsiteHomeController::class, 'home'])->name('home');
 Route::get('find-lawyers', [WebsiteLawyersController::class, 'index'])->name('find-lawyeres');
@@ -40,8 +41,8 @@ Route::prefix('blog')->group(function () {
 });
 
 // blog comments routes
-Route::post('/blog/{blogPost}/comments', [CommentController::class, 'store'])->name('website.blog.comments.store');
-Route::get('/comments/{comment}/replies', [CommentController::class, 'getReplies'])->name('website.comments.replies');
+Route::post('/blog/{blogPost}/comments', [WebsiteCommentController::class, 'store'])->name('website.blog.comments.store');
+Route::get('/comments/{comment}/replies', [WebsiteCommentController::class, 'getReplies'])->name('website.comments.replies');
 
 // Route::get('/specializations', [WebsiteHomeController::class, 'getSpecializations'])->name('specializations.list');
 // Route::middleware(['auth', 'verified', 'role:super-admin|school-admin'])->group(function () {});
@@ -67,6 +68,7 @@ Route::middleware('auth')->group(function () {
 
     // Blog Posts Resource
     Route::resource('blog-posts', BlogController::class);
+    Route::get('/post/{id}', [CommentController::class, 'comments'])->name('blog-posts.comments');
 
     // Reviews
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
@@ -85,12 +87,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('experiences', ExperienceController::class);
 
     // Review routes
-    Route::middleware(['auth'])->group(function () {
-        Route::post('/lawyers/{lawyerUuid}/reviews', [WebsiteReviewController::class, 'store'])->name('website.reviews.store');
-        Route::patch('/reviews/{reviewUuid}/status', [WebsiteReviewController::class, 'updateStatus'])->name('website.reviews.update-status');
-        Route::patch('/reviews/{reviewUuid}/toggle-featured', [WebsiteReviewController::class, 'toggleFeatured'])->name('website.reviews.toggle-featured');
-        Route::delete('/reviews/{reviewUuid}', [WebsiteReviewController::class, 'destroy'])->name('website.reviews.destroy');
-    });
+    Route::post('/lawyers/{lawyerUuid}/reviews', [WebsiteReviewController::class, 'store'])->name('website.reviews.store');
+    Route::patch('/reviews/{reviewUuid}/status', [WebsiteReviewController::class, 'updateStatus'])->name('website.reviews.update-status');
+    Route::patch('/reviews/{reviewUuid}/toggle-featured', [WebsiteReviewController::class, 'toggleFeatured'])->name('website.reviews.toggle-featured');
+    Route::delete('/reviews/{reviewUuid}', [WebsiteReviewController::class, 'destroy'])->name('website.reviews.destroy');
 });
 
 
