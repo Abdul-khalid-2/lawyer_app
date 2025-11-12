@@ -502,7 +502,7 @@
                                     <div class="mt-3">
                                         <label for="clientRegPassword" class="form-label">Password</label>
                                         <div class="password-toggle">
-                                            <input type="password" class="form-control" id="clientRegPassword" name="password" required autocomplete="new-password">
+                                            <input type="password" class="form-control password-strength-input" id="clientRegPassword" name="password" required autocomplete="new-password">
                                             <span class="password-toggle-icon" role="button" aria-label="Toggle password visibility">
                                                 <i class="fas fa-eye"></i>
                                             </span>
@@ -588,7 +588,7 @@
                                     <div class="mt-3">
                                         <label for="lawyerRegPassword" class="form-label">Password</label>
                                         <div class="password-toggle">
-                                            <input type="password" class="form-control" id="lawyerRegPassword" name="password" required autocomplete="new-password">
+                                            <input type="password" class="form-control password-strength-input" id="lawyerRegPassword" name="password" required autocomplete="new-password">
                                             <span class="password-toggle-icon" role="button" aria-label="Toggle password visibility">
                                                 <i class="fas fa-eye"></i>
                                             </span>
@@ -653,7 +653,7 @@
         });
 
         // Password strength indicator for both forms
-        const passwordInputs = document.querySelectorAll('input[type="password"][name="password"]');
+        const passwordInputs = document.querySelectorAll('input[type="password"][name="password"][class*="password-strength-input"]');
         passwordInputs.forEach(input => {
             input.addEventListener('input', function() {
                 const strengthBar = this.parentElement.nextElementSibling;
