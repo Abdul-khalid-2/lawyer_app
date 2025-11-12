@@ -239,11 +239,18 @@ class WebsiteBlogController extends Controller
 
     public function tag($tag)
     {
+        $cleanTag = trim($tag, '[]"\'');
+
         $posts = BlogPost::with(['lawyer.user', 'category'])
-            ->where('tags', 'like', '%"' . $tag . '"%')
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
+            ->where(function ($query) use ($cleanTag) {
+                // Search in JSON tags array
+                $query->whereJsonContains('tags', $cleanTag)
+                    ->orWhere('tags', 'like', '%"' . $cleanTag . '"%')
+                    ->orWhere('tags', 'like', '%' . $cleanTag . '%');
+            })
             ->orderBy('published_at', 'desc')
             ->paginate(9);
 
@@ -258,14 +265,59 @@ class WebsiteBlogController extends Controller
         $categories = BlogCategory::where('is_active', true)->get();
         $tags = $this->getAllTags();
 
-        abort(404);
+        // Get related tags (tags that appear together with the current tag)
+        $relatedTags = $this->getRelatedTags($cleanTag);
+
         return view('website.blog.tag', compact(
             'tag',
             'posts',
             'popularPosts',
             'categories',
-            'tags'
+            'tags',
+            'relatedTags'
         ));
+    }
+
+    private function getRelatedTags($currentTag)
+    {
+        // Get posts with the current tag
+        $postsWithTag = BlogPost::where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->where(function ($query) use ($currentTag) {
+                $query->whereJsonContains('tags', $currentTag)
+                    ->orWhere('tags', 'like', '%"' . $currentTag . '"%')
+                    ->orWhere('tags', 'like', '%' . $currentTag . '%');
+            })
+            ->get();
+
+        // Collect all tags from these posts
+        $relatedTags = collect();
+
+        foreach ($postsWithTag as $post) {
+            if ($post->tags) {
+                $postTags = [];
+                if (is_string($post->tags)) {
+                    if (str_starts_with($post->tags, '[') && str_ends_with($post->tags, ']')) {
+                        $postTags = json_decode($post->tags, true) ?? [];
+                    } else {
+                        $postTags = array_map('trim', explode(',', $post->tags));
+                    }
+                } elseif (is_array($post->tags)) {
+                    $postTags = $post->tags;
+                }
+
+                foreach ($postTags as $tag) {
+                    $cleanTag = trim($tag);
+                    if (!empty($cleanTag) && $cleanTag !== $currentTag) {
+                        $relatedTags->push($cleanTag);
+                    }
+                }
+            }
+        }
+
+        // Count occurrences and return top 10
+        return $relatedTags->countBy()->sortDesc()->keys()->take(10);
     }
 
     public function author($uuid)
