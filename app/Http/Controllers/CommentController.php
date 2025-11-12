@@ -21,7 +21,7 @@ class CommentController extends Controller
                 'blog_post_id' => $blogPost->id,
                 'comment' => $request->comment,
                 'parent_id' => $request->parent_id,
-                'status' => 'pending', // Moderate comments
+                'status' => 'approved', // Moderate comments
             ];
 
             // Add user data if logged in
@@ -34,7 +34,7 @@ class CommentController extends Controller
 
             $comment = Comment::create($commentData);
 
-            return back()->with('success', 'Comment submitted successfully. It will be visible after approval.');
+            return back()->with('success', 'Comment submitted successfully.');
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to submit comment. Please try again.');
         }
