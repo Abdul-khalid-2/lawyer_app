@@ -68,7 +68,12 @@ Route::middleware('auth')->group(function () {
 
     // Blog Posts Resource
     Route::resource('blog-posts', BlogController::class);
-    Route::get('/post/{id}', [CommentController::class, 'comments'])->name('blog-posts.comments');
+
+    // Dashboard comments status change routes
+    Route::get('/blog-posts/{id}/comments', [CommentController::class, 'comments'])->name('blog-posts.comments');
+    Route::put('/comments/{comment}/status', [CommentController::class, 'updateStatus'])->name('comments.update-status');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comments.show');
 
     // Reviews
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');

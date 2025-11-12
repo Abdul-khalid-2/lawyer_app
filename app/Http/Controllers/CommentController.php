@@ -1,56 +1,115 @@
 <?php
-// app/Http/Controllers/CommentController.php
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\BlogPost;
-use App\Http\Requests\StoreCommentRequest;
+use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
     /**
-     * Store a newly created comment.
+     * Display comments for a specific blog post
      */
-    public function store(StoreCommentRequest $request, BlogPost $blogPost)
+    public function comments($id)
     {
-        try {
-            $commentData = [
-                'blog_post_id' => $blogPost->id,
-                'comment' => $request->comment,
-                'parent_id' => $request->parent_id,
-                'status' => 'approved', // Moderate comments
-            ];
+        $post = BlogPost::with(['lawyer.user', 'category'])->findOrFail($id);
 
-            // Add user data if logged in
-            if (Auth::check()) {
-                $commentData['user_id'] = Auth::id();
-            } else {
-                $commentData['name'] = $request->name;
-                $commentData['email'] = $request->email;
-            }
+        $comments = Comment::with(['user', 'replies.user'])
+            ->where('blog_post_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
-            $comment = Comment::create($commentData);
+        $commentStats = $this->getCommentStats($id);
 
-            return back()->with('success', 'Comment submitted successfully.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to submit comment. Please try again.');
-        }
+        return view('dashboard.comments.index', compact('post', 'comments', 'commentStats'));
     }
 
     /**
-     * Get replies for a comment (for AJAX loading)
+     * Show individual comment details
      */
-    public function getReplies(Comment $comment)
+    public function show(Comment $comment)
     {
-        $replies = $comment->replies()
-            ->approved()
-            ->with('user')
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $comment->load(['user', 'blogPost', 'replies.user']);
 
-        return response()->json($replies);
+
+        return view('dashboard.comments.show', compact('comment'));
+    }
+
+    /**
+     * Update comment status
+     */
+    public function updateStatus(Request $request, Comment $comment)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected,spam'
+        ]);
+
+        $comment->update([
+            'status' => $request->status,
+            'moderated_at' => now(),
+            'moderated_by' => auth()->id()
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment status updated successfully',
+            'status' => $comment->status,
+            'status_badge' => $this->getStatusBadge($comment->status)
+        ]);
+    }
+
+    /**
+     * Delete a comment
+     */
+    public function destroy(Comment $comment)
+    {
+        DB::transaction(function () use ($comment) {
+            // Delete all replies first
+            $comment->replies()->delete();
+            // Delete the comment
+            $comment->delete();
+        });
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment deleted successfully'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Comment deleted successfully');
+    }
+
+    /**
+     * Get comment statistics for a post
+     */
+    private function getCommentStats($postId)
+    {
+        return Comment::where('blog_post_id', $postId)
+            ->selectRaw('
+                COUNT(*) as total,
+                SUM(CASE WHEN status = "approved" THEN 1 ELSE 0 END) as approved,
+                SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending,
+                SUM(CASE WHEN status = "rejected" THEN 1 ELSE 0 END) as rejected,
+                SUM(CASE WHEN status = "spam" THEN 1 ELSE 0 END) as spam
+            ')
+            ->first();
+    }
+
+    /**
+     * Get status badge HTML
+     */
+    private function getStatusBadge($status)
+    {
+        $badges = [
+            'pending' => '<span class="badge bg-warning">Pending</span>',
+            'approved' => '<span class="badge bg-success">Approved</span>',
+            'rejected' => '<span class="badge bg-danger">Rejected</span>',
+            'spam' => '<span class="badge bg-secondary">Spam</span>'
+        ];
+
+        return $badges[$status] ?? $badges['pending'];
     }
 }

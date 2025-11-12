@@ -79,7 +79,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('blog-posts.comments', $post->id) }}" class="btn btn-sm btn-outline-info" target="_blank">
+                                    <a href="{{ route('blog-posts.comments', $post->id) }}" class="btn btn-sm btn-outline-info">
                                         <span class="d-none d-sm-inline">{{ $post->comments_count }}</span>
                                         <i class="fas fa-comments"></i>
                                     </a>
