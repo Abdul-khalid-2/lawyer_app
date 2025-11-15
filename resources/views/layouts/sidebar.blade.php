@@ -3,7 +3,7 @@
         <div class="sidebar-header d-flex justify-content-between align-items-center">
             <a href="{{ route('home') }}">
                  <h4 class="text-white mb-0">
-                    Consaltent Lawyers
+                    Consultent Lawyers
                 </h4>
             </a>
            
