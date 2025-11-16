@@ -27,9 +27,9 @@
             <div class="col-lg-4 col-md-4 mb-4">
                 <h5 class="mb-4">Contact Us</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Legal Street, Law City</li>
-                    <li class="mb-2"><i class="fas fa-phone me-2"></i> (555) 123-4567</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@Law-Skoolyst.com</li>
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Gulzare Higree, Karachi</li>
+                    <li class="mb-2"><i class="fas fa-phone me-2"></i> 0334-0673401</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> abdulkhalidmasood66@gmail.com</li>
                 </ul>
                 <div class="d-flex mt-3">
                     <a href="#" class="me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
@@ -58,31 +58,31 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
 
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" name="email" required autofocus>
-                            </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required autofocus>
+                    </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
 
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                <label class="form-check-label" for="remember">Remember me</label>
-                            </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
 
-                            <button type="submit" class="btn btn-primary w-100">Login</button>
-                        </form>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
 
-                        <div class="text-center mt-3">
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}">Forgot your password?</a>
-                        @endif
+                <div class="text-center mt-3">
+                    @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}">Forgot your password?</a>
+                    @endif
                 </div>
             </div>
         </div>
