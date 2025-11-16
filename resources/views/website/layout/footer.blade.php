@@ -27,7 +27,7 @@
             <div class="col-lg-4 col-md-4 mb-4">
                 <h5 class="mb-4">Contact Us</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Gulzare Higree, Karachi</li>
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Gulzar-E-Hijri, Karachi</li>
                     <li class="mb-2"><i class="fas fa-phone me-2"></i> 0334-0673401</li>
                     <li class="mb-2"><i class="fas fa-envelope me-2"></i> abdulkhalidmasood66@gmail.com</li>
                 </ul>
