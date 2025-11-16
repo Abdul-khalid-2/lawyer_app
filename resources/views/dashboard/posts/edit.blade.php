@@ -446,6 +446,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        document.getElementById('featured_image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const maxSize = 2000 * 1024; // 2000 KB in bytes
+            const errorElement = document.getElementById('fileSizeError');
+            
+            // Remove existing error message if any
+            if (errorElement) {
+                errorElement.remove();
+            }
+            
+            if (file) {
+                if (file.size > maxSize) {
+                    // Create and show error message
+                    const errorDiv = document.createElement('div');
+                    errorDiv.id = 'fileSizeError';
+                    errorDiv.className = 'alert alert-danger mt-2';
+                    errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>File size must be less than 2000 KB. Please choose a smaller file.';
+                    
+                    // Insert error message after the file input
+                    this.parentNode.appendChild(errorDiv);
+                    
+                    // Clear the file input
+                    this.value = '';
+                    
+                    // Optional: Add visual feedback to the input
+                    this.classList.add('is-invalid');
+                } else {
+                    // Remove invalid class if file is valid
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            }
+        });
         class TagsManager {
             constructor() {
                 this.tags = [];
