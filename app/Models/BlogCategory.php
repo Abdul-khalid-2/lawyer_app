@@ -26,4 +26,9 @@ class BlogCategory extends Model
     {
         return $this->hasMany(BlogPost::class);
     }
+
+    public function published_posts()
+    {
+        return $this->hasMany(BlogPost::class)->where('status', 'published');
+    }
 }

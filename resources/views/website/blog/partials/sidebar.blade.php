@@ -9,7 +9,7 @@
             <a href="{{ route('website.blog.category', $category->slug) }}"
                 class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                 {{ $category->name }}
-                <span class="badge bg-primary rounded-pill">{{ $category->blog_posts_count ?? 0 }}</span>
+                <span class="badge bg-primary rounded-pill">{{ $category->published_posts_count ?? 0 }}</span>
             </a>
             @endforeach
         </div>

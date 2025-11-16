@@ -69,7 +69,10 @@ class WebsiteBlogController extends Controller
             }
         }
 
-        $categories = BlogCategory::where('is_active', true)->get();
+        $categories = BlogCategory::withCount([
+            'blog_posts',
+            'published_posts as published_posts_count'
+        ])->get();
         $popularPosts = $this->getPopularPosts();
         $recentPosts = $this->getRecentPosts();
         $tags = $this->getAllTags();
@@ -104,7 +107,10 @@ class WebsiteBlogController extends Controller
         // Related posts
         $relatedPosts = $this->getRelatedPosts($post);
         $popularPosts = $this->getPopularPosts();
-        $categories = BlogCategory::where('is_active', true)->get();
+        $categories = BlogCategory::withCount([
+            'blog_posts',
+            'published_posts as published_posts_count'
+        ])->get();
         $tags = $this->getAllTags();
 
         return view('website.blog.show', compact(
