@@ -230,10 +230,12 @@ class WebsiteBlogController extends Controller
 
         $popularPosts = $this->getPopularPosts();
         $categoriesCount = BlogCategory::where('is_active', true)->get();
-        $categories = BlogCategory::get();
+        $categories = BlogCategory::withCount([
+            'blog_posts',
+            'published_posts as published_posts_count'
+        ])->get();
         $tags = $this->getAllTags();
 
-        abort(404);
         return view('website.blog.category', compact(
             'category',
             'posts',
