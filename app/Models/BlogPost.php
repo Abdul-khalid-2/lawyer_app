@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class BlogPost extends Model
 {
@@ -104,5 +105,13 @@ class BlogPost extends Model
     public function getCommentsCountAttribute()
     {
         return $this->allComments()->approved()->count();
+    }
+
+    public function youtubeVideos(): BelongsToMany
+    {
+        return $this->belongsToMany(YoutubeVideo::class, 'blog_post_youtube_video')
+            ->withPivot('order')
+            ->withTimestamps()
+            ->orderBy('order');
     }
 }

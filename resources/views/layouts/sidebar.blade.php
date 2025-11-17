@@ -65,6 +65,12 @@
                         <span>Blogs</span>
                     </a>
                 </div>
+                <div class="nav-item">
+                    <a href="{{ route('videos.index') }}" class="nav-link">
+                        <i class="fas fa-gavel"></i>
+                        <span>Videos</span>
+                    </a>
+                </div>
             @endrole
         </ul>
     </nav>

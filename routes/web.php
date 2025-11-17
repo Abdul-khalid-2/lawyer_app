@@ -100,5 +100,18 @@ Route::middleware('auth')->group(function () {
 
 
 
+// Dashboard routes for lawyers
+Route::middleware(['auth', 'role:lawyer'])->prefix('dashboard')->group(function () {
+    Route::resource('videos', \App\Http\Controllers\VideoController::class);
+});
+
+// Website routes for public access
+Route::prefix('videos')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Website\VideoPageController::class, 'index'])->name('videos.index');
+    Route::get('/{uuid}', [\App\Http\Controllers\Website\VideoPageController::class, 'show'])->name('videos.show');
+    Route::post('/{uuid}/track-view', [\App\Http\Controllers\Website\VideoPageController::class, 'trackViewTime'])->name('videos.track-view');
+});
+
+
 
 require __DIR__ . '/auth.php';
