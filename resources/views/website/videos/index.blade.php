@@ -205,7 +205,10 @@
                                     alt="{{ $video->title }}"
                                     style="height: 200px; object-fit: cover;">
                                 <div class="video-play-icon">
-                                    <i class="fas fa-play"></i>
+                                    <a href="{{ route('website.videos.show', $video->uuid) }}">
+                                        <i class="fas fa-play"></i>
+                                    </a>
+
                                 </div>
                                 <div class="video-duration">
                                     {{ $video->duration ? gmdate('i:s', $video->duration) : 'N/A' }}

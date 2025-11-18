@@ -109,7 +109,7 @@
                             {{ $video->video_topic }}
                         </a>
                         <h1 class="h2 mb-3">{{ $video->title }}</h1>
-                        
+
                         @if($video->description)
                         <div class="video-description mb-4">
                             <p class="lead">{{ $video->description }}</p>
@@ -148,7 +148,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <img src="{{ $video->lawyer->user->profile_image ? asset('storage/' . $video->lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
+                                <img src="{{ $video->lawyer->user->profile_image ? asset('website/' . $video->lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
                                     alt="{{ $video->lawyer->user->name }}"
                                     class="rounded-circle"
                                     style="width: 80px; height: 80px; object-fit: cover;">
@@ -157,9 +157,9 @@
                                 <h4 class="mb-1">{{ $video->lawyer->user->name }}</h4>
                                 <p class="text-muted mb-2">
                                     @if($video->lawyer->specializations->count() > 0)
-                                        {{ $video->lawyer->specializations->pluck('name')->implode(', ') }}
+                                    {{ $video->lawyer->specializations->pluck('name')->implode(', ') }}
                                     @else
-                                        Legal Expert
+                                    Legal Expert
                                     @endif
                                 </p>
                                 <p class="text-muted small mb-2">
@@ -172,7 +172,7 @@
                                 @endif
                             </div>
                             <div class="col-auto">
-                                <a href="#" class="btn btn-outline-primary">
+                                <a href="{{ route('website.lawyers.profile', $video->lawyer->uuid) }}" class="btn btn-outline-primary">
                                     View Profile
                                 </a>
                             </div>
@@ -257,41 +257,41 @@
                     </div>
                     <div class="card-body">
                         @php
-                            $lawyerVideos = \App\Models\YoutubeVideo::with(['lawyer.user'])
-                                ->active()
-                                ->where('lawyer_id', $video->lawyer_id)
-                                ->where('id', '!=', $video->id)
-                                ->limit(5)
-                                ->get();
+                        $lawyerVideos = \App\Models\YoutubeVideo::with(['lawyer.user'])
+                        ->active()
+                        ->where('lawyer_id', $video->lawyer_id)
+                        ->where('id', '!=', $video->id)
+                        ->limit(5)
+                        ->get();
                         @endphp
 
                         @if($lawyerVideos->count() > 0)
-                            @foreach($lawyerVideos as $lawyerVideo)
-                            <div class="d-flex mb-3 pb-3 border-bottom">
-                                <div class="flex-shrink-0 position-relative">
-                                    <img src="{{ $lawyerVideo->thumbnail_url }}"
-                                        alt="{{ $lawyerVideo->title }}"
-                                        class="rounded me-3"
-                                        style="width: 80px; height: 60px; object-fit: cover;">
-                                    <div class="video-play-icon" style="width: 30px; height: 30px;">
-                                        <i class="fas fa-play" style="font-size: 12px;"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">
-                                        <a href="{{ route('website.videos.show', $lawyerVideo->uuid) }}"
-                                            class="text-dark text-decoration-none">
-                                            {{ Str::limit($lawyerVideo->title, 40) }}
-                                        </a>
-                                    </h6>
-                                    <small class="text-muted">
-                                        <i class="far fa-eye me-1"></i>{{ $lawyerVideo->view_count }}
-                                    </small>
+                        @foreach($lawyerVideos as $lawyerVideo)
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="flex-shrink-0 position-relative">
+                                <img src="{{ $lawyerVideo->thumbnail_url }}"
+                                    alt="{{ $lawyerVideo->title }}"
+                                    class="rounded me-3"
+                                    style="width: 80px; height: 60px; object-fit: cover;">
+                                <div class="video-play-icon" style="width: 30px; height: 30px;">
+                                    <i class="fas fa-play" style="font-size: 12px;"></i>
                                 </div>
                             </div>
-                            @endforeach
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">
+                                    <a href="{{ route('website.videos.show', $lawyerVideo->uuid) }}"
+                                        class="text-dark text-decoration-none">
+                                        {{ Str::limit($lawyerVideo->title, 40) }}
+                                    </a>
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="far fa-eye me-1"></i>{{ $lawyerVideo->view_count }}
+                                </small>
+                            </div>
+                        </div>
+                        @endforeach
                         @else
-                            <p class="text-muted mb-0">No other videos from this lawyer yet.</p>
+                        <p class="text-muted mb-0">No other videos from this lawyer yet.</p>
                         @endif
                     </div>
                 </div>
@@ -315,50 +315,62 @@
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Track video view time
-    const videoIframe = document.querySelector('.video-player');
-    let watchStartTime = Date.now();
-    let watchInterval;
-    let maxWatchTime = {{ $video->duration ?? 0 }} * 1000; // Convert to milliseconds
+    document.addEventListener('DOMContentLoaded', function() {
+        // Track video view time
+        const videoIframe = document.querySelector('.video-player');
+        let watchStartTime = Date.now();
+        let watchInterval;
+        let maxWatchTime = {
+            {
+                $video - > duration ?? 0
+            }
+        }* 1000; // Convert to milliseconds
 
-    function startTracking() {
-        watchStartTime = Date.now();
-        watchInterval = setInterval(sendWatchTime, 30000); // Send every 30 seconds
-    }
-
-    function sendWatchTime() {
-        const currentTime = Date.now();
-        const watchTime = Math.floor((currentTime - watchStartTime) / 1000); // Convert to seconds
-        
-        // Don't send more than video duration
-        const actualWatchTime = Math.min(watchTime, {{ $video->duration ?? 0 }});
-        
-        fetch('{{ route("website.videos.track-view", $video->uuid) }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                watch_time: actualWatchTime,
-                completed: actualWatchTime >= ({{ $video->duration ?? 0 }} * 0.9) // 90% watched
-            })
-        });
-    }
-
-    function stopTracking() {
-        if (watchInterval) {
-            clearInterval(watchInterval);
-            sendWatchTime(); // Send final time
+        function startTracking() {
+            watchStartTime = Date.now();
+            watchInterval = setInterval(sendWatchTime, 30000); // Send every 30 seconds
         }
-    }
 
-    // Track when user leaves the page
-    window.addEventListener('beforeunload', stopTracking);
+        function sendWatchTime() {
+            const currentTime = Date.now();
+            const watchTime = Math.floor((currentTime - watchStartTime) / 1000); // Convert to seconds
 
-    // Start tracking when page loads (assuming video auto-plays or user interaction)
-    startTracking();
-});
+            // Don't send more than video duration
+            const actualWatchTime = Math.min(watchTime, {
+                {
+                    $video - > duration ?? 0
+                }
+            });
+
+            fetch('{{ route("website.videos.track-view", $video->uuid) }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    watch_time: actualWatchTime,
+                    completed: actualWatchTime >= ({
+                        {
+                            $video - > duration ?? 0
+                        }
+                    }* 0.9) // 90% watched
+                })
+            });
+        }
+
+        function stopTracking() {
+            if (watchInterval) {
+                clearInterval(watchInterval);
+                sendWatchTime(); // Send final time
+            }
+        }
+
+        // Track when user leaves the page
+        window.addEventListener('beforeunload', stopTracking);
+
+        // Start tracking when page loads (assuming video auto-plays or user interaction)
+        startTracking();
+    });
 </script>
 @endpush
