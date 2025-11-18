@@ -250,10 +250,10 @@
                                     <small class="text-muted">
                                         {{ $video->published_at->format('M j, Y') }}
                                     </small>
-                                    <small class="text-muted">
+                                    <!-- <small class="text-muted">
                                         <i class="far fa-clock me-1"></i>
                                         {{ $video->duration ? gmdate('i', $video->duration) . ' min' : 'N/A' }}
-                                    </small>
+                                    </small> -->
                                 </div>
                             </div>
                         </article>
