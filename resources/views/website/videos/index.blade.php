@@ -211,7 +211,7 @@
 
                                 </div>
                                 <div class="video-duration">
-                                    {{ $video->duration ? gmdate('i:s', $video->duration) : 'N/A' }}
+                                    <!-- {{ $video->duration ? gmdate('i:s', $video->duration) : 'N/A' }} -->
                                 </div>
                             </div>
 

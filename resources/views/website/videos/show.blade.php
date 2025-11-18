@@ -119,18 +119,19 @@
                     <div class="col-md-4">
                         <div class="video-stats text-center">
                             <div class="row">
+
+                                <div class="col-6">
+                                    <!-- <div class="stat-item">
+                                        <i class="far fa-clock fa-2x text-success mb-2"></i>
+                                        <h4 class="mb-1">{{ $video->duration ? gmdate('i', $video->duration) : 'N/A' }}</h4>
+                                        <small class="text-muted">Minutes</small>
+                                    </div> -->
+                                </div>
                                 <div class="col-6">
                                     <div class="stat-item">
                                         <i class="far fa-eye fa-2x text-primary mb-2"></i>
                                         <h4 class="mb-1">{{ $video->view_count }}</h4>
                                         <small class="text-muted">Views</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="stat-item">
-                                        <i class="far fa-clock fa-2x text-success mb-2"></i>
-                                        <h4 class="mb-1">{{ $video->duration ? gmdate('i', $video->duration) : 'N/A' }}</h4>
-                                        <small class="text-muted">Minutes</small>
                                     </div>
                                 </div>
                             </div>

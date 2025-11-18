@@ -67,7 +67,7 @@
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('videos.index') }}" class="nav-link">
-                        <i class="fas fa-gavel"></i>
+                         <i class="fas fa-video"></i>
                         <span>Videos</span>
                     </a>
                 </div>
