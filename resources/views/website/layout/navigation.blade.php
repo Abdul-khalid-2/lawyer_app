@@ -21,6 +21,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('website.blog.index') }}">Blogs</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('website.videos.index') }}">Videos</a>
+                </li>
             </ul>
 
             <div class="d-flex">

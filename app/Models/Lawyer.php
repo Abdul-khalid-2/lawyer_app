@@ -134,4 +134,9 @@ class Lawyer extends Model
     {
         return $query->where('is_featured', true);
     }
+
+    public function youtubeVideos()
+    {
+        return $this->hasMany(YoutubeVideo::class);
+    }
 }

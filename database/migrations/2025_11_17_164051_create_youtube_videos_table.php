@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('lawyer_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('video_topic');
-            $table->string('youtube_link');
+            $table->text('youtube_link');
             $table->string('youtube_video_id')->nullable();
             $table->text('description')->nullable();
             $table->integer('display_count')->default(0);
