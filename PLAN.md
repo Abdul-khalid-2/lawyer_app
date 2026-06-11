@@ -237,3 +237,62 @@ per role using hasRole checks.
 - [x] Public schedule shows availability without leaking case details — verified
 - [x] Blog, videos, reviews still work after route restructure (regression) — verified (all 200)
 - [x] `migrate:fresh --seed` runs clean end-to-end — verified
+
+---
+
+# Website Refactor — Components + Centralized Design (June 2026)
+
+Convert the public website to reusable Blade components (`<x-website.*>`), centralized design tokens, and separated CSS/JS files via Vite — zero visual regressions.
+
+### Phase A — Foundation (layout component, tokens, JS modules, Vite)
+
+> ✅ **Phase A Successfully done** — Created `resources/css/website/{_tokens,_base,website}.css` (tokens hold the existing palette/fonts/spacing/shadows), `resources/js/website/website.js` + modules `flash-messages.js` & `auth-manager.js` (extracted from the inline layout scripts), added both as Vite inputs, and built a `<x-website.layout.master>` component with `title`/`description`/`ogImage` props (all SEO/JSON-LD/favicon preserved). Switched all 11 website pages from `@extends` to the component — each now has a proper per-page `<title>` & meta description. `npm run build` clean; every page renders 200 with vite assets + flash payload; all Blade views compile.
+### Phase B — Atoms (ui/: button, badge, avatar, rating, image, inputs, section-heading, icon-box)
+
+> ✅ **Phase B Successfully done** — Created 10 anonymous UI atoms under `components/website/ui/` (button, badge, avatar with initials fallback, rating with half-stars, image with ratio/lazy/fallback, input, textarea, select, section-heading, icon-box) styled in `components/{buttons,badges,forms,cards}.css` using only `_tokens.css` variables (`lc-` prefixed). Migrated `home.blade.php` + `how_it_works.blade.php` to the atoms (hero buttons, section headings, how-it-works steps as icon-boxes), moved their inline styles + the old `public/website/css/home.css` link into `resources/css/website/pages/home.css`. Both pages render 200 with zero inline `<style>`.
+### Phase C — Cards & Sections (lawyer/blog/video/review/team cards, hero, empty-state, pagination + loadMore fix)
+
+> ✅ **Phase C Successfully done** — Built `cards/lawyer-card`, `cards/blog-card` (with optional `showTags`), `cards/video-card`, and `sections/empty-state` molecules (each self-contained with its grid column, composed from the atoms). Replaced hand-coded grids in: home featured lawyers, `lawyers.blade.php` listing, `blog/{index,category,tag}`, `videos/index`. Created `website/partials/lawyer-grid.blade.php` and updated `WebsiteLawyersController@loadMore` to render it, so AJAX-appended cards match — then **deleted** `lawyers_card.blade.php`. lawyer/blog/video card CSS added under `components/`. All pages render 200; load-more verified. (review-card & team-member-card are built in Phase D where the profile consumes them.)
+### Phase D — Split lawyer_profile.blade.php into partials (<100 lines)
+
+> ✅ **Phase D Successfully done** — Split `lawyer_profile.blade.php` from **938 → 28 lines** (orchestrator only). Created 10 partials under `website/partials/profile/` (`_header, _about, _specializations, _experience, _education, _portfolio, _team, _availability, _reviews, _sidebar`); team & reviews use new `cards/team-member-card` + `cards/review-card` components. Migrated both inline `<style>` blocks **and** the external `public/website/css/profile.css` into `resources/css/website/pages/lawyer-profile.css` (cascade order preserved, tokenized). Moved the two inline `<script>` blocks into `js/website/modules/track-time.js` (generic, reads `body[data-track-url]` + csrf meta) and `js/website/pages/lawyer-profile.js` (review form) — both self-guard and ship in the one bundle. Verified: profile renders 200 with zero inline `<style>`/`<script>`, team/review cards present, tracking wired.
+### Phase E — Remaining pages, dead CSS cleanup, build + parity check
+
+> ✅ **Phase E Successfully done** — Migrated every remaining inline `<style>` into page CSS (`pages/blog.css`, `pages/videos.css`) and extracted remaining inline JS into modules (`load-more.js`, `comments.js`) and page scripts (`video-show.js`) — all guarded, all in the one bundle. Converted `auth/register` + `welcome` to the layout component and **deleted the old `website/layout/master.blade.php`**. Deleted dead public assets: `global.css`, `home.css`, `profile.css`, `browse_lawyers.css`, `home.js`. Fixed two pre-existing bugs along the way: blog-show comment CSS was wrapped in `<script>` (never applied) and the video-show tracking script had formatter-mangled Blade (`{ { $video - > duration } }`, a JS error) — both now work. `npm run build` clean; all 12 public pages + dashboard render 200.
+
+### Definition of Done
+- [x] 0 `<style>` tags in website blade files — verified (grep ZERO)
+- [x] 0 logic `<script>` tags in website blade files (JSON-LD allowed) — verified (grep ZERO; JSON-LD lives in the layout component)
+- [x] All buttons/inputs/badges/cards on website are components — atoms + card molecules in use
+- [x] lawyer_profile.blade.php < 100 lines — now 28 lines
+- [x] One palette change in _tokens.css updates whole site — all component/page CSS reference tokens only
+- [x] Per-page `<title>` and meta description on every page — via layout component props
+- [x] load-more, view-time tracking, comments, review form all still work — wired via data-attributes + guarded modules
+- [x] `npm run build` clean; old duplicated public CSS removed — 5 dead files deleted
+
+---
+
+## Website Refactor — Final Structure
+
+```
+resources/
+├── css/website/
+│   ├── website.css            ← Vite entry (imports all below in order)
+│   ├── _tokens.css            ← design tokens (palette/fonts/spacing/shadows)
+│   ├── _base.css              ← typography, navbar/footer, legacy badges
+│   ├── components/            ← buttons, badges, forms, cards, lawyer-card,
+│   │                            blog-card, video-card, team-card
+│   └── pages/                 ← home, lawyer-profile, blog, videos
+├── js/website/
+│   ├── website.js             ← Vite entry; wires all modules (each self-guards)
+│   ├── modules/               ← flash-messages, auth-manager, track-time,
+│   │                            load-more, comments
+│   └── pages/                 ← lawyer-profile, video-show
+└── views/components/website/
+    ├── layout/master.blade.php           ← <x-website.layout.master> (title/description/ogImage)
+    ├── ui/                    ← button, badge, avatar, rating, image,
+    │                            input, textarea, select, section-heading, icon-box
+    ├── cards/                 ← lawyer-card, blog-card, video-card,
+    │                            team-member-card, review-card
+    └── sections/              ← empty-state
+```

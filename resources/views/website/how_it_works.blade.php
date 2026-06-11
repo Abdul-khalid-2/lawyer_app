@@ -1,57 +1,8 @@
-@extends('website.layout.master')
-
-@push('css')
-<link rel="stylesheet" href="{{ asset('website/css/home.css') }}">
-<style>
-    /* .hero-section {
-        background: 
-            linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
-            url('{{ asset('website/images/hero-bg.jpg') }}');
-        background-size: cover;
-        background-position: center;
-        padding: 120px 0;
-        color: white;
-    } */
-    .hero-section {
-        position: relative;
-        overflow: hidden;
-        color: white;
-        padding: 120px 0;
-    }
-
-    .hero-section .hero-bg {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
-
-    .hero-section .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(44, 62, 80, 0.8);
-        z-index: 2;
-    }
-
-    .hero-section .hero-content {
-        position: relative;
-        z-index: 3;
-    }
-</style>
-@endpush
-
-@section('content')
+<x-website.layout.master title="How It Works - Law-Skoolyst"
+    description="Learn how Law-Skoolyst connects you with the right lawyer in three simple steps — search, compare and consult verified legal professionals.">
 
 <!-- Hero Section -->
 <section class="hero-section text-center" id="home">
-    <!-- <img src="{{ asset('website/hero_image.JPG') }}" alt="Hero background" class="hero-bg"> -->
-
     <div class="hero-overlay"></div>
 
     <div class="hero-content container">
@@ -59,8 +10,8 @@
             <div class="col-lg-8 mx-auto">
                 <h1 class="display-4 mb-4 text-white">Your Trusted Legal Partner for Justice And Rights</h1>
                 <p class="lead mb-5 text-light">Expert legal counsel from experienced advocates and law firms. Schedule consultations, get case reviews, and find the right representation for your legal matters.</p>
-                <a href="{{ route('find-lawyeres') }}" class="btn btn-primary btn-lg me-3">Browse Lawyers</a>
-                <a href="#how-it-works" class="btn btn-outline-light btn-lg">Legal Consultation</a>
+                <x-website.ui.button :href="route('find-lawyeres')" variant="primary" size="lg" class="me-3">Browse Lawyers</x-website.ui.button>
+                <x-website.ui.button href="#how-it-works" variant="outline-light" size="lg">Legal Consultation</x-website.ui.button>
             </div>
         </div>
     </div>
@@ -71,28 +22,22 @@
 <!-- How It Works -->
 <section class="section-padding bg-light" id="how-it-works">
     <div class="container">
-        <h2 class="section-title text-center">How It Works</h2>
+        <x-website.ui.section-heading title="How It Works" center />
         <div class="row">
-            <div class="col-md-4 text-center mb-4">
-                <div class="mb-4">
-                    <i class="fas fa-search fa-3x text-secondary"></i>
-                </div>
-                <h4>1. Search Lawyers</h4>
-                <p>Browse through our verified lawyer profiles by specialization, location, or experience.</p>
+            <div class="col-md-4 mb-4">
+                <x-website.ui.icon-box icon="fas fa-search" number="1" title="Search Lawyers">
+                    Browse through our verified lawyer profiles by specialization, location, or experience.
+                </x-website.ui.icon-box>
             </div>
-            <div class="col-md-4 text-center mb-4">
-                <div class="mb-4">
-                    <i class="fas fa-user-check fa-3x text-secondary"></i>
-                </div>
-                <h4>2. Connect</h4>
-                <p>Contact lawyers directly through our platform to discuss your legal needs.</p>
+            <div class="col-md-4 mb-4">
+                <x-website.ui.icon-box icon="fas fa-user-check" number="2" title="Connect">
+                    Contact lawyers directly through our platform to discuss your legal needs.
+                </x-website.ui.icon-box>
             </div>
-            <div class="col-md-4 text-center mb-4">
-                <div class="mb-4">
-                    <i class="fas fa-handshake fa-3x text-secondary"></i>
-                </div>
-                <h4>3. Get Representation</h4>
-                <p>Hire the right lawyer and get the legal representation you deserve.</p>
+            <div class="col-md-4 mb-4">
+                <x-website.ui.icon-box icon="fas fa-handshake" number="3" title="Get Representation">
+                    Hire the right lawyer and get the legal representation you deserve.
+                </x-website.ui.icon-box>
             </div>
         </div>
 
@@ -114,7 +59,7 @@
                     <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Showcase your experience</li>
                     <li class="mb-2"><i class="fas fa-check-circle text-secondary me-2"></i> Connect with clients</li>
                 </ul>
-                <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#registerModal">Join as a Lawyer</button>
+                <x-website.ui.button variant="primary" class="mt-3" data-bs-toggle="modal" data-bs-target="#registerModal">Join as a Lawyer</x-website.ui.button>
             </div>
         </div>
     </div>
@@ -154,8 +99,4 @@
 
 
 
-@push('js')
-<script src="{{ asset('website/js/home.js') }}"></script>
-@endpush
-
-@endsection
+</x-website.layout.master>

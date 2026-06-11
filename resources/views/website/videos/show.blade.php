@@ -1,90 +1,9 @@
-@extends('website.layout.master')
+<x-website.layout.master :title="$video->title . ' - Law-Skoolyst'"
+    :description="$video->description ? \Illuminate\Support\Str::limit(strip_tags($video->description), 155) : 'Watch ' . $video->title . ' on Law-Skoolyst.'"
+    :ogImage="$video->thumbnail_url ?? null">
 
-@push('css')
-<style>
-    .video-container {
-        background: #000;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
 
-    .video-player {
-        width: 100%;
-        height: 500px;
-        border: none;
-    }
 
-    .video-stats {
-        background: #f8f9fa;
-        border-radius: 8px;
-        padding: 1rem;
-    }
-
-    .lawyer-card {
-        transition: transform 0.3s ease;
-    }
-
-    .lawyer-card:hover {
-        transform: translateY(-3px);
-    }
-
-    .related-video-card {
-        transition: all 0.3s ease;
-        border: none;
-    }
-
-    .related-video-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .video-thumbnail {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .video-thumbnail::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: 1;
-    }
-
-    .video-play-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 0, 0, 0.8);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 2;
-    }
-
-    .video-play-icon i {
-        color: white;
-        font-size: 16px;
-        margin-left: 2px;
-    }
-
-    @media (max-width: 768px) {
-        .video-player {
-            height: 300px;
-        }
-    }
-</style>
-@endpush
-
-@section('content')
 <!-- Video Detail Section -->
 <section class="py-5">
     <div class="container">
@@ -92,7 +11,9 @@
             <!-- Main Video Content -->
             <div class="col-lg-8">
                 <!-- Video Player -->
-                <div class="video-container mb-4">
+                <div class="video-container mb-4"
+                    data-video-track-url="{{ route('website.videos.track-view', $video->uuid) }}"
+                    data-video-duration="{{ $video->duration ?? 0 }}">
                     <iframe class="video-player"
                         src="{{ $video->embed_url }}?rel=0&modestbranding=1"
                         frameborder="0"
@@ -312,66 +233,5 @@
         </div>
     </div>
 </section>
-@endsection
 
-@push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Track video view time
-        const videoIframe = document.querySelector('.video-player');
-        let watchStartTime = Date.now();
-        let watchInterval;
-        let maxWatchTime = {
-            {
-                $video - > duration ?? 0
-            }
-        }* 1000; // Convert to milliseconds
-
-        function startTracking() {
-            watchStartTime = Date.now();
-            watchInterval = setInterval(sendWatchTime, 30000); // Send every 30 seconds
-        }
-
-        function sendWatchTime() {
-            const currentTime = Date.now();
-            const watchTime = Math.floor((currentTime - watchStartTime) / 1000); // Convert to seconds
-
-            // Don't send more than video duration
-            const actualWatchTime = Math.min(watchTime, {
-                {
-                    $video - > duration ?? 0
-                }
-            });
-
-            fetch('{{ route("website.videos.track-view", $video->uuid) }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    watch_time: actualWatchTime,
-                    completed: actualWatchTime >= ({
-                        {
-                            $video - > duration ?? 0
-                        }
-                    }* 0.9) // 90% watched
-                })
-            });
-        }
-
-        function stopTracking() {
-            if (watchInterval) {
-                clearInterval(watchInterval);
-                sendWatchTime(); // Send final time
-            }
-        }
-
-        // Track when user leaves the page
-        window.addEventListener('beforeunload', stopTracking);
-
-        // Start tracking when page loads (assuming video auto-plays or user interaction)
-        startTracking();
-    });
-</script>
-@endpush
+</x-website.layout.master>

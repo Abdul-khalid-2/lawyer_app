@@ -42,20 +42,3 @@
         </div>
     @endif
 </div>
-
-<style>
-    .comment-replies {
-        margin-left: 2rem;
-        padding-left: 1.5rem;
-        border-left: 2px solid #e9ecef;
-    }
-    
-    /* Different background colors for different depths */
-    .comment-item .comment-item .comment-item {
-        background-color: #f8f9fa !important;
-    }
-    
-    .comment-item .comment-item .comment-item .comment-item {
-        background-color: #ffffff !important;
-    }
-</style>

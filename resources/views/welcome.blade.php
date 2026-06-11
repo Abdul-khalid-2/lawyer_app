@@ -1,10 +1,5 @@
-@extends('website.layout.master')
+<x-website.layout.master>
 
-@push('css')
-<link rel="stylesheet" href="{{ asset('website/css/home.css') }}">
-@endpush
-
-@section('content')
 
 <!-- Hero Section -->
 <section class="hero-section text-center" id="home">
@@ -280,8 +275,4 @@
     </div>
 </section>
 
-@push('js')
-<script src="{{ asset('website/js/home.js') }}"></script>
-@endpush
-
-@endsection
+</x-website.layout.master>

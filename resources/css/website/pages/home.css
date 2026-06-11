@@ -1,0 +1,89 @@
+/* ============================================================
+   Home + How-It-Works page styles
+   (migrated from public/website/css/home.css + inline hero blocks)
+   ============================================================ */
+
+/* ---- Hero ---- */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    color: var(--lc-on-primary);
+    padding: 120px 0;
+}
+.hero-section .hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.hero-section .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(44 62 80 / .8);
+    z-index: 2;
+}
+.hero-section .hero-content {
+    position: relative;
+    z-index: 3;
+}
+
+/* ---- Section spacing ---- */
+.section-padding {
+    padding: 80px 0;
+}
+
+/* ---- Stats ---- */
+.stats-box {
+    background-color: var(--lc-surface-alt);
+    padding: 30px;
+    border-radius: var(--lc-radius);
+    text-align: center;
+    box-shadow: var(--lc-shadow-sm);
+}
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--lc-secondary);
+}
+
+/* ---- Legacy lawyer card (home featured grid — replaced by component in Phase C) ---- */
+.lawyer-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--lc-shadow);
+    transition: var(--lc-transition);
+    margin-bottom: 30px;
+}
+.lawyer-card:hover {
+    transform: translateY(-10px);
+}
+.lawyer-img {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* ---- Testimonials ---- */
+.testimonial-card {
+    background-color: var(--lc-surface);
+    padding: 30px;
+    border-radius: var(--lc-radius);
+    box-shadow: var(--lc-shadow-sm);
+    margin: 15px;
+}
+.testimonial-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+.rating {
+    color: #f39c12;
+}

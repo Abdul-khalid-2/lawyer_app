@@ -1,0 +1,66 @@
+/* ============================================================
+   Video card molecule — <x-website.cards.video-card>
+   ============================================================ */
+.lc-video-card {
+    box-shadow: var(--lc-shadow-sm);
+}
+.lc-video-card__thumb {
+    position: relative;
+    overflow: hidden;
+}
+.lc-video-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lc-on-primary);
+    font-size: 1.4rem;
+    background: rgb(0 0 0 / .25);
+    transition: var(--lc-transition);
+    text-decoration: none;
+}
+.lc-video-card__play::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--lc-accent);
+    opacity: .92;
+    transition: var(--lc-transition);
+}
+.lc-video-card__play i {
+    position: relative;
+    z-index: 1;
+    margin-left: 3px;
+}
+.lc-video-card__play:hover {
+    background: rgb(0 0 0 / .35);
+    color: var(--lc-on-primary);
+}
+.lc-video-card__play:hover::before {
+    transform: scale(1.12);
+}
+.lc-video-card__title {
+    margin-bottom: var(--lc-space-2);
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+.lc-video-card__title a {
+    color: var(--lc-text);
+    text-decoration: none;
+    transition: var(--lc-transition);
+}
+.lc-video-card__title a:hover {
+    color: var(--lc-accent);
+}
+.lc-video-card__desc {
+    font-size: .85rem;
+    color: var(--lc-text-muted);
+    flex-grow: 1;
+}
+.lc-video-card__footer {
+    padding-top: var(--lc-space-3);
+    border-top: 1px solid var(--lc-border);
+}

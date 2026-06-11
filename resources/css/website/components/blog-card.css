@@ -1,0 +1,40 @@
+/* ============================================================
+   Blog card molecule — <x-website.cards.blog-card>
+   ============================================================ */
+.lc-blog-card {
+    box-shadow: var(--lc-shadow-sm);
+}
+.lc-blog-card__img {
+    border-radius: 0;
+}
+.lc-blog-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 9;
+    background-color: var(--lc-surface-alt);
+    color: var(--lc-text-muted);
+    font-size: 2.5rem;
+}
+.lc-blog-card__title {
+    margin-bottom: var(--lc-space-2);
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+.lc-blog-card__title a {
+    color: var(--lc-text);
+    text-decoration: none;
+    transition: var(--lc-transition);
+}
+.lc-blog-card__title a:hover {
+    color: var(--lc-secondary);
+}
+.lc-blog-card__excerpt {
+    font-size: .9rem;
+    color: var(--lc-text-muted);
+    flex-grow: 1;
+}
+.lc-blog-card__footer {
+    padding-top: var(--lc-space-3);
+    border-top: 1px solid var(--lc-border);
+}

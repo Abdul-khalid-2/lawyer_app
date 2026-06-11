@@ -1,0 +1,50 @@
+/* ============================================================
+   Badge atom — <x-website.ui.badge>
+   ============================================================ */
+.lc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .35rem .75rem;
+    font-size: .75rem;
+    font-weight: 600;
+    line-height: 1;
+    border-radius: var(--lc-radius-pill);
+    white-space: nowrap;
+}
+
+.lc-badge--neutral {
+    background-color: var(--lc-surface-alt);
+    color: var(--lc-text-muted);
+    border: 1px solid var(--lc-border);
+}
+
+.lc-badge--specialization {
+    background-color: #e8f4fc;
+    color: var(--lc-secondary);
+}
+
+.lc-badge--verified {
+    background-color: var(--lc-secondary);
+    color: var(--lc-on-primary);
+}
+
+.lc-badge--featured {
+    background-color: var(--lc-warning);
+    color: #3a2f00;
+}
+
+.lc-badge--success {
+    background-color: color-mix(in srgb, var(--lc-success) 15%, white);
+    color: var(--lc-success);
+}
+
+.lc-badge--warning {
+    background-color: color-mix(in srgb, var(--lc-warning) 22%, white);
+    color: #8a5a00;
+}
+
+.lc-badge--danger {
+    background-color: color-mix(in srgb, var(--lc-danger) 12%, white);
+    color: var(--lc-danger);
+}

@@ -1,0 +1,55 @@
+/* ============================================================
+   Design Tokens — single source of truth for the public website.
+   Change the site's whole look by editing this file only.
+   ============================================================ */
+:root {
+    /* Brand (extracted from public/website/css/global.css) */
+    --lc-primary: #2c3e50;
+    --lc-primary-dark: #1a252f;
+    --lc-secondary: #3498db;
+    --lc-secondary-dark: #2980b9;
+    --lc-accent: #e74c3c;
+    --lc-accent-soft: #fdf0ee;
+
+    /* Neutrals */
+    --lc-bg: #f5f7f9;
+    --lc-surface: #ffffff;
+    --lc-surface-alt: #f8f9fa;
+    --lc-border: #e5e7eb;
+    --lc-text: #333333;
+    --lc-text-muted: #6b7280;
+    --lc-on-primary: #ffffff;
+
+    /* Status */
+    --lc-success: #16a34a;
+    --lc-danger: #dc2626;
+    --lc-warning: #f0ad4e;
+    --lc-info: #2563eb;
+    --lc-star: #ffc107;
+
+    /* Typography */
+    --lc-font-heading: 'Playfair Display', serif;
+    --lc-font-body: 'Inter', sans-serif;
+
+    /* Spacing scale */
+    --lc-space-1: .25rem;
+    --lc-space-2: .5rem;
+    --lc-space-3: 1rem;
+    --lc-space-4: 1.5rem;
+    --lc-space-5: 2.5rem;
+    --lc-space-6: 4rem;
+
+    /* Radius */
+    --lc-radius-sm: .375rem;
+    --lc-radius: .75rem;
+    --lc-radius-lg: 1rem;
+    --lc-radius-pill: 30px;
+
+    /* Shadows */
+    --lc-shadow-sm: 0 1px 3px rgb(0 0 0 / .08);
+    --lc-shadow: 0 4px 16px rgb(0 0 0 / .10);
+    --lc-shadow-lg: 0 12px 32px rgb(0 0 0 / .14);
+
+    /* Transitions */
+    --lc-transition: all .25s ease;
+}

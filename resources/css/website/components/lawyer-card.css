@@ -1,0 +1,51 @@
+/* ============================================================
+   Lawyer card molecule — <x-website.cards.lawyer-card>
+   + empty-state section
+   ============================================================ */
+.lc-lawyer-card {
+    box-shadow: var(--lc-shadow-sm);
+}
+.lc-lawyer-card__photo {
+    border-radius: 0;
+}
+.lc-lawyer-card__name {
+    font-family: var(--lc-font-heading);
+    font-weight: 700;
+    color: var(--lc-text);
+}
+.lc-lawyer-card__meta {
+    font-size: .85rem;
+    color: var(--lc-secondary);
+    font-weight: 600;
+}
+.lc-lawyer-card__meta--muted {
+    color: var(--lc-text-muted);
+    font-weight: 400;
+}
+.lc-lawyer-card__bio {
+    font-size: .85rem;
+    color: var(--lc-text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---- Empty state ---- */
+.lc-empty-state {
+    text-align: center;
+    padding: var(--lc-space-6) var(--lc-space-3);
+    color: var(--lc-text-muted);
+}
+.lc-empty-state__icon {
+    font-size: 3rem;
+    margin-bottom: var(--lc-space-3);
+    opacity: .5;
+}
+.lc-empty-state__title {
+    margin-bottom: var(--lc-space-2);
+    color: var(--lc-text);
+}
+.lc-empty-state__message {
+    margin: 0;
+}

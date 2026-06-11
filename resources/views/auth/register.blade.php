@@ -1,4 +1,5 @@
-@extends('website.layout.master')
+<x-website.layout.master title="Create Your Account - Law-Skoolyst"
+    description="Register on Law-Skoolyst as a client or a lawyer.">
 
 @push('css')
 <style>
@@ -446,7 +447,6 @@
 </style>
 @endpush
 
-@section('content')
 <section class="auth-section">
     <div class="container-fluid px-3 px-sm-4">
         <div class="row justify-content-center">
@@ -631,7 +631,6 @@
         </div>
     </div>
 </section>
-@endsection
 
 @push('js')
 <script>
@@ -799,3 +798,4 @@
     });
 </script>
 @endpush
+</x-website.layout.master>

@@ -1,0 +1,113 @@
+/* ============================================================
+   Button atom — <x-website.ui.button>
+   ============================================================ */
+.lc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lc-space-2);
+    font-family: var(--lc-font-body);
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    border-radius: var(--lc-radius-pill);
+    cursor: pointer;
+    transition: var(--lc-transition);
+    user-select: none;
+}
+
+.lc-btn:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--lc-secondary) 45%, transparent);
+    outline-offset: 2px;
+}
+
+/* Sizes */
+.lc-btn--sm { padding: .45rem 1.1rem; font-size: .85rem; }
+.lc-btn--md { padding: .65rem 1.6rem; font-size: .95rem; }
+.lc-btn--lg { padding: .85rem 2.2rem; font-size: 1.05rem; }
+
+.lc-btn__icon--right { order: 2; }
+
+/* Variants */
+.lc-btn--primary {
+    background-color: var(--lc-secondary);
+    border-color: var(--lc-secondary);
+    color: var(--lc-on-primary);
+}
+.lc-btn--primary:hover {
+    background-color: var(--lc-secondary-dark);
+    border-color: var(--lc-secondary-dark);
+    color: var(--lc-on-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--lc-secondary) 40%, transparent);
+}
+
+.lc-btn--outline {
+    background-color: transparent;
+    border-color: var(--lc-secondary);
+    color: var(--lc-secondary);
+}
+.lc-btn--outline:hover {
+    background-color: var(--lc-secondary);
+    color: var(--lc-on-primary);
+    transform: translateY(-2px);
+}
+
+.lc-btn--accent {
+    background-color: var(--lc-primary);
+    border-color: var(--lc-primary);
+    color: var(--lc-on-primary);
+}
+.lc-btn--accent:hover {
+    background-color: var(--lc-primary-dark);
+    border-color: var(--lc-primary-dark);
+    color: var(--lc-on-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--lc-primary) 35%, transparent);
+}
+
+.lc-btn--ghost {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--lc-on-primary);
+}
+.lc-btn--ghost:hover {
+    background-color: rgb(255 255 255 / .15);
+    color: var(--lc-on-primary);
+}
+
+.lc-btn--success {
+    background-color: transparent;
+    border-color: var(--lc-success);
+    color: var(--lc-success);
+}
+.lc-btn--success:hover {
+    background-color: var(--lc-success);
+    color: var(--lc-on-primary);
+}
+
+.lc-btn--danger {
+    background-color: var(--lc-danger);
+    border-color: var(--lc-danger);
+    color: var(--lc-on-primary);
+}
+.lc-btn--danger:hover {
+    background-color: color-mix(in srgb, var(--lc-danger) 85%, black);
+    color: var(--lc-on-primary);
+    transform: translateY(-2px);
+}
+
+/* Light-on-dark outline (e.g. hero) */
+.lc-btn--outline-light {
+    background-color: transparent;
+    border-color: var(--lc-on-primary);
+    color: var(--lc-on-primary);
+}
+.lc-btn--outline-light:hover {
+    background-color: var(--lc-on-primary);
+    color: var(--lc-primary);
+    transform: translateY(-2px);
+}

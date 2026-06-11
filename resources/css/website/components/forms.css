@@ -1,0 +1,81 @@
+/* ============================================================
+   Form atoms — input / textarea / select
+   ============================================================ */
+.lc-field {
+    margin-bottom: var(--lc-space-3);
+}
+
+.lc-field__label {
+    display: block;
+    margin-bottom: var(--lc-space-2);
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--lc-text);
+}
+
+.lc-field__req {
+    color: var(--lc-danger);
+    margin-left: 2px;
+}
+
+.lc-field__control {
+    position: relative;
+}
+
+.lc-field__control--icon .lc-field__icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--lc-text-muted);
+    pointer-events: none;
+}
+
+.lc-field__control--icon .lc-input {
+    padding-left: 2.6rem;
+}
+
+.lc-input {
+    width: 100%;
+    padding: .7rem 1rem;
+    font-family: var(--lc-font-body);
+    font-size: .95rem;
+    color: var(--lc-text);
+    background-color: var(--lc-surface);
+    border: 1.5px solid var(--lc-border);
+    border-radius: var(--lc-radius-sm);
+    transition: var(--lc-transition);
+}
+
+.lc-input::placeholder {
+    color: color-mix(in srgb, var(--lc-text-muted) 80%, transparent);
+}
+
+.lc-input:focus {
+    outline: none;
+    border-color: var(--lc-secondary);
+    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--lc-secondary) 22%, transparent);
+}
+
+.lc-input.is-invalid {
+    border-color: var(--lc-danger);
+}
+
+.lc-textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.lc-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236b7280'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.lc-field__error {
+    margin: .35rem 0 0;
+    font-size: .8rem;
+    color: var(--lc-danger);
+}

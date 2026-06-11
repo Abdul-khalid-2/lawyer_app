@@ -1,72 +1,7 @@
-@extends('website.layout.master')
+<x-website.layout.master :title="'#' . $tag . ' - Law-Skoolyst Blog'"
+    :description="'Legal articles tagged ' . $tag . ' on Law-Skoolyst.'">
 
-@push('css')
-<style>
 
-    .blog-search-form .form-control {
-        border: none;
-        box-shadow: none;
-    }
-
-    .blog-search-form .btn {
-        border: none;
-    }
-
-    .blog-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .blog-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .blog-card .card-title a:hover {
-        color: #667eea !important;
-    }
-
-    .sidebar-widget .list-group-item {
-        border: none;
-        padding: 0.75rem 0;
-    }
-
-    .sidebar-widget .list-group-item:hover {
-        background: transparent;
-        color: #667eea;
-    }
-
-    .pagination .page-link {
-        border-radius: 8px;
-        margin: 0 2px;
-        border: none;
-    }
-
-    .pagination .page-item.active .page-link {
-        background: #667eea;
-        border-color: #667eea;
-    }
-
-    .tag-header {
-        background: linear-gradient(135deg, #2f2f2f 0%, #000000 100%);
-    }
-
-    .tag-badge {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
-    }
-
-    .breadcrumb-item a {
-        color: #667eea;
-        text-decoration: none;
-    }
-
-    .breadcrumb-item.active {
-        color: #86888a;
-    }
-</style>
-@endpush
-
-@section('content')
 <!-- Tag Header -->
 <section class="tag-header text-white py-5">
     <div class="container">
@@ -147,91 +82,7 @@
                 @if($posts->count() > 0)
                 <div class="row">
                     @foreach($posts as $post)
-                    <div class="col-md-6 col-lg-6 mb-4">
-                        <article class="blog-card card h-100 border-0 shadow-sm">
-                            @if($post->featured_image)
-                            <img src="{{ asset('website/' . $post->featured_image) }}"
-                                class="card-img-top" alt="{{ $post->title }}"
-                                style="height: 200px; object-fit: cover;">
-                            @else
-                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-                                style="height: 200px;">
-                                <i class="fas fa-newspaper fa-3x text-muted"></i>
-                            </div>
-                            @endif
-
-                            <div class="card-body">
-                                @if($post->category)
-                                <a href="{{ route('website.blog.category', $post->category->slug) }}"
-                                    class="badge bg-primary text-decoration-none mb-2">
-                                    {{ $post->category->name }}
-                                </a>
-                                @endif
-
-                                <h5 class="card-title">
-                                    <a href="{{ route('website.blog.show', $post->slug) }}"
-                                        class="text-dark text-decoration-none">
-                                        {{ Str::limit($post->title, 60) }}
-                                    </a>
-                                </h5>
-
-                                <p class="card-text text-muted">
-                                    {{ Str::limit(strip_tags($post->excerpt ?: $post->content), 120) }}
-                                </p>
-
-                                <!-- Post Tags -->
-                                @if($post->tags)
-                                    <div class="post-tags mb-3">
-                                        @php
-                                            $postTags = [];
-                                            if (is_string($post->tags)) {
-                                                if (str_starts_with($post->tags, '[') && str_ends_with($post->tags, ']')) {
-                                                    $postTags = json_decode($post->tags, true) ?? [];
-                                                } else {
-                                                    $postTags = array_map('trim', explode(',', $post->tags));
-                                                }
-                                            } elseif (is_array($post->tags)) {
-                                                $postTags = $post->tags;
-                                            }
-                                        @endphp
-                                        
-                                        @foreach(array_slice($postTags, 0, 3) as $postTag)
-                                            @if(!empty(trim($postTag)))
-                                                <a href="{{ route('website.blog.tag', trim($postTag)) }}" 
-                                                   class="badge bg-light text-dark text-decoration-none me-1">
-                                                    #{{ trim($postTag) }}
-                                                </a>
-                                            @endif
-                                        @endforeach
-                                        
-                                        @if(count($postTags) > 3)
-                                            <span class="badge bg-secondary">+{{ count($postTags) - 3 }} more</span>
-                                        @endif
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="card-footer bg-transparent border-top-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ $post->lawyer->user->profile_image ? asset('website/' . $post->lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
-                                            alt="{{ $post->lawyer->user->name }}"
-                                            class="rounded-circle me-2"
-                                            style="width: 32px; height: 32px; object-fit: cover;">
-                                        <small class="text-muted">{{ $post->lawyer->user->name }}</small>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <small class="text-muted">
-                                        {{ $post->published_at->format('M j, Y') }}
-                                    </small>
-                                    <small class="text-muted">
-                                        <i class="far fa-eye me-1"></i>{{ $post->view_count }}
-                                    </small>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                        <x-website.cards.blog-card :post="$post" :showTags="true" />
                     @endforeach
                 </div>
 
@@ -375,4 +226,4 @@
         </div>
     </div>
 </section>
-@endsection
+</x-website.layout.master>

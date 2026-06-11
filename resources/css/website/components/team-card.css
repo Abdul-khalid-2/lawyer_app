@@ -1,0 +1,10 @@
+/* ============================================================
+   Team member card molecule — <x-website.cards.team-member-card>
+   ============================================================ */
+.lc-team-card {
+    border: 0;
+    box-shadow: var(--lc-shadow-sm);
+}
+.lc-team-card .lc-avatar {
+    display: block;
+}

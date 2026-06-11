@@ -1,0 +1,113 @@
+/* ============================================================
+   Video pages (index / show)
+   Consolidated from the per-page inline <style> blocks.
+   ============================================================ */
+
+/* ---- Headers / search ---- */
+.video-header {
+    background: linear-gradient(135deg, #010a8a 0%, #cc0000 100%);
+}
+.video-search-form .form-control {
+    border: none;
+    box-shadow: none;
+}
+.video-search-form .btn {
+    border: none;
+}
+
+/* ---- Sidebar / pagination / topics ---- */
+.sidebar-widget .list-group-item {
+    border: none;
+    padding: .75rem 0;
+}
+.sidebar-widget .list-group-item:hover {
+    background: transparent;
+    color: #010a8a;
+}
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 2px;
+    border: none;
+}
+.pagination .page-item.active .page-link {
+    background: #010a8a;
+    border-color: #010a8a;
+}
+.topic-badge {
+    background: var(--lc-surface-alt);
+    border: 1px solid var(--lc-border);
+    transition: var(--lc-transition);
+}
+.topic-badge:hover {
+    background: #010a8a;
+    color: var(--lc-on-primary);
+    border-color: #010a8a;
+}
+
+/* ---- Show: player + related (thumbnails still used on show page) ---- */
+.video-container {
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgb(0 0 0 / .3);
+}
+.video-player {
+    width: 100%;
+    height: 500px;
+    border: none;
+}
+.video-stats {
+    background: var(--lc-surface-alt);
+    border-radius: 8px;
+    padding: 1rem;
+}
+.lawyer-card {
+    transition: var(--lc-transition);
+}
+.lawyer-card:hover {
+    transform: translateY(-3px);
+}
+.related-video-card {
+    transition: var(--lc-transition);
+    border: none;
+}
+.related-video-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--lc-shadow);
+}
+.video-thumbnail {
+    position: relative;
+    overflow: hidden;
+}
+.video-thumbnail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / .3);
+    z-index: 1;
+}
+.video-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(255 0 0 / .8);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.video-play-icon i {
+    color: var(--lc-on-primary);
+    font-size: 16px;
+    margin-left: 2px;
+}
+
+@media (max-width: 768px) {
+    .video-player {
+        height: 300px;
+    }
+}

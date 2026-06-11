@@ -31,7 +31,7 @@ class WebsiteLawyersController extends Controller
         $hasMore = $lawyers->count() >= 10;
         $nextSkip = $skip + 10;
 
-        $html = view('website.lawyers_card', compact('lawyers'))->render();
+        $html = view('website.partials.lawyer-grid', compact('lawyers'))->render();
 
         return response()->json([
             'html' => $html,

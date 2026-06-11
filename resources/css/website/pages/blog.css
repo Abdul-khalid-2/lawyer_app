@@ -1,0 +1,150 @@
+/* ============================================================
+   Blog pages (index / category / tag / show)
+   Consolidated from the per-page inline <style> blocks.
+   ============================================================ */
+
+/* ---- Headers ---- */
+.blog-header,
+.tag-header {
+    background: linear-gradient(135deg, #2f2f2f 0%, #000000 100%);
+}
+
+.blog-search-form .form-control {
+    border: none;
+    box-shadow: none;
+}
+.blog-search-form .btn {
+    border: none;
+}
+
+/* ---- Sidebar widget ---- */
+.sidebar-widget .list-group-item {
+    border: none;
+    padding: .75rem 0;
+}
+.sidebar-widget .list-group-item:hover {
+    background: transparent;
+    color: var(--lc-secondary);
+}
+
+/* ---- Pagination ---- */
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 2px;
+    border: none;
+}
+.pagination .page-item.active .page-link {
+    background: var(--lc-secondary);
+    border-color: var(--lc-secondary);
+}
+
+/* ---- Category / tag badges & breadcrumb ---- */
+.category-badge {
+    background: color-mix(in srgb, var(--lc-secondary) 12%, white);
+    color: var(--lc-secondary);
+    padding: .5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+.tag-badge {
+    font-size: 1rem;
+    padding: .5rem 1rem;
+}
+.breadcrumb-item a {
+    color: var(--lc-secondary);
+    text-decoration: none;
+}
+.breadcrumb-item.active {
+    color: #86888a;
+}
+
+/* ---- Article body (show) ---- */
+.blog-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+.blog-content .content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--lc-primary);
+}
+.blog-content .content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: .75rem;
+    color: var(--lc-primary);
+}
+.blog-content .content p {
+    margin-bottom: 1.5rem;
+}
+.blog-content .content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+.blog-content .content blockquote {
+    border-left: 4px solid var(--lc-secondary);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--lc-text-muted);
+}
+
+/* ---- Comments (was previously wrapped in <script> by mistake — now applied) ---- */
+.comments-section {
+    margin-top: 3rem;
+}
+.comment-item {
+    border-left: 3px solid transparent;
+    transition: var(--lc-transition);
+    position: relative;
+}
+.comment-item:hover {
+    border-left-color: var(--lc-secondary);
+    background-color: var(--lc-surface-alt);
+}
+.comment-replies {
+    margin-left: 2.5rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--lc-border);
+    position: relative;
+}
+.comment-replies::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--lc-secondary), transparent);
+}
+.comment-depth-1 { margin-left: 1rem; }
+.comment-depth-2 { margin-left: 2rem; }
+.comment-depth-3 { margin-left: 3rem; }
+.comment-depth-4 { margin-left: 4rem; }
+
+/* Nested comment depth backgrounds */
+.comment-item .comment-item .comment-item {
+    background-color: var(--lc-surface-alt) !important;
+}
+.comment-item .comment-item .comment-item .comment-item {
+    background-color: var(--lc-surface) !important;
+}
+
+.comments-tree {
+    position: relative;
+}
+.reply-form {
+    display: none;
+    margin-top: 1rem;
+}
+.reply-form.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .comment-replies {
+        margin-left: 1rem;
+        padding-left: 1rem;
+    }
+}

@@ -1,53 +1,4 @@
-@extends('website.layout.master')
-
-@push('css')
-<link rel="stylesheet" href="{{ asset('website/css/home.css') }}">
-<style>
-    /* .hero-section {
-        background: 
-            linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
-            url('{{ asset('website/images/hero-bg.jpg') }}');
-        background-size: cover;
-        background-position: center;
-        padding: 120px 0;
-        color: white;
-    } */
-.hero-section {
-    position: relative;
-    overflow: hidden;
-    color: white;
-    padding: 120px 0;
-}
-
-.hero-section .hero-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.hero-section .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(44, 62, 80, 0.8);
-    z-index: 2;
-}
-
-.hero-section .hero-content {
-    position: relative;
-    z-index: 3;
-}
-
-</style>
-@endpush
-
-@section('content')
+<x-website.layout.master>
 
 <!-- Hero Section -->
 <section class="hero-section text-center" id="home">
@@ -60,8 +11,8 @@
             <div class="col-lg-8 mx-auto">
                 <h1 class="display-4 mb-4">Find the Perfect Lawyer for Your Legal Needs</h1>
                 <p class="lead mb-5">Connect with verified legal professionals specializing in various fields of law. Get the right representation for your case.</p>
-                <a href="#lawyers" class="btn btn-primary btn-lg me-3">Find a Lawyer</a>
-                <a href="#how-it-works" class="btn btn-outline-light btn-lg">Are you a Lawyer?</a>
+                <x-website.ui.button href="#lawyers" variant="primary" size="lg" class="me-3">Find a Lawyer</x-website.ui.button>
+                <x-website.ui.button href="#how-it-works" variant="outline-light" size="lg">Are you a Lawyer?</x-website.ui.button>
             </div>
         </div>
     </div>
@@ -72,67 +23,21 @@
 <!-- Featured Lawyers -->
 <section class="section-padding" id="lawyers">
     <div class="container">
-        <h2 class="section-title">Featured Lawyers</h2>
+        <x-website.ui.section-heading title="Featured Lawyers" />
         <div class="row" id="lawyersContainer">
             @forelse($featuredLawyers as $lawyer)
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="lawyer-card">
-                    <img src="{{ $lawyer->user->profile_image ? asset('website/' . $lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
-                        alt="{{ $lawyer->user->full_name }}" class="lawyer-img">
-                    <div class="p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h4 class="mb-0">{{ $lawyer->user->name }}</h4>
-                            @if($lawyer->is_verified)
-                            <span class="badge bg-success">Verified</span>
-                            @endif
-                        </div>
-                        <p class="text-muted mb-2">
-                            {{ $lawyer->specializations->first()->name ?? 'Legal Professional' }} •
-                            {{ $lawyer->years_of_experience }} years experience
-                        </p>
-                        <!-- <div class="mb-3">
-                            @foreach($lawyer->specializations->take(2) as $specialization)
-                            <span class="specialization-badge">{{ $specialization->name }}</span>
-                            @endforeach
-                        </div> -->
-                        @php
-                            $averageRating = $lawyer->reviews->avg('rating');
-                            $reviewCount = $lawyer->reviews->count();
-                        @endphp
-                        <!-- <div class="rating mb-2">
-                            @for($i = 1; $i <= 5; $i++)
-                                @if($i <=floor($averageRating))
-                                <i class="fas fa-star"></i>
-                                @elseif($i - 0.5 <= $averageRating)
-                                    <i class="fas fa-star-half-alt"></i>
-                                    @else
-                                    <i class="far fa-star"></i>
-                                    @endif
-                                    @endfor
-                                    <span class="ms-1">{{ number_format($averageRating, 1) }} ({{ $reviewCount }} reviews)</span>
-                        </div> -->
-                        <p class="text-muted mb-3">
-                            <i class="fas fa-map-marker-alt me-1"></i>
-                            {{ $lawyer->city ? $lawyer->city . ', ' . $lawyer->state : 'Location not specified' }}
-                        </p>
-                        <div class="d-flex">
-                            <a href="{{ route('website.lawyers.profile', $lawyer->uuid) }}" class="btn btn-outline-primary me-2">View Profile</a>
-                            <a href="#contact" class="btn btn-primary">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <x-website.cards.lawyer-card :lawyer="$lawyer" />
             @empty
-            <div class="col-12 text-center">
-                <p class="text-muted">No featured lawyers available at the moment.</p>
-            </div>
+                <div class="col-12">
+                    <x-website.sections.empty-state icon="fas fa-user-tie"
+                        title="No featured lawyers yet"
+                        message="Check back soon — verified lawyers are joining all the time." />
+                </div>
             @endforelse
         </div>
 
         <div class="text-center mt-5">
-            <a href="{{ route('find-lawyeres') }}" class="btn btn-outline-primary">
-                View All Lawyers
-            </a>
+            <x-website.ui.button :href="route('find-lawyeres')" variant="outline">View All Lawyers</x-website.ui.button>
         </div>
     </div>
 </section>
@@ -174,7 +79,7 @@
 <!-- Testimonials -->
 <section class="section-padding bg-light">
     <div class="container">
-        <h2 class="section-title text-center">What Our Clients Say</h2>
+        <x-website.ui.section-heading title="What Our Clients Say" center />
         <div class="row">
             @forelse($testimonials as $testimonial)
             <div class="col-lg-4 mb-4">
@@ -247,8 +152,4 @@
     </div>
 </section>
 
-@push('js')
-<script src="{{ asset('website/js/home.js') }}"></script>
-@endpush
-
-@endsection
+</x-website.layout.master>

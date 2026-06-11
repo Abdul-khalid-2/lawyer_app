@@ -1,0 +1,116 @@
+/* ============================================================
+   Base — typography, body, shared layout helpers.
+   Ported from public/website/css/global.css (visual parity).
+   ============================================================ */
+
+/* Bootstrap variable bridge — keeps existing .btn-primary etc. on-theme */
+:root {
+    --primary: var(--lc-primary);
+    --secondary: var(--lc-secondary);
+    --accent: var(--lc-accent);
+    --light: var(--lc-surface-alt);
+    --dark: var(--lc-primary);
+}
+
+body {
+    font-family: var(--lc-font-body);
+    color: var(--lc-text);
+    line-height: 1.6;
+    background-color: var(--lc-bg);
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--lc-font-heading);
+    font-weight: 700;
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px 0;
+    background-color: var(--lc-surface);
+    box-shadow: 0 2px 10px rgb(0 0 0 / .1);
+}
+
+.navbar-brand {
+    font-family: var(--lc-font-heading);
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--lc-primary);
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--lc-primary);
+    margin: 0 10px;
+}
+
+.nav-link:hover {
+    color: var(--lc-secondary);
+}
+
+/* Legacy Bootstrap button overrides (kept during migration to lc-btn) */
+.btn-primary {
+    background-color: var(--lc-secondary);
+    border-color: var(--lc-secondary);
+    padding: 10px 25px;
+    border-radius: var(--lc-radius-pill);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--lc-secondary-dark);
+    border-color: var(--lc-secondary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--lc-secondary);
+    border-color: var(--lc-secondary);
+    padding: 10px 25px;
+    border-radius: var(--lc-radius-pill);
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--lc-secondary);
+    color: var(--lc-on-primary);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--lc-primary);
+    color: var(--lc-on-primary);
+    padding: 60px 0 30px;
+    margin-top: 60px;
+}
+
+.footer a {
+    color: rgb(255 255 255 / .8);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--lc-on-primary);
+}
+
+/* Shared badges (legacy classes kept for parity) */
+.verified-badge {
+    background-color: var(--lc-secondary);
+    color: var(--lc-on-primary);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: .75rem;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.specialization-badge {
+    background-color: #e8f4fc;
+    color: var(--lc-secondary);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: .75rem;
+    margin-right: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+}

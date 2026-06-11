@@ -1,58 +1,8 @@
-@extends('website.layout.master')
-@push('css')
-    
-<script>
-    /* Comments Styles */
-    .comments-section {
-        margin-top: 3rem;
-    }
+<x-website.layout.master :title="$post->title . ' - Law-Skoolyst'"
+    :description="$post->excerpt ? \Illuminate\Support\Str::limit(strip_tags($post->excerpt), 155) : \Illuminate\Support\Str::limit(strip_tags($post->content), 155)"
+    :ogImage="$post->featured_image ? asset('website/' . $post->featured_image) : null">
 
-    .comment-item {
-        border-left: 3px solid transparent;
-        transition: all 0.3s ease;
-        position: relative;
-    }
 
-    .comment-item:hover {
-        border-left-color: #667eea;
-        background-color: #f8f9fa;
-    }
-
-    .comment-replies {
-        margin-left: 2.5rem;
-        padding-left: 1.5rem;
-        border-left: 2px solid #e9ecef;
-        position: relative;
-    }
-
-    .comment-replies::before {
-        content: '';
-        position: absolute;
-        left: -1px;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: linear-gradient(to bottom, transparent, #667eea, transparent);
-    }
-
-    /* Depth-based styling */
-    .comment-depth-1 { margin-left: 1rem; }
-    .comment-depth-2 { margin-left: 2rem; }
-    .comment-depth-3 { margin-left: 3rem; }
-    .comment-depth-4 { margin-left: 4rem; }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .comment-replies {
-            margin-left: 1rem;
-            padding-left: 1rem;
-        }
-    }
-
-</script>
-@endpush
-
-@section('content')
 <!-- Blog Post Header -->
 <section class="py-5 bg-light">
     <div class="container">
@@ -225,44 +175,5 @@
         </div>
     </div>
 </section>
-@endsection
 
-@push('css')
-<style>
-    .blog-content {
-        font-size: 1.1rem;
-        line-height: 1.8;
-    }
-
-    .blog-content .content h2 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        color: #2c3e50;
-    }
-
-    .blog-content .content h3 {
-        margin-top: 1.5rem;
-        margin-bottom: 0.75rem;
-        color: #2c3e50;
-    }
-
-    .blog-content .content p {
-        margin-bottom: 1.5rem;
-    }
-
-    .blog-content .content img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin: 1.5rem 0;
-    }
-
-    .blog-content .content blockquote {
-        border-left: 4px solid #667eea;
-        padding-left: 1.5rem;
-        margin: 1.5rem 0;
-        font-style: italic;
-        color: #6c757d;
-    }
-</style>
-@endpush
+</x-website.layout.master>
