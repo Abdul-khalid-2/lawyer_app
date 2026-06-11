@@ -56,9 +56,39 @@
                         <span>Blogs Categories</span>
                     </a>
                 </div>
+                <div class="nav-item">
+                    <a href="{{ route('pages.index') }}" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span>CMS Pages</span>
+                    </a>
+                </div>
             @endrole
 
             @role('lawyer')
+                <div class="nav-item">
+                    <a href="{{ route('schedule.index') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('clients.index') }}" class="nav-link">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Clients</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('cases.index') }}" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Cases</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('team-members.index') }}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>My Team</span>
+                    </a>
+                </div>
                 <div class="nav-item">
                     <a href="{{ route('blog-posts.index') }}" class="nav-link">
                         <i class="fas fa-gavel"></i>
@@ -69,6 +99,21 @@
                     <a href="{{ route('videos.index') }}" class="nav-link">
                          <i class="fas fa-video"></i>
                         <span>Videos</span>
+                    </a>
+                </div>
+            @endrole
+
+            @role('client')
+                <div class="nav-item">
+                    <a href="{{ route('client.cases.index') }}" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>My Cases</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('client.schedule') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule</span>
                     </a>
                 </div>
             @endrole

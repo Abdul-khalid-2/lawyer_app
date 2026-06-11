@@ -11,10 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('clients', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('clients', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lawyer_id')->constrained()->onDelete('cascade'); // primary lawyer
+            $table->string('phone')->nullable();
+            $table->string('cnic')->nullable(); // PK market national ID
+            $table->text('address')->nullable();
+            $table->string('city')->nullable();
+            $table->text('notes')->nullable(); // lawyer's private notes
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**

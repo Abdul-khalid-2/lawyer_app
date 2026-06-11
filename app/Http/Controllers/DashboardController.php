@@ -26,6 +26,8 @@ class DashboardController extends Controller
             return $this->superAdminDashboard();
         } elseif ($user->isLawyer()) {
             return $this->lawyerDashboard($user->lawyer);
+        } elseif ($user->isClient()) {
+            return redirect()->route('client.dashboard');
         }
 
         return redirect('/');

@@ -408,6 +408,65 @@
             </div>
             @endif
 
+            <!-- Team Section -->
+            @php
+                $activeTeamMembers = $lawyer->teamMembers()->where('is_active', true)->orderBy('order')->orderBy('name')->get();
+            @endphp
+            @if($activeTeamMembers->count() > 0)
+            <div class="profile-section">
+                <h3 class="section-title">Our Team</h3>
+                <div class="row">
+                    @foreach($activeTeamMembers as $member)
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100 text-center border-0 shadow-sm">
+                            <div class="card-body">
+                                <img src="{{ $member->photo_url }}" alt="{{ $member->name }}"
+                                    class="rounded-circle mb-3"
+                                    style="width: 85px; height: 85px; object-fit: cover;">
+                                <h5 class="mb-1">{{ $member->name }}</h5>
+                                <p class="text-primary fw-bold mb-1">{{ $member->designation }}</p>
+                                @if($member->qualifications)
+                                <p class="small text-muted mb-1">{{ $member->qualifications }}</p>
+                                @endif
+                                @if($member->years_of_experience)
+                                <p class="small text-muted mb-0">{{ $member->years_of_experience }}+ years experience</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+            <!-- Availability Section -->
+            @php
+                $publicSlots = $lawyer->schedules()->where('is_public', true)
+                    ->where('start_datetime', '>=', now())
+                    ->orderBy('start_datetime')->limit(6)->get();
+            @endphp
+            @if($publicSlots->count() > 0)
+            <div class="profile-section">
+                <h3 class="section-title">Upcoming Availability</h3>
+                <div class="row">
+                    @foreach($publicSlots as $slot)
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar-check text-success fa-2x mb-2"></i>
+                                <h6 class="mb-1">{{ $slot->start_datetime->format('D, d M Y') }}</h6>
+                                <p class="text-muted mb-0">
+                                    {{ $slot->start_datetime->format('h:i A') }} – {{ $slot->end_datetime->format('h:i A') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <p class="small text-muted mb-0">Contact the lawyer to book a consultation during these slots.</p>
+            </div>
+            @endif
+
             <!-- Reviews Section -->
             <div class="profile-section">
                 <div class="d-flex justify-content-between align-items-center mb-3">

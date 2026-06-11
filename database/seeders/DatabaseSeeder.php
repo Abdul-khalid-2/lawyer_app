@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             SpecializationSeeder::class,
-            SuperAdminSeeder::class
+            SuperAdminSeeder::class,
+            PracticeManagementSeeder::class,
+            PageSeeder::class,
         ]);
         // User::factory()->create([
         //     'name' => 'Test User',

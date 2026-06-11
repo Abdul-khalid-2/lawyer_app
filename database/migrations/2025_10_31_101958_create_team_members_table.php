@@ -11,10 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('team_members', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('team_members', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            $table->foreignId('lawyer_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('designation'); // e.g., Associate, Paralegal, Junior Counsel
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('photo')->nullable();
+            $table->text('bio')->nullable();
+            $table->text('qualifications')->nullable();
+            $table->integer('years_of_experience')->default(0);
+            $table->boolean('is_active')->default(true);
+            $table->integer('order')->default(0);
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**

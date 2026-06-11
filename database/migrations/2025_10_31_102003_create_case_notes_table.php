@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('case_notes', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('case_notes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('case_id')->constrained('legal_cases')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('note');
+            $table->boolean('is_private')->default(true); // hidden from client
+            $table->timestamps();
+        });
     }
 
     /**

@@ -139,4 +139,24 @@ class Lawyer extends Model
     {
         return $this->hasMany(YoutubeVideo::class);
     }
+
+    public function teamMembers()
+    {
+        return $this->hasMany(TeamMember::class);
+    }
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    public function cases()
+    {
+        return $this->hasMany(LegalCase::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

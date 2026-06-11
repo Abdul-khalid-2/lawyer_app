@@ -11,10 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('case_documents', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('case_documents', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('case_id')->constrained('legal_cases')->onDelete('cascade');
+            $table->foreignId('uploaded_by')->constrained('users')->onDelete('cascade');
+            $table->string('title');
+            $table->string('file_path');
+            $table->string('file_type')->nullable();
+            $table->unsignedBigInteger('file_size')->nullable(); // bytes
+            $table->boolean('is_visible_to_client')->default(false);
+            $table->timestamps();
+        });
     }
 
     /**

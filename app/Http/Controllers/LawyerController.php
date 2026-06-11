@@ -65,14 +65,14 @@ class LawyerController extends Controller
     public function show(Lawyer $lawyer)
     {
         $lawyer->load(['user', 'specializations', 'educations', 'experiences', 'reviews.user']);
-        return view('lawyers.show', compact('lawyer'));
+        return view('dashboard.lawyers.show', compact('lawyer'));
     }
 
     public function edit(Lawyer $lawyer)
     {
         $specializations = Specialization::where('is_active', true)->get();
         $lawyer->load('specializations');
-        return view('lawyers.edit', compact('lawyer', 'specializations'));
+        return view('dashboard.lawyers.edit', compact('lawyer', 'specializations'));
     }
 
     public function update(Request $request, Lawyer $lawyer)

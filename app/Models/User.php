@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->hasOne(Lawyer::class);
     }
 
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
     public function activities()
     {
         return $this->hasMany(UserActivity::class);

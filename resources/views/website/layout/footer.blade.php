@@ -9,10 +9,15 @@
             <div class="col-lg-2 col-md-4 mb-4">
                 <h5 class="mb-4">Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#home">Home</a></li>
-                    <li class="mb-2"><a href="#lawyers">Find Lawyers</a></li>
-                    <li class="mb-2"><a href="#how-it-works">How It Works</a></li>
-                    <li class="mb-2"><a href="#about">About Us</a></li>
+                    <li class="mb-2"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="mb-2"><a href="{{ route('find-lawyeres') }}">Find Lawyers</a></li>
+                    <li class="mb-2"><a href="{{ route('website.howItWork') }}">How It Works</a></li>
+                    @php
+                        $footerPages = \App\Models\Page::published()->orderBy('title')->get(['title', 'slug']);
+                    @endphp
+                    @foreach($footerPages as $footerPage)
+                    <li class="mb-2"><a href="{{ route('website.page', $footerPage->slug) }}">{{ $footerPage->title }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-2 col-md-4 mb-4">
