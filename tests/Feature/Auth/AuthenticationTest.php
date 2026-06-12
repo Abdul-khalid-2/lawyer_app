@@ -2,13 +2,13 @@
 
 use App\Models\User;
 
-test('login screen can be rendered', function () {
+test('login route redirects to home (login is handled via a modal)', function () {
     $response = $this->get('/login');
 
-    $response->assertStatus(200);
+    $response->assertRedirect(route('home'));
 });
 
-test('users can authenticate using the login screen', function () {
+test('users can authenticate using the login endpoint', function () {
     $user = User::factory()->create();
 
     $response = $this->post('/login', [
@@ -17,7 +17,8 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    // A user without an admin/lawyer role lands on the public home page.
+    $response->assertRedirect(route('home'));
 });
 
 test('users can not authenticate with invalid password', function () {
