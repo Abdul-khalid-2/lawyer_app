@@ -7,10 +7,15 @@
         : asset('website/images/male_advocate_avatar.jpg');
 @endphp
 <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="lc-card lc-lawyer-card">
-        <x-website.ui.image :src="$photo" :alt="$lawyer->user->name"
-            ratio="3x2" :fallback="asset('website/images/male_advocate_avatar.jpg')"
-            class="lc-lawyer-card__photo" />
+    <div class="lc-card lc-lawyer-card {{ $lawyer->is_featured ? 'lc-lawyer-card--featured' : '' }}">
+        <div class="lc-lawyer-card__media">
+            <x-website.ui.image :src="$photo" :alt="$lawyer->user->name"
+                ratio="3x2" :fallback="asset('website/images/male_advocate_avatar.jpg')"
+                class="lc-lawyer-card__photo" />
+            @if($lawyer->is_featured)
+                <span class="lc-lawyer-card__featured"><i class="fas fa-star"></i> Featured</span>
+            @endif
+        </div>
 
         <div class="lc-card__body">
             <div class="d-flex align-items-start mb-2">
@@ -35,9 +40,6 @@
                     @endforeach
                     @if($lawyer->specializations->count() > 2)
                         <x-website.ui.badge variant="neutral">+{{ $lawyer->specializations->count() - 2 }} more</x-website.ui.badge>
-                    @endif
-                    @if($lawyer->is_featured)
-                        <x-website.ui.badge variant="featured">Featured</x-website.ui.badge>
                     @endif
                 </div>
             @endif

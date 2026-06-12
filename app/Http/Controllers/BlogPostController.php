@@ -14,10 +14,17 @@ class BlogPostController extends Controller
 {
     public function index()
     {
-        $posts = BlogPost::with('category', 'lawyer.user')
-            ->where('lawyer_id', Auth::user()->lawyer->id)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $user = Auth::user();
+
+        $query = BlogPost::with('category', 'lawyer.user')
+            ->orderBy('created_at', 'desc');
+
+        // Lawyers only see their own posts; super admins see every post.
+        if (! $user->hasRole('super_admin')) {
+            $query->where('lawyer_id', optional($user->lawyer)->id);
+        }
+
+        $posts = $query->paginate(10);
 
         return view('dashboard.posts.index', compact('posts'));
     }

@@ -20,17 +20,18 @@
 
 
 
-<!-- Featured Lawyers -->
+<!-- Our Lawyers -->
 <section class="section-padding" id="lawyers">
     <div class="container">
-        <x-website.ui.section-heading title="Featured Lawyers" />
+        <x-website.ui.section-heading title="Our Lawyers"
+            subtitle="Browse our verified legal professionals — featured lawyers are highlighted." />
         <div class="row" id="lawyersContainer">
             @forelse($featuredLawyers as $lawyer)
                 <x-website.cards.lawyer-card :lawyer="$lawyer" />
             @empty
                 <div class="col-12">
                     <x-website.sections.empty-state icon="fas fa-user-tie"
-                        title="No featured lawyers yet"
+                        title="No lawyers yet"
                         message="Check back soon — verified lawyers are joining all the time." />
                 </div>
             @endforelse

@@ -1,10 +1,14 @@
 <x-app-layout>
 
     <section id="blog-posts" class="page-section">
-        <x-dashboard.page-header title="Blog Posts" subtitle="Manage your blog posts and articles" icon="fas fa-newspaper">
+        <x-dashboard.page-header title="Blog Posts"
+            :subtitle="auth()->user()->hasRole('super_admin') ? 'All blog posts across the platform' : 'Manage your blog posts and articles'"
+            icon="fas fa-newspaper">
+            @role('lawyer')
             <a href="{{ route('blog-posts.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i> Create Post
             </a>
+            @endrole
         </x-dashboard.page-header>
 
         <div class="card">
@@ -14,6 +18,7 @@
                             <tr>
                                 <th class="ps-3">#</th>
                                 <th>Title</th>
+                                @role('super_admin')<th>Author</th>@endrole
                                 <th>Category</th>
                                 <th>Status</th>
                                 <th>Views</th>
@@ -44,6 +49,9 @@
                                         </div>
                                     </div>
                                 </td>
+                                @role('super_admin')
+                                <td>{{ $post->lawyer?->user?->name ?? '—' }}</td>
+                                @endrole
                                 <td>
                                     @if($post->category)
                                     <span class="badge bg-primary">{{ $post->category->name }}</span>
@@ -100,12 +108,14 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center py-4">
+                                <td colspan="{{ auth()->user()->hasRole('super_admin') ? 9 : 8 }}" class="text-center py-4">
                                     <i class="fas fa-file-alt fa-2x text-muted mb-2"></i>
                                     <p class="text-muted">No blog posts found</p>
+                                    @role('lawyer')
                                     <a href="{{ route('blog-posts.create') }}" class="btn btn-primary">
                                         Create Your First Post
                                     </a>
+                                    @endrole
                                 </td>
                             </tr>
                             @endforelse

@@ -51,6 +51,12 @@
                     </a>
                 </div>
                 <div class="nav-item">
+                    <a href="{{ route('blog-posts.index') }}" class="nav-link {{ request()->routeIs('blog-posts.*') ? 'active' : '' }}">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Blogs</span>
+                    </a>
+                </div>
+                <div class="nav-item">
                     <a href="{{ route('blog-categories.index') }}" class="nav-link {{ request()->routeIs('blog-categories.*') ? 'active' : '' }}">
                         <i class="fas fa-folder"></i>
                         <span>Blogs Categories</span>

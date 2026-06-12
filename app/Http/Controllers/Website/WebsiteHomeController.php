@@ -14,12 +14,13 @@ class WebsiteHomeController extends Controller
 
     public function home()
     {
-        // Get featured lawyers (verified and active)
-        $featuredLawyers = Lawyer::with(['specializations', 'reviews'])
+        // Show all verified lawyers on the landing page, with featured ones
+        // surfaced first (and tagged in the card).
+        $featuredLawyers = Lawyer::with(['user', 'specializations', 'reviews'])
             ->where('is_verified', 1)
-            ->where('is_featured', 1)
+            ->orderByDesc('is_featured')
             ->orderBy('years_of_experience', 'desc')
-            ->limit(6)
+            ->limit(12)
             ->get();
 
         // Calculate stats

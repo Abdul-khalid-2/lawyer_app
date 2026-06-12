@@ -42,7 +42,10 @@ class LawyerController extends Controller
                 break;
             default:
                 $query->join('users', 'lawyers.user_id', '=', 'users.id')
-                    ->orderBy('users.name');
+                    ->orderBy('users.name')
+                    // Select only the lawyer columns, otherwise SELECT * makes
+                    // users.id overwrite lawyers.id and every row link breaks.
+                    ->select('lawyers.*');
         }
 
         $lawyers = $query->paginate(10);
