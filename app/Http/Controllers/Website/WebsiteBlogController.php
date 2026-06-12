@@ -415,8 +415,12 @@ class WebsiteBlogController extends Controller
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->where(function ($query) use ($post) {
-                $query->where('blog_category_id', $post->blog_category_id)
-                    ->orWhere('tags', 'like', '%"' . $post->tags[0] . '"%');
+                $query->where('blog_category_id', $post->blog_category_id);
+
+                // Only match on a tag when the post actually has one.
+                if (! empty($post->tags) && ! empty($post->tags[0])) {
+                    $query->orWhere('tags', 'like', '%"' . $post->tags[0] . '"%');
+                }
             })
             ->orderBy('published_at', 'desc')
             ->limit($limit)

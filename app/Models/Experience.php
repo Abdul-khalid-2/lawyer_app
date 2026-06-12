@@ -37,10 +37,16 @@ class Experience extends Model
     public function getDurationAttribute()
     {
         $start = $this->start_date;
-        $end = $this->is_current ? now() : $this->end_date;
 
-        $years = $start->diffInYears($end);
-        $months = $start->diffInMonths($end) % 12;
+        if (! $start) {
+            return '—';
+        }
+
+        // Treat a missing end date as ongoing.
+        $end = ($this->is_current || ! $this->end_date) ? now() : $this->end_date;
+
+        $years = (int) $start->diffInYears($end);
+        $months = (int) $start->diffInMonths($end) % 12;
 
         if ($years > 0 && $months > 0) {
             return "{$years}y {$months}m";
@@ -53,8 +59,12 @@ class Experience extends Model
 
     public function getFormattedDateAttribute()
     {
+        if (! $this->start_date) {
+            return '—';
+        }
+
         $start = $this->start_date->format('M Y');
-        $end = $this->is_current ? 'Present' : $this->end_date->format('M Y');
+        $end = ($this->is_current || ! $this->end_date) ? 'Present' : $this->end_date->format('M Y');
 
         return "{$start} - {$end}";
     }

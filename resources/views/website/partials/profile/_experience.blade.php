@@ -7,18 +7,7 @@
         <h5 class="mb-1">{{ $experience->position }}</h5>
         <p class="text-primary mb-1 fw-bold">{{ $experience->company }}</p>
         <p class="text-muted mb-2">
-            {{ $experience->start_date->format('M Y') }} -
-            @if($experience->is_current)
-            <span class="text-success">Present</span>
-            @else
-            {{ $experience->end_date->format('M Y') }}
-            @endif
-            ·
-            @if($experience->is_current)
-            {{ $experience->start_date->diffInYears(now()) }}+ years
-            @else
-            {{ $experience->start_date->diffInYears($experience->end_date) }}+ years
-            @endif
+            {{ $experience->formatted_date }} · {{ $experience->duration }}
         </p>
         @if($experience->description)
         <p class="mb-0">{{ $experience->description }}</p>
