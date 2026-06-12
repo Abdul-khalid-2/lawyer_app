@@ -8,7 +8,7 @@ and a three-environment branch strategy.
 | Branch | Purpose | Pipeline |
 |---|---|---|
 | `main` | Integration / default branch | CI (test + build) |
-| `testing` | QA / feature integration testing | CI (test + build) |
+| `testing` | QA / feature integration testing | CI → **auto-deploy to testing** |
 | `staging` | Pre-production preview | CI → **auto-deploy to staging** |
 | `production` | Live site | CI → **auto-deploy to production** (gated by approval) |
 
@@ -24,13 +24,14 @@ Typical flow: open PRs into `testing` → merge `testing` into `staging` to prev
 3. Node 20 + `npm ci` + `npm run build` (compiles the Vite website & dashboard bundles)
 4. `php artisan test` (Pest/PHPUnit, SQLite in-memory)
 
-**On push to `staging` or `production`** (after `test` passes) it runs the `deploy` job,
-which SSHes into the target server and pulls + builds + migrates.
+**On push to `testing`, `staging`, or `production`** (after `test` passes) it runs the matching
+deploy job (`deploy-testing`, `deploy-staging`, or `deploy-production`), which SSHes into the
+target server and pulls + builds + migrates.
 
 ## Required configuration (GitHub repo settings)
 
-Create two **Environments** (Settings → Environments): `staging` and `production`.
-Add **required reviewers** to `production` so releases need manual approval.
+Create three **Environments** (Settings → Environments): `testing`, `staging`, and `production`.
+Add **required reviewers** to `production` (and optionally `staging`) so releases need manual approval.
 
 Add these **secrets** to each environment (Settings → Environments → <env> → Secrets):
 
@@ -45,9 +46,9 @@ Add these **secrets** to each environment (Settings → Environments → <env> �
 The server must already have a clone of this repo at `DEPLOY_PATH`, with PHP 8.2, Composer,
 Node and a configured `.env` (the deploy step never overwrites `.env`).
 
-> No server yet? The `test` job still runs on every branch. The `deploy` job only triggers
-> on `staging`/`production`; until the secrets exist it will simply fail the deploy step
-> without affecting the test pipeline on other branches.
+> No server yet? The `test` job still runs on every branch. Deploy jobs only trigger on their
+> matching branch push; until each environment's secrets exist, that deploy step will fail
+> while CI on other branches keeps working.
 
 ## Running locally
 

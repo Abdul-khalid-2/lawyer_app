@@ -1,10 +1,10 @@
 name: CI/CD
 
 # Runs the test/build pipeline on every push & PR to the main flow branches,
-# then deploys automatically to staging or production when those branches move.
+# then deploys to testing, staging, or production when those branches are pushed.
 #
-# Branch strategy:
-#   testing     → CI only (run tests on feature/integration work)
+# Branch strategy (one deploy job per branch — each shows in the Actions graph):
+#   testing     → CI + deploy to the testing environment
 #   staging     → CI + deploy to the staging environment
 #   production  → CI + deploy to the production environment (gated by approval)
 on:
@@ -68,32 +68,90 @@ jobs:
           DB_DATABASE: ':memory:'
         run: php artisan test
 
-  deploy:
-    name: Deploy (${{ github.ref_name }})
+  deploy-testing:
+    name: Deploy (testing)
     needs: test
-    if: github.event_name == 'push' && (github.ref_name == 'staging' || github.ref_name == 'production')
+    if: github.event_name == 'push' && github.ref_name == 'testing'
     runs-on: ubuntu-latest
-    # Maps to a GitHub Environment of the same name.
-    # Add protection rules to "production" (e.g. required reviewers) in repo settings.
-    environment: ${{ github.ref_name }}
+    environment: testing
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
+          port: ${{ secrets.SSH_PORT != '' && secrets.SSH_PORT || '22' }}
           script: |
             set -e
             cd ${{ secrets.DEPLOY_PATH }}
             git fetch --all
-            git checkout ${{ github.ref_name }}
-            git reset --hard origin/${{ github.ref_name }}
+            git checkout testing
+            git reset --hard origin/testing
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            npm ci
+            npm run build
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            php artisan storage:link || true
+
+  deploy-staging:
+    name: Deploy (staging)
+    needs: test
+    if: github.event_name == 'push' && github.ref_name == 'staging'
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT != '' && secrets.SSH_PORT || '22' }}
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch --all
+            git checkout staging
+            git reset --hard origin/staging
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            npm ci
+            npm run build
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            php artisan storage:link || true
+
+  deploy-production:
+    name: Deploy (production)
+    needs: test
+    if: github.event_name == 'push' && github.ref_name == 'production'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT != '' && secrets.SSH_PORT || '22' }}
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch --all
+            git checkout production
+            git reset --hard origin/production
             composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
             npm ci
             npm run build
