@@ -80,11 +80,26 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
     // Lawyers Resource
     Route::resource('lawyers', LawyerController::class);
 
+    // Specializations CRUD
+    Route::resource('specializations', \App\Http\Controllers\SpecializationController::class)->except(['show']);
+
     // Blog Categories Routes
     Route::resource('blog-categories', BlogCategoryController::class);
 
     // CMS Pages
     Route::resource('pages', \App\Http\Controllers\PageController::class)->except(['show']);
+
+    // Admin overview (view all cases / clients / users across the platform)
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('cases', [\App\Http\Controllers\Admin\CaseController::class, 'index'])->name('cases.index');
+        Route::get('cases/{case}', [\App\Http\Controllers\Admin\CaseController::class, 'show'])->name('cases.show');
+
+        Route::get('clients', [\App\Http\Controllers\Admin\ClientController::class, 'index'])->name('clients.index');
+        Route::get('clients/{client}', [\App\Http\Controllers\Admin\ClientController::class, 'show'])->name('clients.show');
+
+        Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+        Route::patch('users/{user}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle-status');
+    });
 
     // Comment moderation
     Route::get('/blog-posts/{id}/comments', [CommentController::class, 'comments'])->name('blog-posts.comments');
@@ -146,6 +161,9 @@ Route::middleware(['auth', 'role:lawyer'])->prefix('dashboard')->group(function 
     // Case hearings
     Route::post('cases/{case}/hearings', [\App\Http\Controllers\Lawyer\CaseController::class, 'storeHearing'])->name('cases.hearings.store');
     Route::patch('cases/{case}/hearings/{hearing}', [\App\Http\Controllers\Lawyer\CaseController::class, 'updateHearing'])->name('cases.hearings.update');
+
+    // Data backup (Excel export)
+    Route::get('backup/export', [\App\Http\Controllers\Lawyer\BackupController::class, 'export'])->name('backup.export');
 
     // Schedule / Calendar
     Route::get('schedule', [\App\Http\Controllers\Lawyer\ScheduleController::class, 'index'])->name('schedule.index');

@@ -3,7 +3,11 @@
     <section id="dashboard" class="page-section active">
         <!-- Welcome Header -->
         <x-dashboard.page-header :title="'Welcome back, ' . Auth::user()->name" icon="fas fa-balance-scale"
-            :subtitle="$lawyer->firm_name ?: 'Your legal practice dashboard'" class="mb-4" />
+            :subtitle="$lawyer->firm_name ?: 'Your legal practice dashboard'" class="mb-4">
+            <a href="{{ route('backup.export') }}" class="btn btn-success">
+                <i class="fas fa-file-excel me-1"></i> Download Backup
+            </a>
+        </x-dashboard.page-header>
 
         <!-- Stats Cards -->
         <div class="row mb-2">

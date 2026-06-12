@@ -29,6 +29,32 @@
             </div>
         </div>
 
+        <!-- Practice management stats -->
+        <div class="row mb-2">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <a href="{{ route('admin.users.index') }}" class="text-decoration-none">
+                    <x-dashboard.stat-card label="Total Users" :value="$stats['total_users']" icon="fas fa-user" variant="primary" />
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <a href="{{ route('admin.clients.index') }}" class="text-decoration-none">
+                    <x-dashboard.stat-card label="Total Clients" :value="$stats['total_clients']" icon="fas fa-user-friends" variant="success" />
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <a href="{{ route('admin.cases.index') }}" class="text-decoration-none">
+                    <x-dashboard.stat-card label="Total Cases" :value="$stats['total_cases']" icon="fas fa-briefcase" variant="info" />
+                    <small class="text-muted d-block mt-1 ms-1">{{ $stats['active_cases'] }} active</small>
+                </a>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <a href="{{ route('lawyers.index') }}" class="text-decoration-none">
+                    <x-dashboard.stat-card label="Lawyers" :value="$stats['total_lawyers']" icon="fas fa-gavel" variant="warning" />
+                    <small class="text-muted d-block mt-1 ms-1">{{ $stats['verified_lawyers'] }} verified</small>
+                </a>
+            </div>
+        </div>
+
         <!-- Charts Row -->
         <div class="row mb-4">
             <div class="col-lg-8 mb-4">

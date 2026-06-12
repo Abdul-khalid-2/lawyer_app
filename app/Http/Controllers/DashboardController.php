@@ -45,6 +45,10 @@ class DashboardController extends Controller
             'approved_reviews' => Review::where('status', 'approved')->count(),
             'total_visitors' => Visitor::count(),
             'active_specializations' => Specialization::where('is_active', true)->count(),
+            'total_clients' => \App\Models\Client::count(),
+            'total_cases' => \App\Models\LegalCase::count(),
+            'active_cases' => \App\Models\LegalCase::whereIn('status', ['pending', 'active'])->count(),
+            'total_users' => \App\Models\User::count(),
         ];
 
         // Recent activities across all users

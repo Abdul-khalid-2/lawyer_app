@@ -13,7 +13,7 @@
         </div>
         <ul class="sidebar-nav list-unstyled">
             <div class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link active">
+                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="fas fa-chart-pie"></i>
                     <span>Dashboard</span>
                 </a>
@@ -21,38 +21,38 @@
 
             @role('super_admin')
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.cases.index') }}" class="nav-link {{ request()->routeIs('admin.cases.*') ? 'active' : '' }}">
                         <i class="fas fa-briefcase"></i>
                         <span>Cases</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-users"></i>
+                    <a href="{{ route('admin.clients.index') }}" class="nav-link {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
+                        <i class="fas fa-user-friends"></i>
                         <span>Clients</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('lawyers.index') }}" class="nav-link {{ request()->routeIs('lawyers.*') ? 'active' : '' }}">
                         <i class="fas fa-gavel"></i>
                         <span>Lawyers</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                         <i class="fas fa-user"></i>
                         <span>Users</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-user"></i>
+                    <a href="{{ route('specializations.index') }}" class="nav-link {{ request()->routeIs('specializations.*') ? 'active' : '' }}">
+                        <i class="fas fa-tags"></i>
                         <span>Specialization</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a href="{{ route('blog-categories.index') }}" class="nav-link">
-                        <i class="fas fa-gavel"></i>
+                    <a href="{{ route('blog-categories.index') }}" class="nav-link {{ request()->routeIs('blog-categories.*') ? 'active' : '' }}">
+                        <i class="fas fa-folder"></i>
                         <span>Blogs Categories</span>
                     </a>
                 </div>
