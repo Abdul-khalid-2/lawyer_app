@@ -1,36 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Blog Post - LegalConsultent</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+<x-app-layout>
+@push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- CKEditor 4 -->
-    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
     <style>
         .builder-container {
-            background: #f8f9fa;
-            min-height: 100vh;
+            background: transparent;
         }
-        
-        .sidebar {
-            background: white;
-            border-right: 1px solid #dee2e6;
-            height: 100vh;
-            overflow-y: auto;
-            position: fixed;
-            width: 300px;
+
+        .builder-aside {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--d-surface);
+            border: 1px solid var(--d-border);
+            border-radius: var(--d-radius);
+            align-self: flex-start;
+            position: sticky;
+            top: calc(var(--d-header-height) + 1rem);
         }
-        
-        .main-content {
-            margin-left: 300px;
-            padding: 20px;
+
+        .builder-main {
+            flex-grow: 1;
+            min-width: 0;
         }
-        
+
         .widget-card {
             cursor: grab;
             border: 2px dashed #dee2e6;
@@ -244,14 +236,19 @@
             margin-top: 4px;
         }
     </style>
-</head>
+@endpush
 
-<body>
+<div class="container-fluid">
+    <x-dashboard.page-header title="Edit Blog Post" subtitle="Update your article content" icon="fas fa-pen-nib">
+        <a href="{{ route('blog-posts.index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Posts
+        </a>
+    </x-dashboard.page-header>
     <div class="builder-container">
-        <div class="d-flex">
-            <!-- Sidebar -->
-            <div class="sidebar p-3">
-                <h5 class="mb-3">Blog Elements</h5>
+        <div class="d-flex gap-4">
+            <!-- Elements palette -->
+            <div class="builder-aside p-3">
+                <h6 class="mb-3 fw-bold">Blog Elements</h6>
                 
                 <div class="widget-card p-3" draggable="true" data-type="heading">
                     <div class="d-flex align-items-center">
@@ -301,11 +298,11 @@
             </div>
 
             <!-- Main Content Area -->
-            <div class="main-content flex-grow-1">
+            <div class="builder-main">
                 <!-- Basic Information Card -->
                 <div class="card basic-info-card">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
                     </div>
                     <div class="card-body">
                         <form id="blogPostForm">
@@ -383,7 +380,7 @@
 
                 <!-- Page Builder Canvas -->
                 <div class="card">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0"><i class="fas fa-pencil-alt me-2"></i>Content Builder</h5>
                             <span class="badge bg-light text-dark" id="elementCount">0 elements</span>
@@ -402,7 +399,7 @@
 
                 <!-- Save Section -->
                 <div class="card mt-4">
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header">
                         <h5 class="mb-0"><i class="fas fa-save me-2"></i>Update Blog Post</h5>
                     </div>
                     <div class="card-body">
@@ -426,6 +423,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Preview Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1">
@@ -442,8 +440,9 @@
         </div>
     </div>
 
+@push('js')
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         document.getElementById('featured_image').addEventListener('change', function(e) {
@@ -1329,5 +1328,5 @@
             window.tagsManager = new TagsManager();
         });
     </script>
-</body>
-</html>
+@endpush
+</x-app-layout>

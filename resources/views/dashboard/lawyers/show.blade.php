@@ -1,154 +1,83 @@
 <x-app-layout>
-    <style>
-        .profile-header {
-            background: var(--d-primary);
-            color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-            border-radius: var(--d-radius);
-        }
+    <div class="container-fluid">
+        <x-dashboard.page-header :title="$lawyer->user->name" icon="fas fa-user-tie"
+            :subtitle="($lawyer->firm_name ?? 'Independent Lawyer') . ($lawyer->bar_number ? ' · ' . $lawyer->bar_number : '')">
+            <a href="{{ route('educations.index') }}" class="btn btn-outline-primary">
+                <i class="fas fa-graduation-cap me-1"></i> Education
+            </a>
+            <a href="{{ route('experiences.index') }}" class="btn btn-outline-primary">
+                <i class="fas fa-briefcase me-1"></i> Experience
+            </a>
+            <a href="{{ route('lawyer.profile.edit') }}" class="btn btn-primary">
+                <i class="fas fa-edit me-1"></i> Edit Profile
+            </a>
+        </x-dashboard.page-header>
 
-        .profile-image {
-            width: 150px;
-            height: 150px;
-            border: 5px solid white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .stats-card {
-            background: var(--d-primary);
-            color: #fff;
-            border: none;
-            border-radius: var(--d-radius);
-            box-shadow: var(--d-shadow-sm);
-            transition: transform 0.2s ease;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .badge-custom {
-            background: var(--d-primary);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-        
-        .section-title {
-            border-left: 4px solid #667eea;
-            padding-left: 15px;
-            margin: 2rem 0 1rem 0;
-            color: #2d3748;
-        }
-    </style>
-
-    <!-- Profile Header -->
-    <div class="profile-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-2 text-center">
-                    <img src="{{ $lawyer->user->profile_image ? asset('website/' . $lawyer->user->profile_image) : 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face' }}" 
-                         alt="{{ $lawyer->user->name }}" 
-                         class="profile-image rounded-circle">
-                </div>
-                <div class="col-md-6">
-                    <h1 class="h2 mb-2">{{ $lawyer->user->name }}</h1>
-                    <p class="mb-1">{{ $lawyer->firm_name ?? 'Independent Lawyer' }}</p>
-                    <p class="mb-3">{{ $lawyer->bar_number }} • {{ $lawyer->license_state }}</p>
-                    
-                    @if($lawyer->specializations->count() > 0)
-                        <div>
-                            @foreach($lawyer->specializations as $specialization)
-                                <span class="badge bg-light text-dark me-1">{{ $specialization->name }}</span>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-                <div class="col-md-4 text-md-end">
-                    <div class="d-flex flex-column flex-md-row gap-2 justify-content-md-end">
-                        <a href="{{ route('educations.index') }}" class="btn btn-light btn-lg">
-                            <i class="fas fa-graduation-cap "></i>Education
-                        </a>
-                        <a href="{{ route('experiences.index') }}" class="btn btn-light btn-lg">
-                            <i class="fas fa-briefcase "></i>Experience
-                        </a>
-                        <a href="{{ route('lawyer.profile.edit') }}" class="btn btn-light btn-lg">
-                            <i class="fas fa-edit "></i>Edit 
-                        </a>
+        <!-- Profile summary -->
+        <div class="card mb-4">
+            <div class="card-body d-flex flex-column flex-sm-row align-items-center gap-3">
+                <img src="{{ $lawyer->user->profile_image ? asset('website/' . $lawyer->user->profile_image) : 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face' }}"
+                    alt="{{ $lawyer->user->name }}" class="rounded-circle"
+                    style="width: 90px; height: 90px; object-fit: cover;">
+                <div class="flex-grow-1 text-center text-sm-start">
+                    <h4 class="mb-1">{{ $lawyer->user->name }}</h4>
+                    <p class="text-muted mb-2">
+                        {{ $lawyer->firm_name ?? 'Independent Lawyer' }}
+                        @if($lawyer->license_state) · {{ $lawyer->license_state }} @endif
+                    </p>
+                    <div class="d-flex flex-wrap gap-1 justify-content-center justify-content-sm-start">
+                        @foreach($lawyer->specializations as $specialization)
+                            <span class="badge bg-light text-dark border">{{ $specialization->name }}</span>
+                        @endforeach
+                        <span class="badge {{ $lawyer->is_verified ? 'bg-success' : 'bg-warning' }}">
+                            <i class="fas fa-{{ $lawyer->is_verified ? 'check-circle' : 'clock' }} me-1"></i>{{ $lawyer->is_verified ? 'Verified' : 'Pending' }}
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <!-- Stats Cards -->
-        <div class="row mb-5">
-            <div class="col-md-3 mb-4">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <h3 class="text-white">{{ $lawyer->years_of_experience }}+</h3>
-                        <p class="text-white mb-0">Years Experience</p>
-                    </div>
-                </div>
+        <!-- Stats -->
+        <div class="row mb-2">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <x-dashboard.stat-card label="Years Experience" :value="$lawyer->years_of_experience . '+'"
+                    icon="fas fa-briefcase" variant="primary" />
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <h3 class="text-white">{{ $lawyer->reviews->count() }}</h3>
-                        <p class="text-white mb-0">Total Reviews</p>
-                    </div>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <x-dashboard.stat-card label="Total Reviews" :value="$lawyer->reviews->count()"
+                    icon="fas fa-comments" variant="info" />
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <h3 class="text-white">{{ $lawyer->average_rating }}/5</h3>
-                        <p class="text-white mb-0">Average Rating</p>
-                    </div>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <x-dashboard.stat-card label="Average Rating" :value="number_format($lawyer->average_rating, 1) . '/5'"
+                    icon="fas fa-star" variant="warning" />
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <h3 class="text-white">{{ $lawyer->blog_posts()->count() ?? 0 }}</h3>
-                        <p class="text-white mb-0">Blog Posts</p>
-                    </div>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <x-dashboard.stat-card label="Blog Posts" :value="$lawyer->blog_posts()->count()"
+                    icon="fas fa-blog" variant="success" />
             </div>
         </div>
 
         <div class="row">
             <!-- Left Column -->
             <div class="col-lg-8">
-                <!-- About Section -->
                 <div class="card mb-4">
-                    <div class="card-header bg-white">
-                        <h4 class="section-title mb-0">About Me</h4>
-                    </div>
+                    <div class="card-header"><h5 class="card-title mb-0">About Me</h5></div>
                     <div class="card-body">
                         <p class="card-text">{{ $lawyer->bio ?? 'No bio provided.' }}</p>
-                        
                         @if($lawyer->services)
-                            <h6 class="mt-4">Services Offered:</h6>
-                            <p class="text-muted">{{ $lawyer->services }}</p>
+                            <h6 class="mt-4">Services Offered</h6>
+                            <p class="text-muted mb-0">{{ $lawyer->services }}</p>
                         @endif
-                        
                         @if($lawyer->awards)
-                            <h6 class="mt-4">Awards & Recognition:</h6>
-                            <p class="text-muted">{{ $lawyer->awards }}</p>
+                            <h6 class="mt-4">Awards &amp; Recognition</h6>
+                            <p class="text-muted mb-0">{{ $lawyer->awards }}</p>
                         @endif
                     </div>
                 </div>
 
-                <!-- Education Section -->
                 @if($lawyer->educations->count() > 0)
                 <div class="card mb-4">
-                    <div class="card-header bg-white">
-                        <h4 class="section-title mb-0">Education</h4>
-                    </div>
+                    <div class="card-header"><h5 class="card-title mb-0">Education</h5></div>
                     <div class="card-body">
                         @foreach($lawyer->educations as $education)
                             <div class="mb-3 pb-3 border-bottom">
@@ -156,7 +85,7 @@
                                 <p class="text-muted mb-1">{{ $education->institution }}</p>
                                 <small class="text-primary">Graduated: {{ $education->graduation_year }}</small>
                                 @if($education->description)
-                                    <p class="mt-2 small">{{ $education->description }}</p>
+                                    <p class="mt-2 small mb-0">{{ $education->description }}</p>
                                 @endif
                             </div>
                         @endforeach
@@ -164,23 +93,20 @@
                 </div>
                 @endif
 
-                <!-- Experience Section -->
                 @if($lawyer->experiences->count() > 0)
                 <div class="card mb-4">
-                    <div class="card-header bg-white">
-                        <h4 class="section-title mb-0">Experience</h4>
-                    </div>
+                    <div class="card-header"><h5 class="card-title mb-0">Experience</h5></div>
                     <div class="card-body">
                         @foreach($lawyer->experiences as $experience)
                             <div class="mb-3 pb-3 border-bottom">
                                 <h6 class="mb-1">{{ $experience->position }}</h6>
                                 <p class="text-muted mb-1">{{ $experience->company }}</p>
                                 <small class="text-primary">
-                                    {{ $experience->start_date->format('M Y') }} - 
-                                    {{ $experience->is_current ? 'Present' : $experience->end_date->format('M Y') }}
+                                    {{ $experience->start_date->format('M Y') }} -
+                                    {{ $experience->is_current ? 'Present' : optional($experience->end_date)->format('M Y') }}
                                 </small>
                                 @if($experience->description)
-                                    <p class="mt-2 small">{{ $experience->description }}</p>
+                                    <p class="mt-2 small mb-0">{{ $experience->description }}</p>
                                 @endif
                             </div>
                         @endforeach
@@ -191,33 +117,25 @@
 
             <!-- Right Column -->
             <div class="col-lg-4">
-                <!-- Contact Information -->
                 <div class="card mb-4">
-                    <div class="card-header bg-white">
-                        <h5 class="section-title mb-0">Contact Information</h5>
-                    </div>
+                    <div class="card-header"><h5 class="card-title mb-0">Contact Information</h5></div>
                     <div class="card-body">
                         <div class="mb-3">
                             <strong><i class="fas fa-envelope text-primary me-2"></i>Email</strong>
                             <p class="mb-0">{{ $lawyer->user->email }}</p>
                         </div>
-                        
                         @if($lawyer->user->phone)
                         <div class="mb-3">
                             <strong><i class="fas fa-phone text-primary me-2"></i>Phone</strong>
                             <p class="mb-0">{{ $lawyer->user->phone }}</p>
                         </div>
                         @endif
-                        
                         @if($lawyer->website)
                         <div class="mb-3">
                             <strong><i class="fas fa-globe text-primary me-2"></i>Website</strong>
-                            <p class="mb-0">
-                                <a href="{{ $lawyer->website }}" target="_blank">{{ $lawyer->website }}</a>
-                            </p>
+                            <p class="mb-0"><a href="{{ $lawyer->website }}" target="_blank">{{ $lawyer->website }}</a></p>
                         </div>
                         @endif
-                        
                         @if($lawyer->address)
                         <div class="mb-3">
                             <strong><i class="fas fa-map-marker-alt text-primary me-2"></i>Address</strong>
@@ -227,9 +145,8 @@
                             @endif
                         </div>
                         @endif
-                        
                         @if($lawyer->hourly_rate)
-                        <div class="mb-3">
+                        <div class="mb-0">
                             <strong><i class="fas fa-money-bill-wave text-primary me-2"></i>Hourly Rate</strong>
                             <p class="mb-0">Rs.{{ number_format($lawyer->hourly_rate, 2) }}/hour</p>
                         </div>
@@ -237,20 +154,17 @@
                     </div>
                 </div>
 
-                <!-- Verification Status -->
                 <div class="card mb-4">
-                    <div class="card-header bg-white">
-                        <h5 class="section-title mb-0">Verification Status</h5>
-                    </div>
+                    <div class="card-header"><h5 class="card-title mb-0">Verification Status</h5></div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span>Profile Verification:</span>
+                            <span>Profile Verification</span>
                             <span class="badge {{ $lawyer->is_verified ? 'bg-success' : 'bg-warning' }}">
                                 {{ $lawyer->is_verified ? 'Verified' : 'Pending' }}
                             </span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span>Account Status:</span>
+                            <span>Account Status</span>
                             <span class="badge {{ $lawyer->is_active ? 'bg-success' : 'bg-danger' }}">
                                 {{ $lawyer->is_active ? 'Active' : 'Inactive' }}
                             </span>
@@ -258,28 +172,20 @@
                     </div>
                 </div>
 
-                <!-- Recent Reviews -->
                 @if($lawyer->reviews->count() > 0)
                 <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="section-title mb-0">Recent Reviews</h5>
-                    </div>
+                    <div class="card-header"><h5 class="card-title mb-0">Recent Reviews</h5></div>
                     <div class="card-body">
                         @foreach($lawyer->reviews->take(3) as $review)
                             <div class="mb-3 pb-3 border-bottom">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <strong>{{ $review->user->name }}</strong>
-                                    <span class="badge bg-primary">
-                                        {{ $review->rating }}/5 <i class="fas fa-star ms-1"></i>
-                                    </span>
+                                    <span class="badge bg-primary">{{ $review->rating }}/5 <i class="fas fa-star ms-1"></i></span>
                                 </div>
                                 <p class="small text-muted mb-2">{{ Str::limit($review->review, 100) }}</p>
                                 <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
                             </div>
                         @endforeach
-                        @if($lawyer->reviews->count() > 3)
-                            <a href="#" class="btn btn-outline-primary btn-sm w-100">View All Reviews</a>
-                        @endif
                     </div>
                 </div>
                 @endif

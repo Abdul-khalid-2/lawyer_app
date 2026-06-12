@@ -8,21 +8,7 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <div class="dropdown me-3">
-                <button class="btn btn-link position-relative" data-bs-toggle="dropdown">
-                    <i class="fas fa-bell text-gray-600"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                        style="font-size: 0.6rem;">
-                        3
-                    </span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">New order received</a></li>
-                    <li><a class="dropdown-item" href="#">Product out of stock</a></li>
-                    <li><a class="dropdown-item" href="#">Customer message</a></li>
-                </ul>
-            </div>
-            @role('lawyer') 
+            @role('lawyer')
                 <div class="dropdown">
                     <button class="btn btn-link d-flex align-items-center" data-bs-toggle="dropdown">
                         <img src="{{ Auth::user()->profile_image ? asset('website/' . Auth::user()->profile_image) : 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop&crop=face' }}"

@@ -37,6 +37,7 @@ class ExperienceController extends Controller
         ]);
 
         $lawyer = Auth::user()->lawyer;
+        $isCurrent = $request->boolean('is_current');
 
         Experience::create([
             'uuid' => Str::uuid(),
@@ -44,9 +45,9 @@ class ExperienceController extends Controller
             'position' => $validated['position'],
             'company' => $validated['company'],
             'start_date' => $validated['start_date'],
-            'end_date' => $validated['is_current'] ? null : $validated['end_date'],
-            'is_current' => $validated['is_current'] ?? false,
-            'description' => $validated['description'],
+            'end_date' => $isCurrent ? null : ($validated['end_date'] ?? null),
+            'is_current' => $isCurrent,
+            'description' => $validated['description'] ?? null,
             'order' => $validated['order'] ?? 0,
         ]);
 
@@ -82,13 +83,15 @@ class ExperienceController extends Controller
             'order' => 'nullable|integer'
         ]);
 
+        $isCurrent = $request->boolean('is_current');
+
         $experience->update([
             'position' => $validated['position'],
             'company' => $validated['company'],
             'start_date' => $validated['start_date'],
-            'end_date' => $validated['is_current'] ? null : $validated['end_date'],
-            'is_current' => $validated['is_current'] ?? false,
-            'description' => $validated['description'],
+            'end_date' => $isCurrent ? null : ($validated['end_date'] ?? null),
+            'is_current' => $isCurrent,
+            'description' => $validated['description'] ?? null,
             'order' => $validated['order'] ?? 0,
         ]);
 
