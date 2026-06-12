@@ -1,11 +1,10 @@
 <x-app-layout>
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">CMS Pages</h1>
+        <x-dashboard.page-header title="CMS Pages" subtitle="About, Terms, Privacy, FAQ and other public pages" icon="fas fa-file-alt">
             <a href="{{ route('pages.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> New Page
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         @if(session('success'))
         <div class="alert alert-success">

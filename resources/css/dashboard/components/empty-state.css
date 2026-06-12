@@ -1,0 +1,21 @@
+/* ============================================================
+   Empty state — <x-dashboard.empty-state>
+   ============================================================ */
+.d-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--d-muted);
+}
+.d-empty__icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--d-border);
+}
+.d-empty__title {
+    margin-bottom: .4rem;
+    color: var(--d-heading);
+    font-size: 1.1rem;
+}
+.d-empty__message {
+    margin: 0 0 1rem;
+}

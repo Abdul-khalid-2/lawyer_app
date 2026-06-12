@@ -11,6 +11,10 @@
     --lc-accent: #e74c3c;
     --lc-accent-soft: #fdf0ee;
 
+    /* Shared hero/banner gradient — one consistent header across every page */
+    --lc-hero-gradient: linear-gradient(135deg, #1a252f 0%, #2c3e50 55%, #3498db 130%);
+    --lc-hero-overlay: rgba(44, 62, 80, .82);
+
     /* Neutrals */
     --lc-bg: #f5f7f9;
     --lc-surface: #ffffff;

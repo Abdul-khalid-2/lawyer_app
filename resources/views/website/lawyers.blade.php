@@ -1,13 +1,11 @@
 <x-website.layout.master title="Find a Lawyer - Browse Verified Legal Professionals | Law-Skoolyst"
     description="Browse and connect with verified lawyers and legal professionals near you. Filter by specialization, experience and location.">
 
-<div class="container py-5">
-    <div class="row mb-5">
-        <div class="col-12">
-            <x-website.ui.section-heading title="Find a Lawyer" subtitle="Browse verified legal professionals near you" />
-        </div>
-    </div>
+<x-website.sections.page-hero icon="fas fa-balance-scale"
+    title="Find the Right Lawyer"
+    subtitle="Browse verified legal professionals by specialization, experience and location." />
 
+<div class="container py-5">
     <!-- Filters -->
     <div class="row mb-5 align-items-end">
         <div class="col-md-4">

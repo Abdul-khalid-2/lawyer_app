@@ -2,12 +2,11 @@
 
 
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">YouTube Videos</h1>
+        <x-dashboard.page-header title="YouTube Videos" subtitle="Manage the videos shown on your public profile" icon="fas fa-video">
             <a href="{{ route('videos.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add New Video
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         @if(session('success'))
         <div class="alert alert-success">

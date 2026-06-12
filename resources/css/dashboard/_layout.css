@@ -1,0 +1,128 @@
+/* ============================================================
+   Dashboard shell — sidebar, header, main, footer, responsive.
+   Migrated from the inline <style> in layouts/app.blade.php
+   (gradients removed → solid colors).
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--d-bg);
+    color: var(--d-text);
+    line-height: 1.6;
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+    width: var(--d-sidebar-width);
+    height: 100vh;
+    background: var(--d-sidebar);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform .3s ease, width .3s ease;
+    box-shadow: var(--d-shadow-lg);
+}
+.sidebar.active { transform: translateX(0); }
+
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--d-sidebar-border);
+}
+
+.sidebar-nav { padding: 1rem 0; }
+.nav-item { margin: .35rem 1rem; }
+
+.sidebar-nav .nav-link {
+    color: var(--d-sidebar-link) !important;
+    padding: .7rem 1rem;
+    border-radius: var(--d-radius-sm);
+    display: flex;
+    align-items: center;
+    transition: var(--d-transition);
+    text-decoration: none;
+    font-weight: 500;
+}
+.sidebar-nav .nav-link:hover {
+    background-color: var(--d-sidebar-link-hover-bg);
+    color: #ffffff !important;
+}
+.sidebar-nav .nav-link.active {
+    background-color: var(--d-sidebar-link-active-bg);
+    color: #ffffff !important;
+}
+.sidebar-nav .nav-link i {
+    margin-right: .75rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* ---- Header ---- */
+.header {
+    height: var(--d-header-height);
+    background: var(--d-surface);
+    border-bottom: 1px solid var(--d-border);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    transition: left .3s ease;
+    box-shadow: var(--d-shadow-sm);
+}
+
+/* ---- Main content ---- */
+.main-content {
+    margin-top: var(--d-header-height);
+    padding: 2rem;
+    min-height: calc(100vh - var(--d-header-height));
+    transition: margin-left .3s ease;
+}
+
+/* ---- Footer ---- */
+.footer {
+    background: var(--d-surface);
+    border-top: 1px solid var(--d-border);
+    padding: 1.25rem 2rem;
+    margin-top: auto;
+}
+
+/* ---- Sidebar overlay (mobile) ---- */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgb(0 0 0 / .5);
+    z-index: 999;
+    display: none;
+}
+.sidebar-overlay.active { display: block; }
+
+/* ---- Desktop ---- */
+@media (min-width: 768px) {
+    .sidebar { transform: translateX(0); overflow: hidden; }
+    .header { left: var(--d-sidebar-width); }
+    .main-content { margin-left: var(--d-sidebar-width); }
+
+    .sidebar.collapsed { width: 70px; }
+    .sidebar.collapsed .sidebar-header h4,
+    .sidebar.collapsed .sidebar-nav .nav-link span { display: none; }
+    .sidebar.collapsed .nav-link { justify-content: center; text-align: center; }
+    .sidebar.collapsed .nav-link i { margin-right: 0; }
+    .header.collapsed { left: 70px; }
+    .main-content.collapsed { margin-left: 70px; }
+
+    .sidebar .nav-link {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-content { padding: 1rem; }
+}

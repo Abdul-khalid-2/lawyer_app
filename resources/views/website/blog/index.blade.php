@@ -3,30 +3,17 @@
 
 
 <!-- Blog Header -->
-<section class="blog-header bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3">Legal Insights And Articles</h1>
-                <p class="lead mb-4">Expert legal advice, case studies, and industry insights from experienced lawyers</p>
-
-                <!-- Search Form -->
-                <form action="{{ route('website.blog.index') }}" method="GET" class="blog-search-form">
-                    <div class="input-group input-group-lg">
-                        <input type="text" name="search" class="form-control"
-                            placeholder="Search articles..." value="{{ request('search') }}">
-                        <button class="btn btn-light" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <!-- <div class="col-lg-4 text-lg-end">
-                <img src="{{ asset('website/images/blog-hero.svg') }}" alt="Legal Blog" class="img-fluid" style="max-height: 200px;">
-            </div> -->
+<x-website.sections.page-hero icon="fas fa-newspaper"
+    title="Legal Insights &amp; Articles"
+    subtitle="Expert legal advice, case studies, and industry insights from experienced lawyers.">
+    <form action="{{ route('website.blog.index') }}" method="GET" class="lc-hero-search">
+        <div class="input-group input-group-lg">
+            <input type="text" name="search" class="form-control"
+                placeholder="Search articles..." value="{{ request('search') }}">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
         </div>
-    </div>
-</section>
+    </form>
+</x-website.sections.page-hero>
 
 <!-- Blog Content -->
 <section class="py-5">

@@ -32,7 +32,7 @@
 
         /* ==================== HERO HEADER ==================== */
         .page-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: var(--d-primary, #2563eb);
             color: white;
             padding: 100px 0 80px;
             text-align: center;
@@ -124,7 +124,7 @@
         /* Element Type Specific Styles */
         .element-heading {
             border-left-color: var(--primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            background: #f8fafc;
         }
 
         .element-heading h1,
@@ -193,7 +193,7 @@
         /* Banner Caption */
         .banner-caption {
             padding: 2rem;
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            background: var(--d-primary, #2563eb);
             color: white;
             text-align: center;
         }

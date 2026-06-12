@@ -14,6 +14,7 @@
 @import './components/blog-card.css';
 @import './components/video-card.css';
 @import './components/team-card.css';
+@import './components/page-hero.css';
 
 /* Pages */
 @import './pages/home.css';

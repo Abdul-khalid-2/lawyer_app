@@ -1,16 +1,13 @@
 <x-app-layout>
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">Client: {{ $client->user?->name }}</h1>
-            <div>
-                <a href="{{ route('clients.edit', $client) }}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
-                <a href="{{ route('clients.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Back
-                </a>
-            </div>
-        </div>
+        <x-dashboard.page-header :title="'Client: ' . $client->user?->name" icon="fas fa-user">
+            <a href="{{ route('clients.edit', $client) }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="{{ route('clients.index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </x-dashboard.page-header>
 
         @if(session('success'))
         <div class="alert alert-success">

@@ -1,0 +1,81 @@
+/* ============================================================
+   Page hero / banner — <x-website.sections.page-hero>
+   One consistent header treatment across all secondary pages.
+   ============================================================ */
+.lc-page-hero {
+    background: var(--lc-hero-gradient);
+    color: var(--lc-on-primary);
+    padding: 4.5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+.lc-page-hero::after {
+    /* subtle decorative glow, keeps the banner from feeling flat */
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgb(52 152 219 / .35) 0%, transparent 70%);
+    pointer-events: none;
+}
+.lc-page-hero--center {
+    text-align: center;
+}
+.lc-page-hero__icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: .9;
+}
+.lc-page-hero__title {
+    position: relative;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--lc-on-primary);
+}
+.lc-page-hero__subtitle {
+    position: relative;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    opacity: .92;
+    margin-bottom: 0;
+    max-width: 680px;
+}
+.lc-page-hero--center .lc-page-hero__subtitle {
+    margin-left: auto;
+    margin-right: auto;
+}
+.lc-page-hero__actions {
+    position: relative;
+    margin-top: 1.75rem;
+}
+
+/* Search bar that sits inside a hero */
+.lc-hero-search .input-group {
+    box-shadow: var(--lc-shadow);
+    border-radius: var(--lc-radius-pill);
+    overflow: hidden;
+    max-width: 560px;
+}
+.lc-page-hero--center .lc-hero-search .input-group {
+    margin: 0 auto;
+}
+.lc-hero-search .form-control {
+    border: none;
+    padding: .9rem 1.4rem;
+    font-size: 1rem;
+}
+.lc-hero-search .form-control:focus {
+    box-shadow: none;
+}
+.lc-hero-search .btn {
+    border: none;
+    background: var(--lc-secondary);
+    color: var(--lc-on-primary);
+    padding: 0 1.6rem;
+}
+.lc-hero-search .btn:hover {
+    background: var(--lc-secondary-dark);
+}

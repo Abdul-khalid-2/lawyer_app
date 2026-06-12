@@ -21,6 +21,7 @@ use App\Http\Controllers\Website\WebsiteCommentController;
 Route::get('/', [WebsiteHomeController::class, 'home'])->name('home');
 Route::get('find-lawyers', [WebsiteLawyersController::class, 'index'])->name('find-lawyeres');
 Route::get('/how-it-work', [WebsiteHomeController::class, 'howItWork'])->name('website.howItWork');
+Route::get('/about', [WebsiteHomeController::class, 'about'])->name('website.about');
 
 // NOTE: public listing lives at /find-lawyers (find-lawyeres); /lawyers is the admin resource below
 Route::post('/lawyers/load-more', [WebsiteLawyersController::class, 'loadMore'])->name('website.lawyers.load-more');

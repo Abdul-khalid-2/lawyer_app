@@ -2,20 +2,14 @@
     description="Learn how Law-Skoolyst connects you with the right lawyer in three simple steps — search, compare and consult verified legal professionals.">
 
 <!-- Hero Section -->
-<section class="hero-section text-center" id="home">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1 class="display-4 mb-4 text-white">Your Trusted Legal Partner for Justice And Rights</h1>
-                <p class="lead mb-5 text-light">Expert legal counsel from experienced advocates and law firms. Schedule consultations, get case reviews, and find the right representation for your legal matters.</p>
-                <x-website.ui.button :href="route('find-lawyeres')" variant="primary" size="lg" class="me-3">Browse Lawyers</x-website.ui.button>
-                <x-website.ui.button href="#how-it-works" variant="outline-light" size="lg">Legal Consultation</x-website.ui.button>
-            </div>
-        </div>
+<x-website.sections.page-hero align="center" icon="fas fa-route"
+    title="Your Trusted Legal Partner for Justice &amp; Rights"
+    subtitle="Expert legal counsel from experienced advocates and law firms. Schedule consultations, get case reviews, and find the right representation for your legal matters.">
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <x-website.ui.button :href="route('find-lawyeres')" variant="primary" size="lg">Browse Lawyers</x-website.ui.button>
+        <x-website.ui.button href="#how-it-works" variant="outline-light" size="lg">Legal Consultation</x-website.ui.button>
     </div>
-</section>
+</x-website.sections.page-hero>
 
 
 

@@ -3,48 +3,24 @@
 
 
 <!-- Tag Header -->
-<section class="tag-header text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('website.blog.index') }}">Blog</a></li>
-                        <li class="breadcrumb-item active">Tag: {{ $tag }}</li>
-                    </ol>
-                </nav>
-                
-                <div class="d-flex align-items-center mb-3">
-                    <i class="fas fa-tag fa-2x me-3"></i>
-                    <div>
-                        <h1 class="display-5 fw-bold mb-2">#{{ $tag }}</h1>
-                        {{-- <p class="lead mb-0">Articles tagged with "{{ $tag }}"</p> --}}
-                    </div>
-                </div>
-
-                <!-- Search Form -->
-                <form action="{{ route('website.blog.index') }}" method="GET" class="blog-search-form mt-4">
-                    <div class="input-group input-group-lg">
-                        <input type="text" name="search" class="form-control"
-                            placeholder="Search articles..." value="{{ request('search') }}">
-                        <button class="btn btn-light" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-                <div class="text-center">
-                    <div class="tag-badge badge bg-white text-dark fs-6 mb-2">
-                        <i class="fas fa-newspaper me-2"></i>{{ $posts->total() }} Articles
-                    </div>
-                    <p class="small opacity-75">Explore all content related to this topic</p>
-                </div>
-            </div>
+<x-website.sections.page-hero icon="fas fa-tag"
+    :title="'#' . $tag"
+    :subtitle="$posts->total() . ' ' . Str::plural('article', $posts->total()) . ' tagged with this topic'">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('website.blog.index') }}">Blog</a></li>
+            <li class="breadcrumb-item active text-white">Tag: {{ $tag }}</li>
+        </ol>
+    </nav>
+    <form action="{{ route('website.blog.index') }}" method="GET" class="lc-hero-search">
+        <div class="input-group input-group-lg">
+            <input type="text" name="search" class="form-control"
+                placeholder="Search articles..." value="{{ request('search') }}">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
         </div>
-    </div>
-</section>
+    </form>
+</x-website.sections.page-hero>
 
 <!-- Blog Content -->
 <section class="py-5">

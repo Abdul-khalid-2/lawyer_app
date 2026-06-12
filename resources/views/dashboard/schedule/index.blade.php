@@ -19,12 +19,11 @@
     @endpush
 
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-            <h1 class="h3">My Schedule</h1>
+        <x-dashboard.page-header title="My Schedule" subtitle="Your hearings, meetings and consultations" icon="fas fa-calendar-alt">
             <button class="btn btn-primary" onclick="openCreateModal()">
                 <i class="fas fa-plus"></i> Add Event
             </button>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="mb-3 small">
             <span class="me-3"><span class="legend-dot" style="background:#dc3545"></span> Hearing</span>

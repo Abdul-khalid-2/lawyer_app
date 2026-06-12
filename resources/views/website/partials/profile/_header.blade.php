@@ -59,10 +59,12 @@
 
             <!-- Action Buttons - Responsive Stack -->
             <div class="d-flex flex-column flex-sm-row flex-wrap gap-2">
-                <button class="btn btn-primary btn-sm flex-fill text-nowrap">
+                <a href="mailto:{{ $lawyer->user->email }}?subject={{ rawurlencode('Legal consultation enquiry') }}"
+                    class="btn btn-primary btn-sm flex-fill text-nowrap">
                     <i class="fas fa-envelope me-1"></i> Contact
-                </button>
-                <button class="btn btn-outline-primary btn-sm flex-fill text-nowrap">
+                </a>
+                <button type="button" class="btn btn-outline-primary btn-sm flex-fill text-nowrap"
+                    data-bs-toggle="modal" data-bs-target="#scheduleModal">
                     <i class="fas fa-calendar me-1"></i> Schedule
                 </button>
             </div>

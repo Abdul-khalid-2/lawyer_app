@@ -18,10 +18,12 @@
         </p>
         @endif
     </div>
-    <button class="btn btn-light w-100 mb-3 fw-bold">
+    <a href="mailto:{{ $lawyer->user->email }}?subject={{ rawurlencode('Legal consultation enquiry') }}"
+        class="btn btn-light w-100 mb-3 fw-bold">
         <i class="fas fa-envelope me-1"></i> Send Message
-    </button>
-    <button class="btn btn-outline-light w-100 fw-bold">
+    </a>
+    <button type="button" class="btn btn-outline-light w-100 fw-bold"
+        data-bs-toggle="modal" data-bs-target="#scheduleModal">
         <i class="fas fa-calendar me-1"></i> Schedule Consultation
     </button>
 </div>

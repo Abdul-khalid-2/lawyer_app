@@ -1,15 +1,11 @@
 <x-app-layout>
 
     <section id="educations" class="page-section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-0">Education</h2>
-                <p class="text-muted">Manage your educational background</p>
-            </div>
+        <x-dashboard.page-header title="Education" subtitle="Manage your educational background" icon="fas fa-graduation-cap">
             <a href="{{ route('educations.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i> Add Education
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="card">
             <div class="card-body">

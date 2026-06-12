@@ -1,11 +1,10 @@
 <x-app-layout>
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">Edit Case</h1>
+        <x-dashboard.page-header title="Edit Case" icon="fas fa-folder-open">
             <a href="{{ route('cases.show', $case) }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back to Case
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="row">
             <div class="col-lg-9">

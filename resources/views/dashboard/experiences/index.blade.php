@@ -1,15 +1,11 @@
 <x-app-layout>
 
     <section id="experiences" class="page-section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-0">Professional Experience</h2>
-                <p class="text-muted">Manage your work experience and employment history</p>
-            </div>
+        <x-dashboard.page-header title="Professional Experience" subtitle="Manage your work experience and employment history" icon="fas fa-briefcase">
             <a href="{{ route('experiences.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i> Add Experience
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="card">
             <div class="card-body">

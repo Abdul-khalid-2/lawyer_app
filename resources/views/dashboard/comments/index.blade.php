@@ -1,36 +1,18 @@
 <x-app-layout>
 
-    <style>
-        .comment-content {
-            line-height: 1.5;
-        }
-        .status-badge {
-            font-size: 0.75rem;
-        }
-        .table tbody tr {
-            transition: background-color 0.2s;
-        }
-        .table tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-    </style>
     <section id="comments-management" class="page-section">
-        <!-- Header Section -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('blog-posts.index') }}">Blog Posts</a></li>
-                        <li class="breadcrumb-item active">Comments</li>
-                    </ol>
-                </nav>
-                <h2 class="mb-1">Comments Management</h2>
-                <p class="text-muted mb-0">Manage comments for: <strong>"{{ $post->title }}"</strong></p>
-            </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('blog-posts.index') }}">Blog Posts</a></li>
+                <li class="breadcrumb-item active">Comments</li>
+            </ol>
+        </nav>
+        <x-dashboard.page-header title="Comments Management"
+            :subtitle="'Manage comments for: ' . $post->title" icon="fas fa-comments">
             <a href="{{ route('blog-posts.index') }}" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-2"></i> Back to Posts
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <!-- Statistics Cards -->
         <div class="row mb-4">

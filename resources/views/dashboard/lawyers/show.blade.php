@@ -1,33 +1,35 @@
 <x-app-layout>
     <style>
         .profile-header {
-            background: linear-gradient(135deg, #000000 0%, #0b5ed7 100%);
+            background: var(--d-primary);
             color: white;
             padding: 3rem 0;
             margin-bottom: 2rem;
+            border-radius: var(--d-radius);
         }
-        
+
         .profile-image {
             width: 150px;
             height: 150px;
             border: 5px solid white;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .stats-card {
-            background: linear-gradient(135deg, #000000 0%, #0b5ed7 100%);
+            background: var(--d-primary);
+            color: #fff;
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            border-radius: var(--d-radius);
+            box-shadow: var(--d-shadow-sm);
+            transition: transform 0.2s ease;
         }
-        
+
         .stats-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .badge-custom {
-            background: linear-gradient(135deg, #0b5ed7 0%, #0b5ed7 100%);
+            background: var(--d-primary);
             color: white;
             padding: 8px 15px;
             border-radius: 20px;

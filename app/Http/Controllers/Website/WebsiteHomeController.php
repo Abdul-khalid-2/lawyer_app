@@ -87,4 +87,19 @@ class WebsiteHomeController extends Controller
         ];
         return view('website.how_it_works', compact('stats'));
     }
+
+    public function about()
+    {
+        $stats = [
+            'lawyersCount' => Lawyer::where('is_verified', true)->count(),
+            'clientsCount' => \App\Models\User::count(),
+            'casesCount' => \App\Models\Portfolio::count(),
+            'citiesCount' => Lawyer::where('is_verified', true)->distinct('city')->count('city'),
+            'specializationsCount' => Specialization::count(),
+        ];
+
+        $specializations = Specialization::where('is_active', true)->take(8)->get();
+
+        return view('website.about', compact('stats', 'specializations'));
+    }
 }

@@ -272,6 +272,14 @@ Convert the public website to reusable Blade components (`<x-website.*>`), centr
 
 ---
 
+### Phase F — Visual consistency, About page, Schedule Consultation (follow-up)
+
+> ✅ **Phase F Successfully done** — Added a shared `<x-website.sections.page-hero>` (one navy→blue brand gradient via the new `--lc-hero-gradient` token) and applied it to find-lawyers, blog, blog-category, blog-tag, videos and how-it-work so every secondary page now shares the same header treatment (home keeps its distinct image hero as the landing page). Added a designed **About page** (`/about` → `WebsiteHomeController@about` → `website/about.blade.php`, built entirely from the shared components: page-hero, section-heading, icon-box, badges, stats, CTA) and pointed the nav "About Us" link to it. Wired the previously-dead **Schedule Consultation** buttons (profile header + sidebar + availability section) to a new `#scheduleModal` (`partials/profile/_schedule_modal.blade.php`) that lists the lawyer's upcoming public slots with call/WhatsApp/email actions (graceful fallback when no slots). All 8 pages render 200.
+
+### Phase G — Dashboard design system (centralized, solid colors, no gradients)
+
+> ✅ **Phase G Successfully done** — Gave the admin/lawyer dashboard the same centralized treatment as the website, with **solid colors only (no gradients)**. Created `resources/css/dashboard/` (`_tokens`, `_layout`, `_base` Bootstrap theming, `components/{page-header,stat-card,empty-state}.css`) and `resources/js/dashboard/` (sidebar toggle + tooltips module) wired through Vite; `layouts/app.blade.php` now `@vite`s the bundle instead of its old inline `<style>` (which had 3 gradients) and `layouts/footer.blade.php` lost its inline sidebar JS. Built `<x-dashboard.page-header>`, `<x-dashboard.stat-card>`, `<x-dashboard.empty-state>` and applied page-header to **every** index/create/edit/show page (clients, cases, team, videos, pages, schedule, blog-posts, blog-categories, educations, experiences, comments, lawyers). Converted both analytics dashboards' gradient stat tiles to solid `stat-card` components and de-gradiented `lawyers/show` + `posts/show`. Verified: all dashboard pages (lawyer + super_admin) render 200 with the shared header and **zero `linear-gradient`** in any rendered output.
+
 ## Website Refactor — Final Structure
 
 ```

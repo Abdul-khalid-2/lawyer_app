@@ -5,8 +5,12 @@
         ->orderBy('start_datetime')->limit(6)->get();
 @endphp
 @if($publicSlots->count() > 0)
-<div class="profile-section">
-    <h3 class="section-title">Upcoming Availability</h3>
+<div class="profile-section" id="availability">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <h3 class="section-title mb-0 border-0 pb-0">Upcoming Availability</h3>
+        <x-website.ui.button variant="primary" size="sm" icon="fas fa-calendar-check"
+            data-bs-toggle="modal" data-bs-target="#scheduleModal">Schedule Consultation</x-website.ui.button>
+    </div>
     <div class="row">
         @foreach($publicSlots as $slot)
         <div class="col-md-6 col-lg-4 mb-3">

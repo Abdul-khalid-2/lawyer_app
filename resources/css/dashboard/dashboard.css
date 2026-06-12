@@ -1,0 +1,11 @@
+/* ============================================================
+   Dashboard bundle — single Vite entry for the admin/lawyer area.
+   Order: tokens → layout → base (Bootstrap theming) → components.
+   ============================================================ */
+@import './_tokens.css';
+@import './_layout.css';
+@import './_base.css';
+
+@import './components/page-header.css';
+@import './components/stat-card.css';
+@import './components/empty-state.css';

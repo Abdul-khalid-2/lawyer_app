@@ -1,15 +1,11 @@
 <x-app-layout>
 
     <section id="blog-posts" class="page-section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-0">Blog Posts</h2>
-                <p class="text-muted">Manage your blog posts and articles</p>
-            </div>
+        <x-dashboard.page-header title="Blog Posts" subtitle="Manage your blog posts and articles" icon="fas fa-newspaper">
             <a href="{{ route('blog-posts.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i> Create Post
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="card">
                 <div class="table-responsive">

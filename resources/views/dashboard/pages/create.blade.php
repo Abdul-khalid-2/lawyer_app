@@ -1,11 +1,10 @@
 <x-app-layout>
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">New Page</h1>
+        <x-dashboard.page-header title="New Page" icon="fas fa-file-circle-plus">
             <a href="{{ route('pages.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back to Pages
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="row">
             <div class="col-lg-9">

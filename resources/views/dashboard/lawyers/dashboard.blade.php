@@ -2,112 +2,30 @@
     <!-- Dashboard Page -->
     <section id="dashboard" class="page-section active">
         <!-- Welcome Header -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card bg-primary text-white">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h3 class="mb-2">Welcome back, {{ Auth::user()->name }}! 👋</h3>
-                                <p class="mb-0 opacity-75">
-                                    @if($lawyer->firm_name)
-                                        {{ $lawyer->firm_name }}
-                                    @else
-                                        Your Legal Practice Dashboard
-                                    @endif
-                                </p>
-                            </div>
-                            <div class="col-md-4 text-md-end">
-                                <div class="bg-white bg-opacity-25 rounded-circle p-3 d-inline-block">
-                                    <i class="fas fa-balance-scale fa-2x"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.page-header :title="'Welcome back, ' . Auth::user()->name" icon="fas fa-balance-scale"
+            :subtitle="$lawyer->firm_name ?: 'Your legal practice dashboard'" class="mb-4" />
 
         <!-- Stats Cards -->
-        <div class="row mb-4">
+        <div class="row mb-2">
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card stats-card text-white"
-                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Profile Visitors</h6>
-                                <h2 class="mb-0">{{ $stats['total_visitors'] ?? 0 }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['profile_views'] ?? 0 }} total views
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-eye fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Profile Visitors" :value="$stats['total_visitors'] ?? 0"
+                    icon="fas fa-eye" variant="primary" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['profile_views'] ?? 0 }} total views</small>
             </div>
-
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card stats-card text-white"
-                    style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Total Reviews</h6>
-                                <h2 class="mb-0">{{ $stats['total_reviews'] ?? 0 }}</h2>
-                                <small class="opacity-75">
-                                    {{ number_format($stats['average_rating'] ?? 0, 1) }} ★ average
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-star fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Total Reviews" :value="$stats['total_reviews'] ?? 0"
+                    icon="fas fa-star" variant="warning" />
+                <small class="text-muted d-block mt-1 ms-1">{{ number_format($stats['average_rating'] ?? 0, 1) }} ★ average</small>
             </div>
-
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card stats-card text-white"
-                    style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Blog Posts</h6>
-                                <h2 class="mb-0">{{ $stats['total_blog_posts'] ?? 0 }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['published_posts'] ?? 0 }} published
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-blog fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Blog Posts" :value="$stats['total_blog_posts'] ?? 0"
+                    icon="fas fa-blog" variant="success" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['published_posts'] ?? 0 }} published</small>
             </div>
-
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card stats-card text-white"
-                    style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Portfolio</h6>
-                                <h2 class="mb-0">{{ $stats['portfolios_count'] ?? 0 }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['specializations_count'] ?? 0 }} specializations
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-gavel fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Portfolio" :value="$stats['portfolios_count'] ?? 0"
+                    icon="fas fa-gavel" variant="info" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['specializations_count'] ?? 0 }} specializations</small>
             </div>
         </div>
 

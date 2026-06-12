@@ -1,11 +1,10 @@
 <x-app-layout>
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">My Clients</h1>
+        <x-dashboard.page-header title="My Clients" subtitle="Manage your clients and their accounts" icon="fas fa-user-friends">
             <a href="{{ route('clients.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Client
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         @if(session('success'))
         <div class="alert alert-success">

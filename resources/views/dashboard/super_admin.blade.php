@@ -2,104 +2,30 @@
     <!-- Super Admin Dashboard Page -->
     <section id="dashboard" class="page-section active">
         <!-- Welcome Header -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card bg-gradient-primary">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h3 class="mb-2">Welcome back, {{ Auth::user()->name }}! 👑</h3>
-                                <p class="mb-0 opacity-75">
-                                    Super Admin Dashboard - Platform Overview & Analytics
-                                </p>
-                            </div>
-                            <div class="col-md-4 text-md-end">
-                                <div class="bg-white bg-opacity-25 rounded-circle p-3 d-inline-block">
-                                    <i class="fas fa-crown fa-2x"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.page-header :title="'Welcome back, ' . Auth::user()->name" icon="fas fa-crown"
+            subtitle="Super Admin Dashboard — platform overview & analytics" class="mb-4" />
 
         <!-- Stats Cards -->
-        <div class="row mb-4">
+        <div class="row mb-2">
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card stats-card text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Total Lawyers</h6>
-                                <h2 class="mb-0">{{ $stats['total_lawyers'] }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['verified_lawyers'] }} verified
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-balance-scale fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Total Lawyers" :value="$stats['total_lawyers']"
+                    icon="fas fa-balance-scale" variant="primary" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['verified_lawyers'] }} verified</small>
             </div>
-
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card stats-card text-white" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Blog Posts</h6>
-                                <h2 class="mb-0">{{ $stats['total_blog_posts'] }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['published_posts'] }} published
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-blog fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Blog Posts" :value="$stats['total_blog_posts']"
+                    icon="fas fa-blog" variant="success" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['published_posts'] }} published</small>
             </div>
-
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card stats-card text-white" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Reviews</h6>
-                                <h2 class="mb-0">{{ $stats['total_reviews'] }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['approved_reviews'] }} approved
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-star fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Reviews" :value="$stats['total_reviews']"
+                    icon="fas fa-star" variant="warning" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['approved_reviews'] }} approved</small>
             </div>
-
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card stats-card text-white" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="card-title opacity-75">Platform Visitors</h6>
-                                <h2 class="mb-0">{{ $stats['total_visitors'] }}</h2>
-                                <small class="opacity-75">
-                                    {{ $stats['active_specializations'] }} specializations
-                                </small>
-                            </div>
-                            <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                                <i class="fas fa-users fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-dashboard.stat-card label="Platform Visitors" :value="$stats['total_visitors']"
+                    icon="fas fa-users" variant="info" />
+                <small class="text-muted d-block mt-1 ms-1">{{ $stats['active_specializations'] }} specializations</small>
             </div>
         </div>
 

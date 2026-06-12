@@ -145,3 +145,31 @@
     max-width: 150px;
     height: 150px;
 }
+
+/* Schedule modal slots */
+.lc-slot {
+    border: 1px solid var(--lc-border);
+    border-left: 4px solid var(--lc-success);
+    border-radius: var(--lc-radius-sm);
+    padding: 1rem;
+    height: 100%;
+    transition: var(--lc-transition);
+}
+.lc-slot:hover {
+    box-shadow: var(--lc-shadow-sm);
+    transform: translateY(-2px);
+}
+.lc-slot__date {
+    font-weight: 600;
+    color: var(--lc-text);
+}
+.lc-slot__time {
+    color: var(--lc-text-muted);
+    font-size: .9rem;
+    margin-top: .25rem;
+}
+.lc-slot__loc {
+    color: var(--lc-text-muted);
+    font-size: .85rem;
+    margin-top: .25rem;
+}

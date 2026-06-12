@@ -1,15 +1,11 @@
 <x-app-layout>
 
     <section id="blog-categories" class="page-section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-0">Blog Categories</h2>
-                <p class="text-muted">Manage your blog categories</p>
-            </div>
+        <x-dashboard.page-header title="Blog Categories" subtitle="Manage your blog categories" icon="fas fa-tags">
             <a href="{{ route('blog-categories.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i> Create Category
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <div class="card">
             <div class="card-body">

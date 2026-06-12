@@ -16,7 +16,7 @@
                     <a class="nav-link" href="{{ route('website.howItWork') }}">How It Works</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About Us</a>
+                    <a class="nav-link" href="{{ route('website.about') }}">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('website.blog.index') }}">Blogs</a>

@@ -1,143 +1,20 @@
-@extends('website.layout.master')
+<x-website.layout.master title="Legal Videos - Law-Skoolyst"
+    description="Watch legal explainer videos and guides from verified lawyers on Law-Skoolyst.">
 
-@push('css')
-<style>
-    .video-header {
-        background: linear-gradient(135deg, #010a8a 0%, #cc0000 100%);
-    }
 
-    .video-search-form .form-control {
-        border: none;
-        box-shadow: none;
-    }
 
-    .video-search-form .btn {
-        border: none;
-    }
-
-    .video-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: none;
-    }
-
-    .video-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .video-thumbnail {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .video-thumbnail::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: 1;
-    }
-
-    .video-play-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 0, 0, 0.8);
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 2;
-        transition: all 0.3s ease;
-    }
-
-    .video-card:hover .video-play-icon {
-        background: #010a8a;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    .video-play-icon i {
-        color: white;
-        font-size: 24px;
-        margin-left: 3px;
-    }
-
-    .video-duration {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        z-index: 2;
-    }
-
-    .sidebar-widget .list-group-item {
-        border: none;
-        padding: 0.75rem 0;
-    }
-
-    .sidebar-widget .list-group-item:hover {
-        background: transparent;
-        color: #010a8a;
-    }
-
-    .pagination .page-link {
-        border-radius: 8px;
-        margin: 0 2px;
-        border: none;
-    }
-
-    .pagination .page-item.active .page-link {
-        background: #010a8a;
-        border-color: #010a8a;
-    }
-
-    .topic-badge {
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
-        transition: all 0.3s ease;
-    }
-
-    .topic-badge:hover {
-        background: #010a8a;
-        color: white;
-        border-color: #010a8a;
-    }
-</style>
-@endpush
-
-@section('content')
 <!-- Video Header -->
-<section class="video-header bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3">Legal Education Videos</h1>
-                <p class="lead mb-4">Expert legal explanations, case analyses, and educational content from verified lawyers</p>
-
-                <!-- Search Form -->
-                <form action="{{ route('website.videos.index') }}" method="GET" class="video-search-form">
-                    <div class="input-group input-group-lg">
-                        <input type="text" name="search" class="form-control"
-                            placeholder="Search videos by topic or title..." value="{{ request('search') }}">
-                        <button class="btn btn-light" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
+<x-website.sections.page-hero icon="fas fa-play-circle"
+    title="Legal Education Videos"
+    subtitle="Expert legal explanations, case analyses, and educational content from verified lawyers.">
+    <form action="{{ route('website.videos.index') }}" method="GET" class="lc-hero-search">
+        <div class="input-group input-group-lg">
+            <input type="text" name="search" class="form-control"
+                placeholder="Search videos by topic or title..." value="{{ request('search') }}">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
         </div>
-    </div>
-</section>
+    </form>
+</x-website.sections.page-hero>
 
 <!-- Video Content -->
 <section class="py-5">
@@ -197,67 +74,7 @@
                 @if($videos->count() > 0)
                 <div class="row">
                     @foreach($videos as $video)
-                    <div class="col-md-6 col-lg-6 mb-4">
-                        <article class="video-card card h-100 border-0 shadow-sm">
-                            <div class="video-thumbnail position-relative">
-                                <img src="{{ $video->thumbnail_url }}"
-                                    class="card-img-top"
-                                    alt="{{ $video->title }}"
-                                    style="height: 200px; object-fit: cover;">
-                                <div class="video-play-icon">
-                                    <a href="{{ route('website.videos.show', $video->uuid) }}">
-                                        <i class="fas fa-play"></i>
-                                    </a>
-
-                                </div>
-                                <div class="video-duration">
-                                    <!-- {{ $video->duration ? gmdate('i:s', $video->duration) : 'N/A' }} -->
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-                                <a href="{{ route('website.videos.show', $video->uuid) }}"
-                                    class="badge bg-danger text-decoration-none mb-2">
-                                    {{ $video->video_topic }}
-                                </a>
-
-                                <h5 class="card-title">
-                                    <a href="{{ route('website.videos.show', $video->uuid) }}"
-                                        class="text-dark text-decoration-none">
-                                        {{ Str::limit($video->title, 60) }}
-                                    </a>
-                                </h5>
-
-                                <p class="card-text text-muted small">
-                                    {{ Str::limit($video->description, 100) }}
-                                </p>
-                            </div>
-
-                            <div class="card-footer bg-transparent border-top-0 pt-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ $video->lawyer->user->profile_image ? asset('website/' . $video->lawyer->user->profile_image) : asset('website/images/male_advocate_avatar.jpg') }}"
-                                            alt="{{ $video->lawyer->user->name }}"
-                                            class="rounded-circle me-2"
-                                            style="width: 32px; height: 32px; object-fit: cover;">
-                                        <small class="text-muted">{{ $video->lawyer->user->name }}</small>
-                                    </div>
-                                    <small class="text-muted">
-                                        <i class="far fa-eye me-1"></i>{{ $video->view_count }}
-                                    </small>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <small class="text-muted">
-                                        {{ $video->published_at->format('M j, Y') }}
-                                    </small>
-                                    <!-- <small class="text-muted">
-                                        <i class="far fa-clock me-1"></i>
-                                        {{ $video->duration ? gmdate('i', $video->duration) . ' min' : 'N/A' }}
-                                    </small> -->
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                        <x-website.cards.video-card :video="$video" />
                     @endforeach
                 </div>
 
@@ -389,4 +206,4 @@
         </div>
     </div>
 </section>
-@endsection
+</x-website.layout.master>

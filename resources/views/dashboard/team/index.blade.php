@@ -1,11 +1,10 @@
 <x-app-layout>
     <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3">My Team</h1>
+        <x-dashboard.page-header title="My Team" subtitle="Your associates, paralegals and counsel shown on your public profile" icon="fas fa-users">
             <a href="{{ route('team-members.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Add Team Member
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         @if(session('success'))
         <div class="alert alert-success">

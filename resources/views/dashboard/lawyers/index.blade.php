@@ -1,76 +1,32 @@
 {{-- resources/views/lawyers/index.blade.php --}}
 <x-app-layout>
+    @push('css')
     <style>
-        .page-section {
-            padding: 20px 0;
-        }
-
-        .card {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            border: none;
-            border-radius: 10px;
-        }
-
-        .card-header {
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1.5rem;
-        }
-
-        .btn {
-            border-radius: 6px;
-            padding: 10px 20px;
-        }
-
-        .section-title {
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-
-        .badge-status {
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-
         .lawyer-img {
             width: 50px;
             height: 50px;
             object-fit: cover;
-            border: 2px solid #e9ecef;
+            border: 2px solid var(--d-border);
+            border-radius: 50%;
         }
-
         .specialization-badge {
-            background-color: #e8f4fc;
-            color: #2c7be5;
+            background-color: var(--d-primary-soft);
+            color: var(--d-primary);
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 0.75rem;
             margin-right: 4px;
         }
-
-        .pagination .page-item.active .page-link {
-            background-color: #2c7be5;
-            border-color: #2c7be5;
-        }
-
-        .pagination .page-link {
-            color: #2c7be5;
-        }
     </style>
+    @endpush
 
     <!-- Lawyers Page -->
     <section id="lawyers" class="page-section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-0">Lawyers</h2>
-                <p class="text-muted">Manage your legal team members</p>
-            </div>
+        <x-dashboard.page-header title="Lawyers" subtitle="Manage lawyers on the platform" icon="fas fa-gavel">
             <a href="{{ route('lawyers.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Add Lawyer
             </a>
-        </div>
+        </x-dashboard.page-header>
 
         <!-- Success/Error Messages -->
         @if(session('success'))

@@ -1,0 +1,49 @@
+/* ============================================================
+   Dashboard design tokens — single source of truth.
+   Solid colors only (NO gradients).
+   ============================================================ */
+:root {
+    /* Layout */
+    --d-sidebar-width: 280px;
+    --d-header-height: 70px;
+
+    /* Sidebar (solid slate) */
+    --d-sidebar: #1e293b;
+    --d-sidebar-border: rgba(255, 255, 255, .08);
+    --d-sidebar-link: #cbd5e1;
+    --d-sidebar-link-hover-bg: rgba(255, 255, 255, .10);
+    --d-sidebar-link-active-bg: #2563eb;
+
+    /* Brand / actions (solid) */
+    --d-primary: #2563eb;
+    --d-primary-hover: #1d4ed8;
+    --d-primary-soft: #eff6ff;
+
+    /* Surfaces & text */
+    --d-bg: #f1f5f9;
+    --d-surface: #ffffff;
+    --d-surface-alt: #f8fafc;
+    --d-border: #e2e8f0;
+    --d-heading: #0f172a;
+    --d-text: #334155;
+    --d-muted: #64748b;
+
+    /* Status (solid) */
+    --d-success: #16a34a;
+    --d-danger: #dc2626;
+    --d-warning: #d97706;
+    --d-info: #0891b2;
+    --d-secondary: #64748b;
+
+    /* Radius */
+    --d-radius-sm: .5rem;
+    --d-radius: .75rem;
+    --d-radius-lg: 1rem;
+
+    /* Shadows (soft, flat) */
+    --d-shadow-sm: 0 1px 2px rgb(15 23 42 / .06);
+    --d-shadow: 0 2px 8px rgb(15 23 42 / .08);
+    --d-shadow-lg: 0 8px 24px rgb(15 23 42 / .10);
+
+    --d-transition: all .2s ease;
+}

@@ -3,33 +3,22 @@
 
 
 <!-- Blog Header -->
-<section class="blog-header bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <div class="d-flex align-items-center mb-3">
-                    <a href="{{ route('website.blog.index') }}" class="text-white text-decoration-none me-3">
-                        <i class="fas fa-arrow-left me-2"></i>Back to All Articles
-                    </a>
-                    <span class="category-badge">{{ $category->name }}</span>
-                </div>
-                <h1 class="display-4 fw-bold mb-3">{{ $category->name }} Articles</h1>
-                <p class="lead mb-4">{{ $category->description ?? 'Explore expert legal insights and articles about ' . $category->name }}</p>
-
-                <!-- Search Form -->
-                <form action="{{ route('website.blog.category', $category->slug) }}" method="GET" class="blog-search-form">
-                    <div class="input-group input-group-lg">
-                        <input type="text" name="search" class="form-control"
-                            placeholder="Search {{ $category->name }} articles..." value="{{ request('search') }}">
-                        <button class="btn btn-light" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+<x-website.sections.page-hero icon="fas fa-folder-open"
+    :title="$category->name . ' Articles'"
+    :subtitle="$category->description ?? 'Explore expert legal insights and articles about ' . $category->name">
+    <div class="mb-3">
+        <a href="{{ route('website.blog.index') }}" class="text-white text-decoration-none">
+            <i class="fas fa-arrow-left me-2"></i>Back to All Articles
+        </a>
     </div>
-</section>
+    <form action="{{ route('website.blog.category', $category->slug) }}" method="GET" class="lc-hero-search">
+        <div class="input-group input-group-lg">
+            <input type="text" name="search" class="form-control"
+                placeholder="Search {{ $category->name }} articles..." value="{{ request('search') }}">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+</x-website.sections.page-hero>
 
 <!-- Blog Content -->
 <section class="py-5">

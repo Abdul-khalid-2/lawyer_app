@@ -25,4 +25,6 @@
             </div>
         </div>
     </div>
+
+    @include('website.partials.profile._schedule_modal')
 </x-website.layout.master>
