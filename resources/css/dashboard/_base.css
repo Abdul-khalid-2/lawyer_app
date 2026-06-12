@@ -168,5 +168,12 @@ a:hover { color: var(--d-primary-hover); }
 
 /* Header bits */
 .header .btn-link { color: var(--d-muted); }
+
+/* Gray utilities (replaces the few Tailwind classes the dashboard used,
+   so the Tailwind CDN is no longer needed) */
+.text-gray-900 { color: #0f172a !important; }
 .text-gray-800 { color: var(--d-heading) !important; }
+.text-gray-700 { color: #334155 !important; }
 .text-gray-600 { color: var(--d-muted) !important; }
+.text-gray-500 { color: #6b7280 !important; }
+.bg-gray-100 { background-color: #f3f4f6 !important; }

@@ -610,13 +610,37 @@
                 };
                 return templates[element.type] ? templates[element.type](element) : '';
             }
+            clearValidation() {
+                $('#title, #blog_category_id, #status, #featured_image').removeClass('is-invalid');
+                $('#saveResult').empty();
+            }
+            showValidationErrors(messages) {
+                const list = (Array.isArray(messages) ? messages : [messages]).map(m => `<li>${m}</li>`).join('');
+                $('#saveResult').html(`
+                    <div class="alert alert-danger">
+                        <strong><i class="fas fa-exclamation-triangle me-1"></i>Please fix the following before saving:</strong>
+                        <ul class="mb-0 mt-1">${list}</ul>
+                    </div>`);
+                document.getElementById('saveResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             async saveBlogPost() {
+                this.clearValidation();
+
                 const title = $('#title').val().trim();
-                if (!title) { alert('Please enter a blog post title'); return; }
-                if (this.elements.length === 0) { alert('Please add some content to your blog post before saving'); return; }
                 const featuredImage = $('#featured_image')[0].files[0];
                 const maxSize = 2000 * 1024;
-                if (featuredImage && featuredImage.size > maxSize) { alert('Featured image size must be less than 2000 KB. Please choose a smaller file.'); return; }
+                const errors = [];
+
+                if (!title) { errors.push('Post title is required.'); $('#title').addClass('is-invalid'); }
+                if (this.elements.length === 0) { errors.push('Add at least one content element in the builder.'); }
+                if (featuredImage && featuredImage.size > maxSize) { errors.push('Featured image must be less than 2000 KB.'); $('#featured_image').addClass('is-invalid'); }
+
+                if (errors.length) {
+                    this.showValidationErrors(errors);
+                    if (!title) $('#title').trigger('focus');
+                    return;
+                }
+
                 const formData = new FormData();
                 formData.append('title', title);
                 formData.append('blog_category_id', $('#blog_category_id').val());
@@ -625,13 +649,19 @@
                 formData.append('tags', $('#tags').val());
                 formData.append('structure', JSON.stringify(this.getPageData()));
                 formData.append('_token', $('input[name="_token"]').val());
-                if (featuredImage && featuredImage.size <= maxSize) { formData.append('featured_image', featuredImage); }
+                if (featuredImage) { formData.append('featured_image', featuredImage); }
+
                 const $saveBtn = $('.btn-success');
                 $saveBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Saving...');
                 try {
-                    const response = await fetch('{{ route("blog-posts.store") }}', { method: 'POST', body: formData });
+                    const response = await fetch('{{ route("blog-posts.store") }}', {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                        body: formData
+                    });
                     const result = await response.json();
-                    if (result.success) {
+
+                    if (response.ok && result.success) {
                         $('#saveResult').html(`
                             <div class="alert alert-success">
                                 <strong>Success!</strong> Blog post "${title}" has been created successfully.
@@ -644,9 +674,15 @@
                         this.clearCanvas();
                         tagsManager.clearTags();
                         $('#featured_image').removeClass('is-valid is-invalid');
-                    } else { throw new Error(result.message); }
+                    } else if (response.status === 422 && result.errors) {
+                        if (result.errors.title) $('#title').addClass('is-invalid');
+                        if (result.errors.featured_image) $('#featured_image').addClass('is-invalid');
+                        this.showValidationErrors(Object.values(result.errors).flat());
+                    } else {
+                        this.showValidationErrors(result.message || 'Something went wrong. Please try again.');
+                    }
                 } catch (error) {
-                    $('#saveResult').html(`<div class="alert alert-danger"><strong>Error!</strong> ${error.message}</div>`);
+                    this.showValidationErrors('Network error — please check your connection and try again.');
                 } finally {
                     $saveBtn.prop('disabled', false).html('<i class="fas fa-save me-2"></i>Save Blog Post');
                 }

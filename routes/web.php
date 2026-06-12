@@ -162,6 +162,12 @@ Route::middleware(['auth', 'role:lawyer'])->prefix('dashboard')->group(function 
     Route::post('cases/{case}/hearings', [\App\Http\Controllers\Lawyer\CaseController::class, 'storeHearing'])->name('cases.hearings.store');
     Route::patch('cases/{case}/hearings/{hearing}', [\App\Http\Controllers\Lawyer\CaseController::class, 'updateHearing'])->name('cases.hearings.update');
 
+    // Client reviews moderation (lawyer approves/rejects their own reviews)
+    Route::get('reviews', [\App\Http\Controllers\Lawyer\ReviewController::class, 'index'])->name('lawyer.reviews.index');
+    Route::patch('reviews/{review}/status', [\App\Http\Controllers\Lawyer\ReviewController::class, 'updateStatus'])->name('lawyer.reviews.status');
+    Route::patch('reviews/{review}/feature', [\App\Http\Controllers\Lawyer\ReviewController::class, 'toggleFeatured'])->name('lawyer.reviews.feature');
+    Route::delete('reviews/{review}', [\App\Http\Controllers\Lawyer\ReviewController::class, 'destroy'])->name('lawyer.reviews.destroy');
+
     // Data backup (Excel export)
     Route::get('backup/export', [\App\Http\Controllers\Lawyer\BackupController::class, 'export'])->name('backup.export');
 

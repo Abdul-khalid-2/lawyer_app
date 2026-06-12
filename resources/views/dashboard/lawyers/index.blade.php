@@ -98,7 +98,7 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ $lawyer->profile_image_url }}" alt="{{ $lawyer->full_name }}" class="rounded-circle lawyer-img me-3">
+                                    <img src="{{ $lawyer->user->profile_image ? asset('website/' . $lawyer->user->profile_image) : 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face' }}" alt="{{ $lawyer->full_name }}" class="rounded-circle lawyer-img me-3">
                                     <div>
                                         <h6 class="mb-0">{{ $lawyer->full_name }}</h6>
                                         <small class="text-muted">{{ $lawyer->bar_number ?? 'No bar number' }}</small>

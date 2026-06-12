@@ -96,6 +96,12 @@
                     </a>
                 </div>
                 <div class="nav-item">
+                    <a href="{{ route('lawyer.reviews.index') }}" class="nav-link">
+                        <i class="fas fa-star"></i>
+                        <span>Reviews</span>
+                    </a>
+                </div>
+                <div class="nav-item">
                     <a href="{{ route('blog-posts.index') }}" class="nav-link">
                         <i class="fas fa-gavel"></i>
                         <span>Blogs</span>

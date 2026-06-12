@@ -26,7 +26,7 @@
     @endif
 
     @auth
-        @if(auth()->user()->hasRole('super_admin') || auth()->user()->id === $lawyer->user_id)
+        <!-- @if(auth()->user()->hasRole('super_admin') || auth()->user()->id === $lawyer->user_id)
             <div class="mt-3 pt-2 border-top">
                 <div class="btn-group btn-group-sm">
                     @if(auth()->user()->hasRole('super_admin'))
@@ -62,6 +62,6 @@
                     <span class="badge bg-secondary ms-2">{{ ucfirst($review->status) }}</span>
                 @endif
             </div>
-        @endif
+        @endif -->
     @endauth
 </div>
