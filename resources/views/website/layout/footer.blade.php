@@ -63,6 +63,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <p>Email : <strong>ahmed.raza@lawconnect.pk</strong></p>
+                <p>Password : <strong>password</strong></p>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
