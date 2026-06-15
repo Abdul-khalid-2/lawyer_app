@@ -56,7 +56,7 @@
         <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
             <li class="nav-item"><button class="nav-link {{ $defaultTab === 'personal' ? 'active' : '' }}" type="button" data-tab="personal"><i class="fas fa-user me-1"></i> Personal Info</button></li>
             <li class="nav-item"><button class="nav-link {{ $defaultTab === 'professional' ? 'active' : '' }}" type="button" data-tab="professional"><i class="fas fa-briefcase me-1"></i> Professional Info</button></li>
-            <li class="nav-item"><button class="nav-link {{ $defaultTab === 'password' ? 'active' : '' }}" type="button" data-tab="password"><i class="fas fa-key me-1"></i> Change Password</button></li>
+            <!-- <li class="nav-item"><button class="nav-link {{ $defaultTab === 'password' ? 'active' : '' }}" type="button" data-tab="password"><i class="fas fa-key me-1"></i> Change Password</button></li> -->
         </ul>
 
         <!-- Personal Information -->
@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email Address *</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $lawyer->user->email) }}" required>
+                                <input disabled type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $lawyer->user->email) }}" required>
                                 @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
