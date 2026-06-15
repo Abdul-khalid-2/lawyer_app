@@ -13,28 +13,58 @@
         </div>
         @endif
 
-        @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+        @php
+            $personalFields = ['name', 'email', 'phone', 'gender', 'profile_image'];
+            $professionalFields = ['bar_number', 'license_state', 'years_of_experience', 'firm_name', 'bio', 'website', 'hourly_rate', 'address', 'city', 'state', 'zip_code', 'country', 'services', 'awards', 'specializations'];
+            $hasPersonalErrors = $errors->hasAny($personalFields);
+            $hasProfessionalErrors = $errors->hasAny($professionalFields);
+            $hasPasswordErrors = $errors->hasAny(['current_password', 'password', 'password_confirmation']);
+            $defaultTab = session('active_tab')
+                ?? ($hasPasswordErrors ? 'password' : ($hasProfessionalErrors ? 'professional' : 'personal'));
+        @endphp
+
+        @if($hasPersonalErrors)
+        <div class="alert alert-danger" id="personal-errors">
+            <strong>Please fix the following personal info errors:</strong>
+            <ul class="mb-0 mt-2">
+                @foreach($personalFields as $field)
+                    @error($field)<li>{{ $message }}</li>@enderror
+                @endforeach
+            </ul>
+        </div>
+        @elseif($hasProfessionalErrors)
+        <div class="alert alert-danger" id="professional-errors">
+            <strong>Please fix the following professional info errors:</strong>
+            <ul class="mb-0 mt-2">
+                @foreach($professionalFields as $field)
+                    @error($field)<li>{{ $message }}</li>@enderror
+                @endforeach
+            </ul>
+        </div>
+        @elseif($hasPasswordErrors)
+        <div class="alert alert-danger" id="password-errors">
+            <strong>Please fix the following password errors:</strong>
+            <ul class="mb-0 mt-2">
+                @error('current_password')<li>{{ $message }}</li>@enderror
+                @error('password')<li>{{ $message }}</li>@enderror
+                @error('password_confirmation')<li>{{ $message }}</li>@enderror
             </ul>
         </div>
         @endif
 
         <!-- Tabs -->
         <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
-            <li class="nav-item"><button class="nav-link active" type="button" data-tab="personal"><i class="fas fa-user me-1"></i> Personal Info</button></li>
-            <li class="nav-item"><button class="nav-link" type="button" data-tab="professional"><i class="fas fa-briefcase me-1"></i> Professional Info</button></li>
-            <li class="nav-item"><button class="nav-link" type="button" data-tab="password"><i class="fas fa-key me-1"></i> Change Password</button></li>
+            <li class="nav-item"><button class="nav-link {{ $defaultTab === 'personal' ? 'active' : '' }}" type="button" data-tab="personal"><i class="fas fa-user me-1"></i> Personal Info</button></li>
+            <li class="nav-item"><button class="nav-link {{ $defaultTab === 'professional' ? 'active' : '' }}" type="button" data-tab="professional"><i class="fas fa-briefcase me-1"></i> Professional Info</button></li>
+            <li class="nav-item"><button class="nav-link {{ $defaultTab === 'password' ? 'active' : '' }}" type="button" data-tab="password"><i class="fas fa-key me-1"></i> Change Password</button></li>
         </ul>
 
-        <!-- Profile form (Personal + Professional) -->
-        <form method="POST" action="{{ route('lawyer.profile.update') }}" enctype="multipart/form-data" id="profileForm">
-            @csrf
-            @method('PUT')
+        <!-- Personal Information -->
+        <div class="tab-pane {{ $defaultTab === 'personal' ? 'active' : '' }}" id="personal-tab">
+            <form method="POST" action="{{ route('lawyer.profile.update.personal') }}" enctype="multipart/form-data" id="personalForm" novalidate>
+                @csrf
+                @method('PUT')
 
-            <!-- Personal Information -->
-            <div class="tab-pane active" id="personal-tab">
                 <div class="card mb-4">
                     <div class="card-header"><h5 class="card-title mb-0">Personal Information</h5></div>
                     <div class="card-body">
@@ -79,10 +109,19 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Professional Information -->
-            <div class="tab-pane" id="professional-tab">
+                <div class="d-flex justify-content-end mb-4">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Personal Info</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Professional Information -->
+        <div class="tab-pane {{ $defaultTab === 'professional' ? 'active' : '' }}" id="professional-tab">
+            <form method="POST" action="{{ route('lawyer.profile.update.professional') }}" id="professionalForm" novalidate>
+                @csrf
+                @method('PUT')
+
                 <div class="card mb-4">
                     <div class="card-header"><h5 class="card-title mb-0">Professional Information</h5></div>
                     <div class="card-body">
@@ -143,7 +182,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="website" class="form-label">Website</label>
-                                <input type="url" class="form-control @error('website') is-invalid @enderror" id="website" name="website" value="{{ old('website', $lawyer->website) }}">
+                                <input type="url" class="form-control @error('website') is-invalid @enderror" id="website" name="website" value="{{ old('website', $lawyer->website) }}" placeholder="https://example.com">
                                 @error('website')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
@@ -190,17 +229,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Save (shown for the two profile tabs only) -->
-            <div class="d-flex justify-content-end mb-4" id="profileActions">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Update Profile</button>
-            </div>
-        </form>
+                <div class="d-flex justify-content-end mb-4">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Professional Info</button>
+                </div>
+            </form>
+        </div>
 
         <!-- Change Password -->
-        <div class="tab-pane" id="password-tab">
-            <form method="POST" action="{{ route('lawyer.profile.password') }}">
+        <div class="tab-pane {{ $defaultTab === 'password' ? 'active' : '' }}" id="password-tab">
+            <form method="POST" action="{{ route('lawyer.profile.password') }}" id="passwordForm" novalidate>
                 @csrf
                 @method('PUT')
                 <div class="card mb-4">
@@ -208,17 +246,17 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current Password *</label>
-                            <input type="password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" name="current_password" required>
+                            <input type="password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" name="current_password" required autocomplete="current-password">
                             @error('current_password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">New Password *</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="new-password">
                             @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-0">
                             <label for="password_confirmation" class="form-label">Confirm New Password *</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
                 </div>
@@ -242,16 +280,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('#profileTabs [data-tab]');
             const panes = document.querySelectorAll('.tab-pane');
-            const profileActions = document.getElementById('profileActions');
-            const profileForm = document.getElementById('profileForm');
 
             function activateTab(target) {
                 tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-tab') === target));
                 panes.forEach(p => p.classList.remove('active'));
-                document.getElementById(target + '-tab').classList.add('active');
-                if (profileActions) {
-                    profileActions.style.display = target === 'password' ? 'none' : '';
-                }
+                const pane = document.getElementById(target + '-tab');
+                if (pane) pane.classList.add('active');
             }
 
             tabs.forEach(tab => {
@@ -260,33 +294,26 @@
                 });
             });
 
-            // A required field lives on a tab that may be hidden. The browser
-            // can't focus a hidden required field, so it silently blocks submit.
-            // On submit, jump to the tab holding the first invalid field and
-            // surface the native validation message there.
-            if (profileForm) {
-                profileForm.addEventListener('submit', function (e) {
-                    const invalid = profileForm.querySelector(':invalid');
+            document.querySelectorAll('#personalForm, #professionalForm, #passwordForm').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    const invalid = form.querySelector(':invalid');
                     if (invalid) {
                         e.preventDefault();
-                        const pane = invalid.closest('.tab-pane');
-                        if (pane) {
-                            activateTab(pane.id.replace('-tab', ''));
-                        }
+                        invalid.classList.add('is-invalid');
                         invalid.reportValidity();
-                        if (typeof invalid.focus === 'function') invalid.focus();
+                        invalid.focus({ preventScroll: false });
                     }
                 });
-            }
 
-            // If validation errors are for the password form, open that tab
-            @if($errors->has('current_password') || $errors->has('password'))
-                document.querySelector('#profileTabs [data-tab="password"]').click();
-            @elseif($errors->has('bar_number') || $errors->has('license_state') || $errors->has('years_of_experience'))
-                document.querySelector('#profileTabs [data-tab="professional"]').click();
-            @endif
+                form.querySelectorAll('input, select, textarea').forEach(field => {
+                    field.addEventListener('input', function () {
+                        if (this.checkValidity()) {
+                            this.classList.remove('is-invalid');
+                        }
+                    });
+                });
+            });
 
-            // Toggle the per-specialization experience input
             document.querySelectorAll('.specialization-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', function () {
                     const wrap = this.closest('.col-md-6').querySelector('.specialization-experience');

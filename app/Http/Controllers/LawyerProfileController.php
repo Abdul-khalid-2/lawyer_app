@@ -32,20 +32,49 @@ class LawyerProfileController extends Controller
         return view('dashboard.lawyers.edit', compact('lawyer', 'specializations'));
     }
 
-    public function update(Request $request)
+    public function updatePersonal(Request $request)
     {
         $user = Auth::user();
-        $lawyer = $user->lawyer;
 
-        $request->validate([
-            // User fields
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:20'],
             'gender' => ['nullable', 'string', 'in:male,female,other'],
             'profile_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ]);
 
-            // Lawyer fields
+        $userData = [
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'gender' => $validated['gender'] ?? null,
+        ];
+
+        if ($request->hasFile('profile_image')) {
+            $lawyerName = Str::slug($validated['name']);
+            $fileName = time() . '.' . $request->file('profile_image')->getClientOriginalExtension();
+            $filePath = $lawyerName . '/' . $fileName;
+
+            Storage::disk('website')->put($filePath, file_get_contents($request->file('profile_image')));
+
+            $userData['profile_image'] = $filePath;
+        }
+
+        $user->update($userData);
+
+        return redirect()
+            ->route('lawyer.profile.edit')
+            ->with('success', 'Personal information updated successfully.')
+            ->with('active_tab', 'personal');
+    }
+
+    public function updateProfessional(Request $request)
+    {
+        $user = Auth::user();
+        $lawyer = $user->lawyer;
+
+        $validated = $request->validate([
             'bar_number' => ['required', 'string', 'max:255', Rule::unique('lawyers')->ignore($lawyer->id)],
             'license_state' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
@@ -64,48 +93,23 @@ class LawyerProfileController extends Controller
             'specializations.*' => ['exists:specializations,id'],
         ]);
 
-        // Initialize user data array
-        $userData = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'gender' => $request->gender,
-        ];
-
-        // Handle profile image upload
-        if ($request->hasFile('profile_image')) {
-            $lawyerName = Str::slug($request->name);
-            $fileName = time() . '.' . $request->file('profile_image')->getClientOriginalExtension();
-            $filePath = $lawyerName . '/' . $fileName;
-
-            // Store in custom "website" disk
-            Storage::disk('website')->put($filePath, file_get_contents($request->file('profile_image')));
-
-            $userData['profile_image'] = $filePath;
-        }
-
-        // Update User
-        $user->update($userData);
-
-        // Update Lawyer
         $lawyer->update([
-            'bar_number' => $request->bar_number,
-            'license_state' => $request->license_state,
-            'bio' => $request->bio,
-            'years_of_experience' => $request->years_of_experience,
-            'firm_name' => $request->firm_name,
-            'website' => $request->website,
-            'address' => $request->address,
-            'city' => $request->city,
-            'state' => $request->state,
-            'zip_code' => $request->zip_code,
-            'country' => $request->country,
-            'hourly_rate' => $request->hourly_rate,
-            'services' => $request->services,
-            'awards' => $request->awards,
+            'bar_number' => $validated['bar_number'],
+            'license_state' => $validated['license_state'],
+            'bio' => $validated['bio'] ?? null,
+            'years_of_experience' => $validated['years_of_experience'],
+            'firm_name' => $validated['firm_name'] ?? null,
+            'website' => $validated['website'] ?? null,
+            'address' => $validated['address'] ?? null,
+            'city' => $validated['city'] ?? null,
+            'state' => $validated['state'] ?? null,
+            'zip_code' => $validated['zip_code'] ?? null,
+            'country' => $validated['country'] ?? null,
+            'hourly_rate' => $validated['hourly_rate'] ?? null,
+            'services' => $validated['services'] ?? null,
+            'awards' => $validated['awards'] ?? null,
         ]);
 
-        // Sync specializations
         if ($request->has('specializations')) {
             $syncData = [];
             foreach ($request->specializations as $specId) {
@@ -118,8 +122,10 @@ class LawyerProfileController extends Controller
             $lawyer->specializations()->detach();
         }
 
-        return redirect()->route('lawyer.profile.show')
-            ->with('success', 'Profile updated successfully!');
+        return redirect()
+            ->route('lawyer.profile.edit')
+            ->with('success', 'Professional information updated successfully.')
+            ->with('active_tab', 'professional');
     }
     public function updatePassword(Request $request)
     {
@@ -133,7 +139,9 @@ class LawyerProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('lawyer.profile.show')
-            ->with('success', 'Password updated successfully!');
+        return redirect()
+            ->route('lawyer.profile.edit')
+            ->with('success', 'Password updated successfully.')
+            ->with('active_tab', 'password');
     }
 }

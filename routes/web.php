@@ -123,7 +123,8 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
 Route::middleware(['auth', 'role:lawyer|super_admin'])->group(function () {
     // Lawyer public profile management
     Route::get('lawyer/profile/edit', [LawyerProfileController::class, 'edit'])->name('lawyer.profile.edit');
-    Route::put('lawyer/profile', [LawyerProfileController::class, 'update'])->name('lawyer.profile.update');
+    Route::put('lawyer/profile/personal', [LawyerProfileController::class, 'updatePersonal'])->name('lawyer.profile.update.personal');
+    Route::put('lawyer/profile/professional', [LawyerProfileController::class, 'updateProfessional'])->name('lawyer.profile.update.professional');
     Route::put('lawyer/profile/password', [LawyerProfileController::class, 'updatePassword'])->name('lawyer.profile.password');
     Route::get('lawyer/view', [LawyerProfileController::class, 'show'])->name('lawyer.profile.show');
 
