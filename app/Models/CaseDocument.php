@@ -38,7 +38,7 @@ class CaseDocument extends Model
     // Accessors
     public function getFileUrlAttribute()
     {
-        return asset('storage/' . $this->file_path);
+        return asset('website/' . $this->file_path);
     }
 
     public function getHumanFileSizeAttribute()

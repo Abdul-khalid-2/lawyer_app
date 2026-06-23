@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class CaseController extends Controller
@@ -132,7 +133,7 @@ class CaseController extends Controller
 
     // ----- Documents -----
 
-    public function storeDocument(Request $request, LegalCase $case)
+   public function storeDocument(Request $request, LegalCase $case)
     {
         $this->authorizeOwnership($case);
 
@@ -142,13 +143,27 @@ class CaseController extends Controller
         ]);
 
         $file = $request->file('document');
-        $path = $file->store('cases/' . $case->uuid, 'public');
+
+        // Create folder name using case UUID
+        $folderName = Str::slug(Auth::user()->name) . '/cases/' . $case->uuid;
+
+        // Generate unique filename
+        $fileName = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+        // Full path relative to public disk
+        $filePath = $folderName . '/' . $fileName;
+
+        // Store file in storage/app/public/cases/{uuid}/
+        Storage::disk('website')->put(
+            $filePath,
+            file_get_contents($file)
+        );
 
         CaseDocument::create([
             'case_id' => $case->id,
             'uploaded_by' => Auth::id(),
             'title' => $request->title,
-            'file_path' => $path,
+            'file_path' => $filePath,
             'file_type' => $file->getClientOriginalExtension(),
             'file_size' => $file->getSize(),
             'is_visible_to_client' => $request->boolean('is_visible_to_client'),
@@ -172,7 +187,7 @@ class CaseController extends Controller
         $this->authorizeOwnership($case);
         abort_unless($document->case_id === $case->id, 404);
 
-        Storage::disk('public')->delete($document->file_path);
+        Storage::disk('website')->delete($document->file_path);
         $document->delete();
 
         return back()->with('success', 'Document deleted.');
